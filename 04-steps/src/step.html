@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Step component</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="step-container">
+      <div class="step-num">
+        <p class="active">1</p>
+        <p>2</p>
+        <p>3</p>
+      </div>
+      <div class="step-text">
+        <p>Step 1: Lean React</p>
+      </div>
+      <div class="step-btn">
+        <button class="btn-pre">Previous</button>
+        <button class="btn-next">Next</button>
+      </div>
+    </div>
+    <script>
+      const messages = [
+        "Learn React ⚛️",
+        "Apply for jobs 💼",
+        "Invest your new income 🤑",
+      ];
+      const numbers = document.querySelectorAll(".step-num p");
+      const text = document.querySelector(".step-text p");
+      const preBtn = document.querySelector(".btn-pre");
+      const nextBtn = document.querySelector(".btn-next");
+
+      let step = 1;
+      const updateUI = function (step) {
+        text.textContent = `Step ${step}: ${messages[step - 1]}`;
+      };
+
+      nextBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (step < 3) step += 1;
+        numbers[step - 1].classList.add("active");
+        text.textContent = `Step ${step}: ${messages[step - 1]}`;
+      });
+      preBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        if (step <= 1) return;
+        numbers[step - 1].classList.remove("active");
+        text.textContent = `Step ${step}: ${messages[step - 1]}`;
+        step -= 1;
+      });
+    </script>
+  </body>
+</html>
