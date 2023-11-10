@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel List</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="travel">
+      <div class="logo">🌴 FAR AWAY 💼</div>
+      <form class="form">
+        <span>What do you need for your 😍 trip? </span>
+        <select id="number">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="9">9</option>
+        </select>
+        <input id="item" type="text" placeholder="Item..." />
+        <button>Add</button>
+      </form>
+      <div class="packing-list">
+        <ul class="packings">
+          <li>
+            <input id="checkbox" type="checkbox" /><span>2 passports</span
+            ><button>&times;</button>
+          </li>
+          <li>
+            <input id="checkbox" type="checkbox" /><span>2 passports</span
+            ><button>&times;</button>
+          </li>
+          <li>
+            <input id="checkbox" type="checkbox" /><span>2 passports</span
+            ><button>&times;</button>
+          </li>
+          <li>
+            <input id="checkbox" type="checkbox" /><span>2 passports</span
+            ><button>&times;</button>
+          </li>
+          <li>
+            <input id="checkbox" type="checkbox" /><span>2 passports</span
+            ><button>&times;</button>
+          </li>
+        </ul>
+        <div class="option-box">
+          <select name="sort" id="sort">
+            <option>sort</option>
+            <option value="description">Sort by the tag description</option>
+          </select>
+          <button class="btn-clear">Clear list</button>
+        </div>
+      </div>
+      <div class="stats">
+        <p>💼 You have 6 items on your list, and you already packed 0 (0%)</p>
+      </div>
+    </div>
+  </body>
+</html>

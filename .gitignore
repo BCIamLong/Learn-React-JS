@@ -4,6 +4,8 @@
 03-pizza-menu/client/node_modules/
 03-pizza-menu/server/node_modules/
 04-steps/node_modules/
+05-travel-list/client/node_modules/
+05-travel-list/server/node_modules/
 *.env
 
 /.pnp

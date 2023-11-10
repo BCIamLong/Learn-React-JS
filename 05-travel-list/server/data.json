@@ -1,0 +1,5 @@
+[
+  { "description": "Passports", "quantity": 2, "packed": false },
+  { "description": "Socks", "quantity": 12, "packed": false },
+  { "description": "Coat", "quantity": 3, "packed": true }
+]
