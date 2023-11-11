@@ -51,6 +51,28 @@ app.post("/api/v1/travels", async (req, res) => {
   }
 });
 
+app.patch("/api/v1/travels/:id", async (req, res) => {
+  try {
+    const newTravelItem = await TravelItem.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        travelItem: newTravelItem,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.delete("/api/v1/travels/:id", async (req, res) => {
   try {
     await TravelItem.findByIdAndDelete(req.params.id);
