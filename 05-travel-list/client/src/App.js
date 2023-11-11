@@ -41,7 +41,7 @@ export default function App() {
     <div className="travel">
       <Logo />
       <Form itemsList={itemsList} onAddItem={handleAddItem} />
-      <PackingList itemsList={itemsList} />
+      <PackingList itemsList={itemsList} setItemsList={setItemsList} />
       <Stats itemsList={itemsList} />
     </div>
   );
@@ -102,16 +102,25 @@ function Form({ onAddItem }) {
   );
 }
 
-function PackingList({ itemsList }) {
+function PackingList({ itemsList, setItemsList }) {
+  async function deleteAllItemAPI() {
+    await fetch("http://127.0.0.1:3001/api/v1/travels", {
+      method: "DELETE",
+    });
+  }
+  function handleDeleteAllItem() {
+    deleteAllItemAPI();
+    setItemsList([]);
+  }
   return (
     <div className="packing-list">
       <ul className="packings">
         {itemsList?.map((item) => (
           <Item
             key={item._id || item.id}
-            description={item.description}
-            quantity={item.quantity}
-            packed={item.packed}
+            item={item}
+            itemsList={itemsList}
+            setItemsList={setItemsList}
           />
         ))}
       </ul>
@@ -120,22 +129,37 @@ function PackingList({ itemsList }) {
           <option>sort</option>
           <option value="description">Sort by the tag description</option>
         </select>
-        <button className="btn-clear">Clear list</button>
+        <button onClick={handleDeleteAllItem} className="btn-clear">
+          Clear list
+        </button>
       </div>
     </div>
   );
 }
 
-function Item({ description, quantity, packed }) {
+function Item({ item, itemsList, setItemsList }) {
+  async function deleteItemAPI(itemId) {
+    await fetch(`http://127.0.0.1:3001/api/v1/travels/${itemId}`, {
+      method: "DELETE",
+    });
+  }
+
+  function handleDeleteItem(itemId) {
+    // const newItemsList = itemsList.filter((item) => item._id !== itemId);
+    deleteItemAPI(itemId);
+
+    // setItemsList(newItemsList);
+    setItemsList((items) => items.filter((item) => item._id !== itemId));
+  }
   return (
     <li>
-      {packed ? (
+      {item.packed ? (
         <input type="checkbox" id="checkbox" defaultChecked />
       ) : (
         <input type="checkbox" id="checkbox" />
       )}
-      <label htmlFor="checkbox">{`${quantity} ${description}`}</label>
-      <button>&times;</button>
+      <label htmlFor="checkbox">{`${item.quantity} ${item.description}`}</label>
+      <button onClick={() => handleDeleteItem(item._id)}>&times;</button>
     </li>
   );
 }
