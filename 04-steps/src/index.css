@@ -54,6 +54,8 @@ body {
 }
 
 .step-btn button {
+  display: flex;
+  align-items: center;
   cursor: pointer;
   color: #fff;
   border: 0;

@@ -27,8 +27,8 @@ export default function App() {
       // setStep((s) => s + 1);
       // setStep((s) => s + 1);
       setStep(step + 1);
-      // setStep((step) => step + 1);
-      // console.log(step);
+      setStep((step) => step + 1);
+      console.log(step);
       // ! now the step is 1, but  setStep(step + 1); so step now 2 but it only possible in re-render cycle and to take this value we need to use callback function to take the previous state that 2 not current state is  right
     }
     // * so when we click to the next button it will call this function and call setter function setStep then update step
@@ -40,11 +40,6 @@ export default function App() {
   function handleStepPrevious() {
     // if (step > 1) setStep(step - 1);
     if (step > 1) setStep((s) => s - 1);
-  }
-
-  function handleStepBoth(type) {
-    if (type === "Previous" && step > 1) setStep((s) => s - 1);
-    if (type === "Next" && step < 3) setStep((s) => s + 1);
   }
 
   function handleOptionBtnClick() {
@@ -63,7 +58,6 @@ export default function App() {
         <Buttons
           handleStepPrevious={handleStepPrevious}
           handleStepNext={handleStepNext}
-          handleStepBoth={handleStepBoth}
         />
       </div>
     </React.Fragment>
@@ -88,19 +82,16 @@ function Text({ message }) {
   );
 }
 
-function Buttons({ handleStepPrevious, handleStepNext, handleStepBoth }) {
+function Buttons({ handleStepPrevious, handleStepNext }) {
   return (
     <div className="step-btn">
-      <Button handleClick={handleStepPrevious}>
-        <span>👈 </span>Previous
-      </Button>
-      <Button handleClick={handleStepNext}>
-        Next<span> 👉</span>
-      </Button>
+      <button onClick={handleStepPrevious}>Previous</button>
+      <button
+        onClick={handleStepNext}
+        // onMouseEnter={() => alert("Click you will good")}
+      >
+        Next
+      </button>
     </div>
   );
-}
-
-function Button({ handleClick, children }) {
-  return <button onClick={handleClick}>{children}</button>;
 }
