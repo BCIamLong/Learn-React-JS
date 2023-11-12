@@ -54,12 +54,25 @@ export default function App() {
 
   return (
     <React.Fragment>
+      <Text>
+        <div className="step-btn">
+          <Button handleClick={() => alert("Back to before page")}>
+            <span>🔙</span> Back
+          </Button>
+        </div>
+        <h1>🏁 The steps to master somethings 💎</h1>
+      </Text>
       <button className="option-btn show" onClick={handleOptionBtnClick}>
         {isOpen ? <AiOutlineClose /> : <HiMenuAlt1 />}
       </button>
       <div className={`step-container${isOpen ? "" : " hide"}`}>
         <Numbers step={step} />
-        <Text message={`Step ${step}: ${messages[step - 1]}`} />
+        {/* <Text message={`Step ${step}: ${messages[step - 1]}`} /> */}
+        <Text>
+          <p>
+            Step <span>{step}</span>: {messages[step - 1]}
+          </p>
+        </Text>
         <Buttons
           handleStepPrevious={handleStepPrevious}
           handleStepNext={handleStepNext}
@@ -80,10 +93,11 @@ function Numbers({ step }) {
   );
 }
 
-function Text({ message }) {
+function Text({ message, children }) {
   return (
     <div className="step-text">
-      <p>{message}</p>
+      {/* <p>{message}</p> */}
+      {children}
     </div>
   );
 }
