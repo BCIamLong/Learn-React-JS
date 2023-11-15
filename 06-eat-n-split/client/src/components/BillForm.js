@@ -11,13 +11,19 @@ export default function BillForm({
   onSetPayer,
   onSplitBill,
   bill,
+  payer,
 }) {
   const firstName = curFriend?.name.split(" ")[0];
-  const billValue = bill ? bill.billVal : billVal;
+  // const billValue = bill ? bill.billVal : billVal;
+  const billValue = billVal;
   return (
+    // <div
+    //   className={`form form--bill${billFormOpen ? "" : " hide"}${
+    //     bill ? " disable" : ""
+    //   }`}
+    // >
     <div
-      className={`form form--bill${billFormOpen ? "" : " hide"}${
-        bill ? " disable" : ""
+      className={`form form--bill${billFormOpen ? "" : " hide"}
       }`}
     >
       <h3 className="form-title">Split a bill with {firstName}</h3>
@@ -27,7 +33,7 @@ export default function BillForm({
         </label>
         <input
           type="number"
-          value={bill ? bill.billVal : billVal}
+          value={billVal}
           onChange={(e) => onSetBillVal(e.target.value)}
         />
       </div>
@@ -37,13 +43,13 @@ export default function BillForm({
         </label>
         <input
           type="number"
-          value={bill ? bill.myExpense : myExpense}
+          value={myExpense}
           onChange={(e) =>
             onSetMyExpense(
               +e.target.value > billValue ? billValue : e.target.value
             )
           }
-          max={bill ? bill.billVal : billVal}
+          max={billVal}
           min={0}
         />
       </div>
@@ -51,12 +57,7 @@ export default function BillForm({
         <label>
           <span>🧍‍♀️</span> {firstName}'s expense
         </label>
-        <input
-          type="text"
-          value={bill ? bill.billVal - bill.myExpense : friendExpense}
-          readOnly
-          disabled
-        />
+        <input type="text" value={friendExpense} readOnly disabled />
       </div>
       <div className="form-item">
         <label>
@@ -65,7 +66,7 @@ export default function BillForm({
         <select
           name=""
           id=""
-          value={bill ? bill.payer : "You"}
+          value={payer}
           onChange={(e) => onSetPayer(e.target.value)}
         >
           <option value="you">You</option>

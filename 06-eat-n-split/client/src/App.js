@@ -3,7 +3,13 @@ import BillForm from "./components/BillForm";
 import Button from "./components/Button";
 import FriendForm from "./components/FriendForm";
 import FriendList from "./components/FriendList";
-import { getRandomImg, getFriends, newBill, getBill } from "./api";
+import {
+  getRandomImg,
+  getFriends,
+  newBill,
+  getBill,
+  updatePerson,
+} from "./api";
 
 export default function App() {
   const [friendFormOpen, setFriendFormOpen] = useState(false);
@@ -41,7 +47,19 @@ export default function App() {
       person: curFriend?._id,
     });
     const friendsData = await getFriends();
-    setFriends(friendsData);
+    setFriends(
+      friendsData.map((friend) => {
+        if (friend._id === curFriend._id) {
+          const balance =
+            payer === "you"
+              ? friend.balance + friendExpense
+              : friend.balance + -myExpense;
+          updatePerson(curFriend?._id, { balance });
+          return { ...friend, balance };
+        }
+        return friend;
+      })
+    );
     setBillFormOpen((billFormOpen) => !billFormOpen);
   }
 
@@ -97,6 +115,7 @@ export default function App() {
         onSetPayer={setPayer}
         onSplitBill={handleSplitBill}
         bill={bill}
+        payer={payer}
       />
     </div>
   );

@@ -16,14 +16,14 @@ export default function FriendItem({
       <div className="user-info">
         <p className="name">{friend.name}</p>
 
-        {friend.bill?.length ? (
-          friend?.bill[0]?.payer === "you" ? (
+        {friend.balance !== 0 ? (
+          friend.balance > 0 ? (
             <p className="description no-owe">
-              {friend.name} owes you ${friend?.bill[0]?.owe}$
+              {friend.name} owes you ${friend.balance}$
             </p>
           ) : (
             <p className="description owe">
-              You owe {friend.name} {friend?.bill[0]?.owe}$
+              You owe {friend.name} {Math.abs(friend.balance)}$
             </p>
           )
         ) : (

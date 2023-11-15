@@ -44,6 +44,10 @@ const personSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  balance: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const imageSchema = new mongoose.Schema({
