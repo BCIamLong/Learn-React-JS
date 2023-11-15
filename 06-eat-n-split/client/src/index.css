@@ -1,0 +1,185 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,700;1,300&family=Roboto:wght@400;500;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  line-height: 1;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+  color: #343a40;
+}
+
+.container {
+  max-width: 84rem;
+  margin: 0 auto;
+  padding-top: 8rem;
+}
+
+.flex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.sidebar {
+  padding: 0 2.4rem;
+  width: 40rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  /* gap: 2.4rem; */
+  list-style: none;
+  margin-bottom: 2.4rem;
+}
+
+.item {
+  display: flex;
+  width: 100%;
+  gap: 1.2rem;
+  align-items: center;
+  border-radius: 0.6rem;
+  padding: 1.2rem 1.6rem;
+}
+
+.item:nth-child(even) {
+  background-color: #ffe8cc;
+}
+
+.item img {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.name {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.owe {
+  color: #c92a2a;
+}
+
+.no-owe {
+  color: #5c940d;
+}
+
+.btn {
+  margin-right: 0;
+  margin-left: auto;
+  font-size: 1.2rem;
+  border: 0;
+  padding: 0.6rem 1.2rem;
+  border-radius: 1rem;
+  background-color: #f59f00;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: #f08c00;
+}
+
+.add-form {
+  width: 100%;
+}
+
+.btn--add {
+  /* !the trick margin-left: auto and margin-right: 0 not working with inline-block in the case in the parent element not have any other element and only the inline-element itself */
+  display: block;
+  margin-top: 2rem;
+  /* width: 51% !important; */
+}
+
+/* .form--bill .btn--add {
+  width: 51%;
+} */
+
+.form {
+  background-color: #ffe8cc;
+  padding: 1.2rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+
+.form .btn--add {
+  /* width: 63%; */
+  width: 51%;
+}
+
+.form-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.form-item select,
+.form-item label,
+.form-item input {
+  width: 100%;
+}
+
+/* .form-item input {
+  text-align: center;
+} */
+
+.form-item input,
+.form-item select {
+  border: 0.2rem solid #ffd8a8;
+  border-radius: 0.3rem;
+  padding: 0.4rem 0.8rem;
+  text-align: center;
+}
+
+.form-item input:focus,
+.form-item select:focus {
+  outline: 0.2rem solid #ffd8a8;
+}
+
+.hide {
+  display: none;
+}
+
+.form--bill {
+  width: 44rem;
+  padding: 2.4rem;
+}
+
+.form-title {
+  font-size: 2.4rem;
+  margin-bottom: 2.4rem;
+  text-transform: uppercase;
+}
+
+.disable {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.selected {
+  background-color: #e9fac8 !important;
+}

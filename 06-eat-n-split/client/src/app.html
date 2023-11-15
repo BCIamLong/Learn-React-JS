@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>App</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div class="container flex">
+      <div class="sidebar">
+        <ul class="list">
+          <li class="item">
+            <img
+              src="https://thumbs.dreamstime.com/b/front-view-beautiful-female-face-perfect-skin-front-view-beautiful-female-face-perfect-skin-over-white-background-143563838.jpg"
+              alt=""
+            />
+            <div class="user-info">
+              <p class="name">Laura</p>
+              <p class="description">You owe clark 7$</p>
+            </div>
+            <button class="btn">Select</button>
+          </li>
+          <li class="item">
+            <img
+              src="https://thumbs.dreamstime.com/b/front-view-beautiful-female-face-perfect-skin-front-view-beautiful-female-face-perfect-skin-over-white-background-143563838.jpg"
+              alt=""
+            />
+            <div class="user-info">
+              <p class="name">Laura</p>
+              <p class="description">You owe clark 7$</p>
+            </div>
+            <button class="btn">Select</button>
+          </li>
+        </ul>
+        <button class="btn btn--add">Add friend</button>
+        <div class="add-form hide">
+          <form action="" class="form">
+            <div class="form-item">
+              <label><span>🙋‍♂️</span> Friend name</label>
+              <input type="text" />
+            </div>
+            <div class="form-item">
+              <label><span>💶</span> Image URL</label>
+              <input type="text" />
+            </div>
+            <button class="btn btn--add">Add</button>
+          </form>
+          <button class="btn btn--add">Close</button>
+        </div>
+      </div>
+
+      <div class="form form--bill hide">
+        <h3 class="form-title">Split a bill with Sara</h3>
+        <div class="form-item">
+          <label><span>💲</span> Bill value</label>
+          <input type="text" />
+        </div>
+        <div class="form-item">
+          <label><span>🧍‍♂️</span> Your expense</label>
+          <input type="text" />
+        </div>
+        <div class="form-item">
+          <label><span>🧍‍♀️</span> Sara's expense</label>
+          <input type="text" />
+        </div>
+        <div class="form-item">
+          <label><span>🤑</span> Who is paying the bill?</label>
+          <select name="" id="">
+            <option value="you">You</option>
+            <option value="friend">Sara</option>
+          </select>
+        </div>
+        <button class="btn btn--add">Split bill</button>
+      </div>
+    </div>
+  </body>
+</html>

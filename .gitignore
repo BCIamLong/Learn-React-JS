@@ -6,6 +6,10 @@
 04-steps/node_modules/
 05-travel-list/client/node_modules/
 05-travel-list/server/node_modules/
+# 06-eat-n-split/client/node_modules/
+# 06-eat-n-split/server/node_modules/
+# ignore all the folders and files start with name node_module
+node_modules*
 *.env
 
 /.pnp
