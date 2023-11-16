@@ -1,32 +1,15 @@
-import { useState, useEffect } from "react";
-import { getMovies } from "../api/movie";
-import { getWatched, getWatchedStats } from "../api/watched";
+// import { useState, useEffect } from "react";
+// import { getMovies } from "../api/movie";
+// import { getWatched, getWatchedStats } from "../api/watched";
 // import ListBox from "./ListBox";
-import WatchedBox from "./WatchedBox";
+// import WatchedBox from "./WatchedBox";
+// import Box from "./Box";
+// import List from "./List";
 
-export default function Main({ onSetMovies, children }) {
-  const [watched, setWatched] = useState();
-  const [stats, setStats] = useState();
-
-  useEffect(
-    () => async () => {
-      const moviesData = await getMovies();
-      const watchedData = await getWatched();
-      const statsData = await getWatchedStats();
-      // console.log(statsData);
-      onSetMovies(moviesData);
-      setWatched(watchedData);
-      setStats(statsData[0]);
-    },
-    [onSetMovies]
-  );
-
+export default function Main({ children }) {
   return (
     <main className="main">
-      <div className="grid grid--2-cols grid--cg-sm">
-        {children}
-        <WatchedBox stats={stats} data={watched} />
-      </div>
+      <div className="grid grid--2-cols grid--cg-sm">{children}</div>
     </main>
   );
 }
