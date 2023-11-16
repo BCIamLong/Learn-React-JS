@@ -1,15 +1,15 @@
 import { useState } from "react";
 import Button from "./Button";
-import List from "./List";
+// import List from "./List";
 
-export default function ListBox({ data }) {
+export default function ListBox({ children }) {
   const [isMoviesOpen, setIsMoviesOpen] = useState(true);
   return (
     <div className="box">
       <Button onBtnClick={setIsMoviesOpen}>
         {isMoviesOpen ? <span>&#8211;</span> : "+"}
       </Button>
-      {isMoviesOpen && <List type="movies" data={data} />}
+      {isMoviesOpen && children}
     </div>
   );
 }

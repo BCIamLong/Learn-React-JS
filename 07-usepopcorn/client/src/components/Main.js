@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { getMovies } from "../api/movie";
 import { getWatched, getWatchedStats } from "../api/watched";
-import ListBox from "./ListBox";
+// import ListBox from "./ListBox";
 import WatchedBox from "./WatchedBox";
 
-export default function Main({ movies, onSetMovies }) {
+export default function Main({ onSetMovies, children }) {
   const [watched, setWatched] = useState();
   const [stats, setStats] = useState();
 
@@ -24,7 +24,7 @@ export default function Main({ movies, onSetMovies }) {
   return (
     <main className="main">
       <div className="grid grid--2-cols grid--cg-sm">
-        <ListBox data={movies} />
+        {children}
         <WatchedBox stats={stats} data={watched} />
       </div>
     </main>

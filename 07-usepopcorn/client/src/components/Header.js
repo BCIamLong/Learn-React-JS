@@ -1,13 +1,9 @@
 import Heading from "./Heading";
-import Result from "./Result";
-import SearchBox from "./SearchBox";
-
-export default function Header({ query, onSetQuery, movies }) {
+export default function Header({ children }) {
   return (
     <header className="header">
       <Heading />
-      <SearchBox query={query} onSetQuery={onSetQuery} />
-      <Result movies={movies} />
+      {children}
     </header>
   );
 }
