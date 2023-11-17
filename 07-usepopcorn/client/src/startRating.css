@@ -1,0 +1,24 @@
+.stars {
+  display: flex;
+  /* gap: 0.3rem; */
+  font-size: 1.6rem;
+  /* align-items: center; */
+}
+
+.star {
+  cursor: pointer;
+
+  color: #ffd43b;
+  /* stroke-width: 5rem; */
+  /* stroke-linejoin: miter; */
+  /* margin-right: 0.2rem; */
+}
+
+.fill {
+  fill: #ffd43b;
+}
+
+.cur-rating {
+  color: #ffd43b;
+  margin-left: 0.8rem;
+}

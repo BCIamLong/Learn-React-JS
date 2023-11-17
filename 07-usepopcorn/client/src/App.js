@@ -36,12 +36,14 @@ function App() {
         <Result movies={movies} />
       </Header>
       <Main onSetMovies={setMovies} onSetWatched={setWatched}>
-        <Box element={<List type="movies" data={movies} />} />
-        {/* <List type="movies" data={movies} /> */}
-        {/* </Box> */}
-        <Box element={<List type="watched" data={watched} stats={stats} />} />
-        {/* <List type="watched" data={watched} stats={stats} />
-        </Box> */}
+        {/* <Box element={<List type="movies" data={movies} />} /> */}
+        <Box>
+          <List type="movies" data={movies} />
+        </Box>
+        {/* <Box element={<List type="watched" data={watched} stats={stats} />} /> */}
+        <Box>
+          <List type="watched" data={watched} stats={stats} />
+        </Box>
       </Main>
     </div>
   );
