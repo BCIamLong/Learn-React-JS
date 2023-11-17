@@ -1,11 +1,23 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import "../startRating.css";
 import { FaRegStar, FaStar } from "react-icons/fa";
+
+StarRating.propTypes = {
+  // numStars: PropTypes.number.isRequired,
+  numStars: PropTypes.number,
+  color: PropTypes.string,
+  size: PropTypes.number,
+  className: PropTypes.string,
+  message: PropTypes.array,
+  defaultRating: PropTypes.number,
+  onSetRating: PropTypes.func,
+};
 
 export default function StarRating({
   numStars = 10,
   color = "#ffd43b",
-  size = "12",
+  size = 12,
   className = "",
   message = [],
   defaultRating = 0,

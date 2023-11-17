@@ -20,7 +20,7 @@ root.render(
     <StarRating
       numStars={5}
       color="red"
-      size="2.4rem"
+      size={24}
       message={["Terrible", "Bad", "Okay", "Good", "Amazing"]}
       defaultRating={3}
     />
