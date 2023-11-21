@@ -105,6 +105,7 @@ export default function App() {
         />
       </div>
       <BillForm
+        key={curFriend?._id}
         billFormOpen={billFormOpen}
         curFriend={curFriend}
         onSetBillVal={setBillVal}
