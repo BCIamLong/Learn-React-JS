@@ -19,10 +19,11 @@ const content = [
   },
 ];
 
-console.log(<Tabbed content={content} />);
-console.log(App());
+// console.log(<Tabbed content={content} />);
+// console.log(App());
 
 export default function App() {
+  console.log("RENDER APP");
   return (
     <div className="container">
       <Tabbed content={content} />

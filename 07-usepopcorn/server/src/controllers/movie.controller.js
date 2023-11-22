@@ -1,9 +1,10 @@
 import { movieService } from "../services/index.js";
+
 const { getMovies } = movieService;
 
 const getMoviesList = async (req, res) => {
   try {
-    const movies = await getMovies();
+    const movies = await getMovies(req.query);
 
     res.json({
       status: "success",

@@ -177,3 +177,23 @@ body {
   display: flex;
   gap: 1.2rem;
 }
+
+.loader {
+  margin-top: 2.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: 500;
+  letter-spacing: 0.3rem;
+}
+
+.error {
+  margin-top: 2.4rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  font-weight: 500;
+  /* letter-spacing: 0.0rem; */
+  color: #c92a2a;
+  line-height: 1.5;
+}
