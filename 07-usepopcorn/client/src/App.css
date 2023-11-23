@@ -90,9 +90,10 @@ body {
 .box {
   padding: 1.2rem 0;
   background-color: #343a40;
-  border-radius: 0.6rem;
+  border-radius: 1.2rem;
   height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 .watched-movies {
@@ -115,6 +116,7 @@ body {
   cursor: pointer;
   padding: 1.2rem 2.4rem;
   border-bottom: 0.1rem solid #495057;
+  transition: all 0.4s;
 }
 
 .item:hover {
@@ -196,4 +198,94 @@ body {
   /* letter-spacing: 0.0rem; */
   color: #c92a2a;
   line-height: 1.5;
+}
+
+/* Details box */
+.detail {
+  margin-top: -1.2rem;
+}
+
+.info-box {
+  display: flex;
+  background-color: #495057;
+}
+
+.info-box img {
+  width: 33%;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2.4rem;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  color: #ced4da;
+}
+
+.heading {
+  line-height: 1.2;
+}
+
+.description-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  padding: 3.6rem;
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2.4rem;
+  background-color: #495057;
+  width: 100%;
+  border-radius: 0.6rem;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  font-size: 1.4rem;
+  line-height: 1.5;
+  color: #dee2e6;
+}
+
+.description p:first-child {
+  font-style: italic;
+}
+
+.btn--back {
+  right: 88%;
+  /* left: 0 !important; */
+  /* top: 0; */
+  background-color: #fff;
+  color: #212529;
+  /* font-weight: 700; */
+  font-size: 2.2rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  box-shadow: 0 2.4rem 4.8rem 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+.btn--add {
+  cursor: pointer;
+  border: none;
+  background-color: #7048e8;
+  color: #fff;
+  width: 100%;
+  padding: 0.6rem 0;
+  font-size: 1.4rem;
+  line-height: 1.6;
+
+  font-weight: 600;
+  border-radius: 3rem;
+  transition: all 0.3s;
+}
+
+.btn--add:hover {
+  background-color: #7950f2;
 }

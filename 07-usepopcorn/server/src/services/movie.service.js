@@ -4,7 +4,10 @@ import { APIFeatures } from "../utils/index.js";
 const getMovies = async (queryStr) => {
   try {
     const count = await Movie.countDocuments();
-    const apiFeatures = new APIFeatures(Movie.find(), queryStr)
+    const apiFeatures = new APIFeatures(
+      Movie.find().select("title year poster"),
+      queryStr
+    )
       .filter()
       .sort()
       .select()
@@ -12,6 +15,16 @@ const getMovies = async (queryStr) => {
 
     const movies = await apiFeatures.query;
     return movies;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const getMovie = async (id) => {
+  try {
+    const movie = await Movie.findById(id);
+
+    return movie;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -37,4 +50,4 @@ const searchMovies = async (title) => {
   }
 };
 
-export default { getMovies, searchMovies };
+export default { getMovies, searchMovies, getMovie };

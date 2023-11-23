@@ -1,6 +1,9 @@
-export default function Button({ onBtnClick, children }) {
+export default function Button({ type, onBtnClick, children }) {
   return (
-    <button className="btn" onClick={() => onBtnClick((isOpen) => !isOpen)}>
+    <button
+      className={`btn ${type === "back" ? "btn--back" : ""}`}
+      onClick={() => onBtnClick((isOpen) => !isOpen)}
+    >
       {children}
     </button>
   );

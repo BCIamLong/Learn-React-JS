@@ -13,6 +13,34 @@ const movieSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  runtime: {
+    type: Number,
+    required: true,
+  },
+  categories: {
+    type: Array,
+    required: true,
+  },
+  imdbRating: {
+    type: Number,
+    default: 8,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  starring: {
+    type: Array,
+    required: true,
+  },
+  directed: {
+    type: Array,
+    required: true,
+  },
+  createdAt: {
+    type: String,
+    required: true,
+  },
 });
 
 const Movie = mongoose.model("Movie", movieSchema);

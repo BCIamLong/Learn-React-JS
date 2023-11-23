@@ -2,16 +2,73 @@
   {
     "title": "Inception",
     "year": "2010",
-    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg"
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    "runtime": 148,
+    "categories": ["Action", "Adventure", "Sci-Fi"],
+    "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster.",
+    "starring": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Elliot Page"],
+    "directed": ["Christopher Nolan"],
+    "imdbRating": 8.3,
+    "createdAt": "2010-11-20"
+  },
+  {
+    "title": "Inception: The Cobol Job",
+    "year": "2010",
+    "poster": "https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_SX300.jpg",
+    "runtime": 15,
+    "categories": ["Action", "Short", "Sci-Fi"],
+    "description": "This Inception prequel unfolds courtesy of a beautiful Motion Comic, and explains how Cobb, Arthur and Nash were enlisted by Cobol Engineering. Diehard fans of the film will be especially interested in this one.",
+    "starring": ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Lukas Haas"],
+    "directed": ["Ian Kirby"],
+    "imdbRating": 8.2,
+    "createdAt": "2010-03-20"
   },
   {
     "title": "The Matrix",
     "year": "1999",
-    "poster": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg"
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "runtime": 136,
+    "categories": ["Action", "Sci-Fi"],
+    "description": "When a beautiful stranger leads computer hacker Neo to a forbidding underworld, he discovers the shocking truth--the life he knows is the elaborate deception of an evil cyber-intelligence.",
+    "starring": ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+    "directed": ["Lana Wachowski", "Lilly Wachowski"],
+    "imdbRating": 8.7,
+    "createdAt": "1999-09-20"
+  },
+  {
+    "title": "The Matrix Reloaded",
+    "year": "2003 ",
+    "poster": "https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX300.jpg",
+    "runtime": 138,
+    "categories": ["Action", "Sci-Fi"],
+    "description": "Freedom fighters Neo, Trinity and Morpheus continue to lead the revolt against the Machine Army, unleashing their arsenal of extraordinary skills and weaponry against the systematic forces of repression and exploitation.",
+    "starring": ["Keanu Reeves", "Laurence Fishburne", "Carrie-Anne Moss"],
+    "directed": ["Lana Wachowski", "Lilly Wachowski"],
+    "imdbRating": 7.2,
+    "createdAt": "2003-11-20"
   },
   {
     "title": "Parasite",
     "year": "2019",
-    "poster": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg"
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    "runtime": 148,
+    "categories": ["Drama", "Thriller"],
+    "description": "Greed and class discrimination threaten the newly formed symbiotic relationship between the wealthy Park family and the destitute Kim clan.",
+    "starring": ["Song Kang-ho", "Lee Sun-kyun", "Cho Yeo-jeong"],
+    "directed": ["Bong Joon Ho"],
+    "imdbRating": 7.1,
+    "createdAt": "2019-11-20"
+  },
+  {
+    "title": "Parasite Eve",
+    "year": "1997 ",
+    "poster": "https://m.media-amazon.com/images/M/MV5BYWZjMjk3ZTItODQ2ZC00NTY5LWE0ZDYtZTI3MjcwN2Q5NTVkXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_SX300.jpg",
+    "runtime": 120,
+    "categories": ["Drama", "Horror", "Romance"],
+    "description": "A scientist realizes his dead wife is an organization of mitochondria bent on making a new species that will wipe out humanity.",
+    "starring": ["Hiroshi Mikami", "Riona Hazuki", "Tomoko Nakajima"],
+    "directed": ["Masayuki Ochiai"],
+    "createdAt": "1997-11-20",
+    "imdbRating": 5
   }
 ]

@@ -1,13 +1,11 @@
-import Item from "./Item";
+// import Item from "./Item";
 import Stats from "./Stats";
 
-export default function List({ type, data, stats }) {
+export default function List({ type, stats, children }) {
   return (
     <ul className="list">
       {type === "watched" && <Stats stats={stats} />}
-      {data?.map((dt) => (
-        <Item type={type} item={dt} key={dt._id} />
-      ))}
+      {children}
     </ul>
   );
 }

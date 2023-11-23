@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getMovies } from "./api/movie";
+import { getMovieDetail, getMovies } from "./api/movie";
 import { getWatched, getWatchedStats } from "./api/watched";
 import "./App.css";
 import Header from "./components/Header";
@@ -11,6 +11,8 @@ import Box from "./components/Box";
 import List from "./components/List";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
+import Detail from "./components/Detail";
+import Item from "./components/Item";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -19,30 +21,51 @@ function App() {
   const [stats, setStats] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  // const [selectedId, setSelectedId] = useState(null);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [movieRating, setMovieRating] = useState(0);
 
   // (async () => {
   //   const moviesData = await getMovies();
   //   setMovies(moviesData);
   // })();
+  // useEffect(() => console.log("C"));
+  // useEffect(() => console.log("B"), []);
+  // console.log("A");
 
   useEffect(
     () => async () => {
       // const moviesData = await getMovies();
       const watchedData = await getWatched();
       const statsData = await getWatchedStats();
-      // console.log(statsData);
-      // setMovies(moviesData);
+      // console.log(selectedId);
+      // if (selectedId) {
+      //   const selectedMovie = await getMovieDetail(selectedId);
+      //   // console.log(statsData);
+      //   // setMovies(moviesData);
+      //   setSelectedMovie(selectedMovie);
+      // }
       setWatched(watchedData);
       setStats(statsData[0]);
     },
     []
   );
 
+  async function handleItemClick(id) {
+    if (!id) return;
+    if (id === selectedMovie?._id) return setSelectedMovie(null);
+    const movie = await getMovieDetail(id);
+    setSelectedMovie(movie);
+    // const movie = await getMovieDetail(id);
+    // setSelectedMovie((selectedMovie) => {
+    //   return movie;
+    // });
+  }
   async function handleQuery(q) {
     setError("");
     setQuery(q);
     setIsLoading(true);
-    if (!q) {
+    if (!q || q.length < 3) {
       setIsLoading(false);
       return setMovies([]);
     }
@@ -73,12 +96,34 @@ function App() {
           {isLoading ? (
             <Loader />
           ) : error ? null : (
-            <List type="movies" data={movies} />
+            <List>
+              {movies?.map((mv) => (
+                <Item
+                  type="movies"
+                  item={mv}
+                  key={mv._id}
+                  onItemClick={handleItemClick}
+                />
+              ))}
+            </List>
           )}
         </Box>
         {/* <Box element={<List type="watched" data={watched} stats={stats} />} /> */}
         <Box>
-          <List type="watched" data={watched} stats={stats} />
+          {selectedMovie ? (
+            <Detail
+              item={selectedMovie}
+              onCloseDetail={setSelectedMovie}
+              onSetRating={setMovieRating}
+              rating={movieRating}
+            />
+          ) : (
+            <List stats={stats} type="watched">
+              {watched?.map((wc) => (
+                <Item item={wc} key={wc._id} />
+              ))}
+            </List>
+          )}
         </Box>
       </Main>
     </div>

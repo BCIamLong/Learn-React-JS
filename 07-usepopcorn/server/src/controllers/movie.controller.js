@@ -1,6 +1,6 @@
 import { movieService } from "../services/index.js";
 
-const { getMovies } = movieService;
+const { getMovies, getMovie } = movieService;
 
 const getMoviesList = async (req, res) => {
   try {
@@ -20,4 +20,22 @@ const getMoviesList = async (req, res) => {
   }
 };
 
-export default { getMoviesList };
+const getMovieDetail = async (req, res) => {
+  try {
+    const movie = await getMovie(req.params.id);
+
+    res.json({
+      status: "success",
+      data: {
+        movie,
+      },
+    });
+  } catch (err) {
+    res.status(404).json({
+      status: "fail",
+      message: err.message,
+    });
+  }
+};
+
+export default { getMoviesList, getMovieDetail };

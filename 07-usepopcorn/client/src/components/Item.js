@@ -1,6 +1,6 @@
-export default function Item({ type, item }) {
+export default function Item({ type, item, onItemClick }) {
   return (
-    <li className="item">
+    <li className="item" onClick={() => onItemClick(item._id)}>
       <img className="image" src={item.poster} alt={item.title} />
       <div className="item-info">
         <p className="name">{item.title}</p>
