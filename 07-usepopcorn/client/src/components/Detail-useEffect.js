@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button";
 import StarRating from "./StarRating";
 import { getMovieDetail } from "../api/movie";
-import { getWatchedDetail } from "../api/watched";
+// import { getWatchedDetail } from "../api/watched";
 import Loader from "./Loader";
 
 export default function Detail({
@@ -12,9 +12,13 @@ export default function Detail({
   rating,
   onAddToList,
   setMovieRating,
+  watched,
 }) {
   const [movieDetail, setMovieDetail] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  // const [rated, setRated] = useState(null);
+  const ratedTest = watched.find((wc) => wc.movie === selectedId);
+  const rated = ratedTest ? ratedTest.userRating : 0;
   const movieDate = new Date(movieDetail?.createdAt).toLocaleDateString(
     "en-US",
     {
@@ -36,12 +40,14 @@ export default function Detail({
   // console.log(data);
   useEffect(() => {
     async function getMovie() {
+      setMovieRating(0);
       setIsLoading(true);
       // if (!selectedId) return;
       const movie = await getMovieDetail(selectedId);
-      const watchedCheck = await getWatchedDetail(selectedId);
-      setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
-
+      // const watchedCheck = await getWatchedDetail(selectedId);
+      // setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
+      // setRated(watchedCheck ? watchedCheck.userRating : null);
+      // console.log("ok");
       setMovieDetail(movie);
       setIsLoading(false);
     }
@@ -72,17 +78,21 @@ export default function Detail({
         </div>
       </div>
       <div className="description-box">
-        <div className="rating">
+        <div className={`rating ${rated ? "disable" : ""}`}>
           <StarRating
             key={movieDetail._id}
             size={24}
             onSetRating={onSetRating}
-            defaultRating={rating ? rating : 0}
+            defaultRating={rated ? rated : rating}
           />
-          {rating ? (
+          {rating && !rated ? (
             <button className="btn--add" onClick={() => onAddToList(data)}>
               + Add to list
             </button>
+          ) : rated ? (
+            <p className="rated">
+              You rated this movie {rated} <span>⭐</span>
+            </p>
           ) : null}
         </div>
         <div className="description">

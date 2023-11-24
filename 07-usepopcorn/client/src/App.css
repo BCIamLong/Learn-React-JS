@@ -307,3 +307,12 @@ body {
 .btn--close:hover {
   background-color: #c92a2a;
 }
+
+.disable {
+  pointer-events: none;
+}
+
+.rated {
+  font-size: 1.6rem;
+  font-weight: 500;
+}

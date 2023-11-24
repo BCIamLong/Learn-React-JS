@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { getMovieDetail, getMovies } from "./api/movie";
+import { getMovies } from "./api/movie";
 import {
   createWatched,
   deleteWatched,
   getWatched,
-  getWatchedDetail,
+  // getWatchedDetail,
   getWatchedStats,
 } from "./api/watched";
 import "./App.css";
@@ -40,8 +40,9 @@ function App() {
   // useEffect(() => console.log("B"), []);
   // console.log("A");
 
-  useEffect(
-    () => async () => {
+  useEffect(() => {
+    // console.log("ok");
+    async function loadData() {
       // const moviesData = await getMovies();
       const watchedData = await getWatched();
       const statsData = await getWatchedStats();
@@ -54,13 +55,15 @@ function App() {
       // }
       setWatched(watchedData);
       setStats(statsData[0]);
-    },
-    []
-  );
+    }
+    loadData();
+  }, []);
 
   async function handleRemoveItem(id) {
     await deleteWatched(id);
+    const statsData = await getWatchedStats();
     setWatched((watched) => watched.filter((wc) => wc._id !== id));
+    setStats(statsData[0]);
   }
 
   async function handleAddToList(data) {
@@ -145,6 +148,7 @@ function App() {
               rating={movieRating}
               onAddToList={handleAddToList}
               setMovieRating={setMovieRating}
+              watched={watched}
             />
           ) : (
             <List stats={stats} type="watched">
