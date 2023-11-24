@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "./App-useEffect";
 // import StarRating from "./components/StarRating";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -9,6 +9,32 @@ const getWatched = async () => {
   }
 };
 
+const getAWatched = async (id) => {
+  try {
+    const watched = await Watched.findOne({ movie: id });
+    return watched;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const createWatched = async (data) => {
+  try {
+    const newWatched = await Watched.create(data);
+    return newWatched;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+const removeWatched = async (id) => {
+  try {
+    await Watched.findByIdAndDelete(id);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
 const getStats = async () => {
   try {
     const stats = await Watched.aggregate([
@@ -27,4 +53,10 @@ const getStats = async () => {
     throw new Error(error.message);
   }
 };
-export default { getWatched, getStats };
+export default {
+  getWatched,
+  getStats,
+  createWatched,
+  removeWatched,
+  getAWatched,
+};

@@ -25,6 +25,11 @@ const watchedSchema = new mongoose.Schema({
     type: Number,
     default: 4.5,
   },
+  movie: {
+    type: mongoose.Schema.ObjectId,
+    ref: "Movie",
+    required: true,
+  },
 });
 
 const Watched = mongoose.model("Watched", watchedSchema);

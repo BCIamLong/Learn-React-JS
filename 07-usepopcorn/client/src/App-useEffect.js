@@ -17,7 +17,7 @@ import Box from "./components/Box";
 import List from "./components/List";
 import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
-import Detail from "./components/Detail";
+import Detail from "./components/Detail-useEffect";
 import Item from "./components/Item";
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   // const [selectedId, setSelectedId] = useState(null);
-  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
   const [movieRating, setMovieRating] = useState(0);
   // const [selectedWatched, setSelectedWatched] = useState(null);
 
@@ -68,18 +68,20 @@ function App() {
     const statsData = await getWatchedStats();
     setWatched((watched) => [...watched, newWatched]);
     setStats(statsData[0]);
-    setSelectedMovie(null);
+    setSelectedId(null);
   }
 
   async function handleItemClick(id) {
     if (!id) return;
-    if (id === selectedMovie?._id) return setSelectedMovie(null);
-    const movie = await getMovieDetail(id);
-    const watchedCheck = await getWatchedDetail(id);
-    console.log(watchedCheck);
-    setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+    // if (id === selectedMovie?._id) return setSelectedMovie(null);
+    // else setSelectedMovie(true);
+    // const movie = await getMovieDetail(id);
+    // const watchedCheck = await getWatchedDetail(id);
+    // console.log(watchedCheck);
+    // setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
 
-    setSelectedMovie(movie);
+    // setSelectedMovie(movie);
     // const movie = await getMovieDetail(id);
     // setSelectedMovie((selectedMovie) => {
     //   return movie;
@@ -134,13 +136,15 @@ function App() {
         </Box>
         {/* <Box element={<List type="watched" data={watched} stats={stats} />} /> */}
         <Box>
-          {selectedMovie ? (
+          {selectedId ? (
             <Detail
-              item={selectedMovie}
-              onCloseDetail={setSelectedMovie}
+              // key={selectedId}
+              selectedId={selectedId}
+              onCloseDetail={setSelectedId}
               onSetRating={setMovieRating}
               rating={movieRating}
               onAddToList={handleAddToList}
+              setMovieRating={setMovieRating}
             />
           ) : (
             <List stats={stats} type="watched">
