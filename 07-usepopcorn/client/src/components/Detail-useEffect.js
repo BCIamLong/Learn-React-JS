@@ -37,6 +37,7 @@ export default function Detail({
     userRating: rating,
     movie: movieDetail._id,
   };
+
   // console.log(data);
   useEffect(() => {
     async function getMovie() {
@@ -58,6 +59,10 @@ export default function Detail({
   useEffect(() => {
     if (!movieDetail.title) return;
     document.title = `MOVIE | ${movieDetail.title}`;
+
+    return () => {
+      document.title = "usePopcorn";
+    };
   }, [movieDetail]);
 
   return isLoading ? (

@@ -59,6 +59,32 @@ function App() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    const controller = new AbortController();
+    setError("");
+    setIsLoading(true);
+    if (!query || query.length < 3) {
+      setIsLoading(false);
+      return setMovies([]);
+    }
+    async function searchMovies() {
+      try {
+        const movies = await getMovies(query, controller);
+        if (movies?.length === 0) throw new Error("No movies data found!");
+
+        setMovies(movies);
+      } catch (err) {
+        // console.log(err.message);
+        // setIsLoading(false);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    searchMovies();
+    return () => controller.abort();
+  }, [query]);
+
   async function handleRemoveItem(id) {
     await deleteWatched(id);
     const statsData = await getWatchedStats();
@@ -91,29 +117,11 @@ function App() {
     // });
   }
   async function handleQuery(q) {
-    setError("");
     setQuery(q);
-    setIsLoading(true);
-    if (!q || q.length < 3) {
-      setIsLoading(false);
-      return setMovies([]);
-    }
-    try {
-      const movies = await getMovies(q);
-      if (movies.length === 0) throw new Error("No movies data found!");
-
-      setMovies(movies);
-    } catch (err) {
-      // console.log(err.message);
-      // setIsLoading(false);
-      setError(err.message);
-    } finally {
-      setIsLoading(false);
-    }
   }
 
   function handleCloseDetail() {
-    document.title = "usePopcorn";
+    // document.title = "usePopcorn";
     setSelectedId(null);
   }
 
