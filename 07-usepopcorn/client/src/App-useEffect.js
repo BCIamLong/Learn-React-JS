@@ -40,6 +40,18 @@ function App() {
   // useEffect(() => console.log("B"), []);
   // console.log("A");
 
+  // useEffect(() => {
+  //   function globalKeyPress(e) {
+  //     if (e.key === "Escape") {
+  //       setSelectedId(null);
+  //       console.log("CLOSING");
+  //     }
+  //   }
+  //   document.addEventListener("keydown", globalKeyPress);
+
+  //   return () => document.removeEventListener("keydown", globalKeyPress);
+  // }, []);
+
   useEffect(() => {
     // console.log("ok");
     async function loadData() {
@@ -118,6 +130,7 @@ function App() {
   }
   async function handleQuery(q) {
     setQuery(q);
+    setSelectedId(null);
   }
 
   function handleCloseDetail() {
@@ -162,6 +175,7 @@ function App() {
               onAddToList={handleAddToList}
               setMovieRating={setMovieRating}
               watched={watched}
+              setSelectedId={setSelectedId}
             />
           ) : (
             <List stats={stats} type="watched">

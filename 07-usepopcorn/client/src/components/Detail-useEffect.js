@@ -13,6 +13,7 @@ export default function Detail({
   onAddToList,
   setMovieRating,
   watched,
+  setSelectedId,
 }) {
   const [movieDetail, setMovieDetail] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +38,18 @@ export default function Detail({
     userRating: rating,
     movie: movieDetail._id,
   };
+
+  useEffect(() => {
+    function globalKeyPress(e) {
+      if (e.key === "Escape") {
+        setSelectedId(null);
+        // console.log("CLOSING");
+      }
+    }
+    document.addEventListener("keydown", globalKeyPress);
+
+    return () => document.removeEventListener("keydown", globalKeyPress);
+  }, [setSelectedId]);
 
   // console.log(data);
   useEffect(() => {
