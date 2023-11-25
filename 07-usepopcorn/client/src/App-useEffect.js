@@ -112,6 +112,11 @@ function App() {
     }
   }
 
+  function handleCloseDetail() {
+    document.title = "usePopcorn";
+    setSelectedId(null);
+  }
+
   return (
     <div className="container">
       <Header query={query}>
@@ -143,7 +148,7 @@ function App() {
             <Detail
               // key={selectedId}
               selectedId={selectedId}
-              onCloseDetail={setSelectedId}
+              onCloseDetail={handleCloseDetail}
               onSetRating={setMovieRating}
               rating={movieRating}
               onAddToList={handleAddToList}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Button from "./Button";
+// import Button from "./Button";
 import StarRating from "./StarRating";
 import { getMovieDetail } from "../api/movie";
 // import { getWatchedDetail } from "../api/watched";
@@ -44,6 +44,7 @@ export default function Detail({
       setIsLoading(true);
       // if (!selectedId) return;
       const movie = await getMovieDetail(selectedId);
+      // document.title = `MOVIE: ${movie.title}`;
       // const watchedCheck = await getWatchedDetail(selectedId);
       // setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
       // setRated(watchedCheck ? watchedCheck.userRating : null);
@@ -53,6 +54,12 @@ export default function Detail({
     }
     getMovie();
   }, [selectedId, setMovieRating]);
+
+  useEffect(() => {
+    if (!movieDetail.title) return;
+    document.title = `MOVIE | ${movieDetail.title}`;
+  }, [movieDetail]);
+
   return isLoading ? (
     <Loader />
   ) : (
@@ -60,9 +67,13 @@ export default function Detail({
       {/* <button className="btn btn--back" onClick={() => onSetItem(null)}>
         &#8592;
       </button> */}
-      <Button type="back" onBtnClick={onCloseDetail}>
+      <button className="btn btn--back" onClick={onCloseDetail}>
+        {" "}
         &#8592;
-      </Button>
+      </button>
+      {/* <Button type="back" onBtnClick={onCloseDetail}>
+        &#8592;
+      </Button> */}
       <div className="info-box">
         <img src={movieDetail.poster} alt={`Poster of ${movieDetail.title}`} />
         <div className="info">
