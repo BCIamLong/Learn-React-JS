@@ -23,13 +23,23 @@ import Item from "./components/Item";
 function App() {
   const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
-  const [watched, setWatched] = useState();
   const [stats, setStats] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   // const [selectedId, setSelectedId] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [movieRating, setMovieRating] = useState(0);
+  // const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(() => {
+    const watchedData = localStorage.getItem("watched")
+      ? JSON.parse(localStorage.getItem("watched"))
+      : [];
+    return watchedData;
+  });
+
+  // const isTop = movieRating > 8;
+  // const [avgRating, setAvgRating] = useState(0);
+  // console.log(isTop);
   // const [selectedWatched, setSelectedWatched] = useState(null);
 
   // (async () => {
@@ -52,11 +62,70 @@ function App() {
   //   return () => document.removeEventListener("keydown", globalKeyPress);
   // }, []);
 
+  async function handleRemoveItem(id) {
+    await deleteWatched(id);
+    const statsData = await getWatchedStats();
+    setWatched((watched) => watched.filter((wc) => wc._id !== id));
+    // localStorage.setItem(
+    //   "watched",
+    //   JSON.stringify(watched.filter((wc) => wc._id !== id))
+    // );
+    setStats(statsData[0]);
+  }
+
+  async function handleAddToList(data) {
+    const newWatched = await createWatched(data);
+    const statsData = await getWatchedStats();
+
+    // localStorage.setItem("watched", JSON.stringify([...watched, newWatched]));
+    setWatched((watched) => [...watched, newWatched]);
+    setStats(statsData[0]);
+    // setAvgRating(movieRating);
+    // setAvgRating((avg) => (avg + movieRating) / 2);
+    // alert(avgRating);
+    setSelectedId(null);
+  }
+
+  async function handleItemClick(id) {
+    if (!id) return;
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+    // if (id === selectedMovie?._id) return setSelectedMovie(null);
+    // else setSelectedMovie(true);
+    // const movie = await getMovieDetail(id);
+    // const watchedCheck = await getWatchedDetail(id);
+    // console.log(watchedCheck);
+    // setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
+
+    // setSelectedMovie(movie);
+    // const movie = await getMovieDetail(id);
+    // setSelectedMovie((selectedMovie) => {
+    //   return movie;
+    // });
+  }
+  async function handleQuery(q) {
+    setQuery(q);
+    setSelectedId(null);
+  }
+
+  function handleCloseDetail() {
+    // document.title = "usePopcorn";
+    setSelectedId(null);
+  }
+
+  useEffect(() => {
+    if (!watched.length) return;
+    localStorage.setItem("watched", JSON.stringify(watched));
+  }, [watched]);
+
   useEffect(() => {
     // console.log("ok");
     async function loadData() {
       // const moviesData = await getMovies();
-      const watchedData = await getWatched();
+      // const watchedData = await getWatched();
+
+      // const watchedData = localStorage.getItem("watched")
+      //   ? JSON.parse(localStorage.getItem("watched"))
+      //   : [];
       const statsData = await getWatchedStats();
       // console.log(selectedId);
       // if (selectedId) {
@@ -65,7 +134,7 @@ function App() {
       //   // setMovies(moviesData);
       //   setSelectedMovie(selectedMovie);
       // }
-      setWatched(watchedData);
+      // setWatched(watchedData);
       setStats(statsData[0]);
     }
     loadData();
@@ -97,53 +166,13 @@ function App() {
     return () => controller.abort();
   }, [query]);
 
-  async function handleRemoveItem(id) {
-    await deleteWatched(id);
-    const statsData = await getWatchedStats();
-    setWatched((watched) => watched.filter((wc) => wc._id !== id));
-    setStats(statsData[0]);
-  }
-
-  async function handleAddToList(data) {
-    const newWatched = await createWatched(data);
-    const statsData = await getWatchedStats();
-    setWatched((watched) => [...watched, newWatched]);
-    setStats(statsData[0]);
-    setSelectedId(null);
-  }
-
-  async function handleItemClick(id) {
-    if (!id) return;
-    setSelectedId((selectedId) => (id === selectedId ? null : id));
-    // if (id === selectedMovie?._id) return setSelectedMovie(null);
-    // else setSelectedMovie(true);
-    // const movie = await getMovieDetail(id);
-    // const watchedCheck = await getWatchedDetail(id);
-    // console.log(watchedCheck);
-    // setMovieRating(watchedCheck ? watchedCheck.userRating : 0);
-
-    // setSelectedMovie(movie);
-    // const movie = await getMovieDetail(id);
-    // setSelectedMovie((selectedMovie) => {
-    //   return movie;
-    // });
-  }
-  async function handleQuery(q) {
-    setQuery(q);
-    setSelectedId(null);
-  }
-
-  function handleCloseDetail() {
-    // document.title = "usePopcorn";
-    setSelectedId(null);
-  }
-
   return (
     <div className="container">
       <Header query={query}>
         <SearchBox query={query} onSetQuery={handleQuery} />
         <Result movies={movies} />
       </Header>
+      {/* <p>{avgRating}</p> */}
       <Main onSetMovies={setMovies} onSetWatched={setWatched}>
         {/* <Box element={<List type="movies" data={movies} />} /> */}
         <Box>

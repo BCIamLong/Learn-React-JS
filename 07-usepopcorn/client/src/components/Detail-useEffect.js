@@ -18,7 +18,7 @@ export default function Detail({
   const [movieDetail, setMovieDetail] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   // const [rated, setRated] = useState(null);
-  const ratedTest = watched.find((wc) => wc.movie === selectedId);
+  const ratedTest = watched?.find((wc) => wc.movie === selectedId);
   const rated = ratedTest ? ratedTest.userRating : 0;
   const movieDate = new Date(movieDetail?.createdAt).toLocaleDateString(
     "en-US",
@@ -38,6 +38,18 @@ export default function Detail({
     userRating: rating,
     movie: movieDetail._id,
   };
+  /*  //eslint-disable */
+  // if (movieDetail.imdbRating > 8) [isTop, setIsTop] = useState(true);
+  // if (movieDetail.imdbRating > 8) return <p>Top movies</p>;
+  // const [isTop, setIsTop] = useState(movieDetail.imdbRating > 8 ? true : false);
+  // console.log(isTop);
+
+  // useEffect(() => {
+  //   setIsTop(movieDetail.imdbRating > 8);
+  // }, [movieDetail]);
+
+  // const isTop = movieDetail.imdbRating > 8;
+  // console.log(isTop);
 
   useEffect(() => {
     function globalKeyPress(e) {
