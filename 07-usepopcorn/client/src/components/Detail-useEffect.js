@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 // import Button from "./Button";
 import StarRating from "./StarRating";
 import { getMovieDetail } from "../api/movie";
@@ -38,6 +38,7 @@ export default function Detail({
     userRating: rating,
     movie: movieDetail._id,
   };
+
   /*  //eslint-disable */
   // if (movieDetail.imdbRating > 8) [isTop, setIsTop] = useState(true);
   // if (movieDetail.imdbRating > 8) return <p>Top movies</p>;

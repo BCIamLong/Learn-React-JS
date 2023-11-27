@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getMovies } from "./api/movie";
 import {
   createWatched,
@@ -36,6 +36,8 @@ function App() {
       : [];
     return watchedData;
   });
+  const count = useRef(0);
+  let countTest = 0;
 
   // const isTop = movieRating > 8;
   // const [avgRating, setAvgRating] = useState(0);
@@ -78,7 +80,10 @@ function App() {
     const statsData = await getWatchedStats();
 
     // localStorage.setItem("watched", JSON.stringify([...watched, newWatched]));
-    setWatched((watched) => [...watched, newWatched]);
+    setWatched((watched) => [
+      ...watched,
+      { ...newWatched, count: count.current },
+    ]);
     setStats(statsData[0]);
     // setAvgRating(movieRating);
     // setAvgRating((avg) => (avg + movieRating) / 2);
@@ -113,7 +118,18 @@ function App() {
   }
 
   useEffect(() => {
-    if (!watched.length) return;
+    if (!movieRating) {
+      count.current = 0;
+      return;
+    }
+    countTest++;
+    count.current++;
+    console.log(countTest);
+    // console.log(count.current);
+  }, [movieRating, countTest]);
+
+  useEffect(() => {
+    // if (!watched.length) return;
     localStorage.setItem("watched", JSON.stringify(watched));
   }, [watched]);
 

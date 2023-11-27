@@ -14,7 +14,7 @@ export default function SearchBox({ query, onSetQuery }) {
     // console.log(inputSearch.current);
     inputSearch.current.focus();
     const handleKeyEnter = (e) => {
-      console.log(e.key);
+      // console.log(e.key);
       if (e.key !== "Enter" || inputSearch.current === document.activeElement)
         return;
       onSetQuery("");
