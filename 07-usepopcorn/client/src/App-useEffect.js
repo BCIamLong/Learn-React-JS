@@ -20,6 +20,7 @@ import ErrorMessage from "./components/ErrorMessage";
 import Detail from "./components/Detail-useEffect";
 import Item from "./components/Item";
 import { useMovies } from "./hooks/useMovies";
+import { useLocalStorageState } from "./hooks/useLocalStorageState";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -31,15 +32,16 @@ function App() {
   const [movieRating, setMovieRating] = useState(0);
   // const [selectedId, setSelectedId] = useState(null);
   // const [watched, setWatched] = useState([]);
-  const [watched, setWatched] = useState(() => {
-    const watchedData = localStorage.getItem("watched")
-      ? JSON.parse(localStorage.getItem("watched"))
-      : [];
-    return watchedData;
-  });
+  // const [watched, setWatched] = useState(() => {
+  //   const watchedData = localStorage.getItem("watched")
+  //     ? JSON.parse(localStorage.getItem("watched"))
+  //     : [];
+  //   return watchedData;
+  // });
   const count = useRef(0);
 
   const { movies, isLoading, error } = useMovies(query);
+  const [watched, setWatched] = useLocalStorageState([], "watched");
 
   // let countTest = 0;
 
@@ -132,10 +134,10 @@ function App() {
     // console.log(count.current);
   }, [movieRating]);
 
-  useEffect(() => {
-    // if (!watched.length) return;
-    localStorage.setItem("watched", JSON.stringify(watched));
-  }, [watched]);
+  // useEffect(() => {
+  //   // if (!watched.length) return;
+  //   localStorage.setItem("watched", JSON.stringify(watched));
+  // }, [watched]);
 
   useEffect(() => {
     // console.log("ok");
