@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { useKey } from "../hooks/useKey";
 
 export default function SearchBox({ query, onSetQuery }) {
   // useEffect(() => {
@@ -10,21 +11,33 @@ export default function SearchBox({ query, onSetQuery }) {
   // }, [query]);
   const inputSearch = useRef(null);
 
+  // useKey("Enter", () => {
+  //   inputSearch.current.focus();
+  // });
   useEffect(() => {
-    // console.log(inputSearch.current);
     inputSearch.current.focus();
-    const handleKeyEnter = (e) => {
-      // console.log(e.key);
-      if (e.key !== "Enter" || inputSearch.current === document.activeElement)
-        return;
-      onSetQuery("");
-      // inputSearch.current.value = "";
-      inputSearch.current.focus();
-    };
-    document.addEventListener("keydown", handleKeyEnter);
+  }, []);
 
-    return () => document.removeEventListener("keydown", handleKeyEnter);
-  }, [onSetQuery]);
+  useKey("Enter", () => {
+    if (inputSearch.current === document.activeElement) return;
+    onSetQuery("");
+    inputSearch.current.focus();
+  });
+
+  // useEffect(() => {
+  //   // console.log(inputSearch.current);
+  //   const handleKeyEnter = (e) => {
+  //     // console.log(e.key);
+  //     if (e.key !== "Enter" || inputSearch.current === document.activeElement)
+  //       return;
+  //     onSetQuery("");
+  //     // inputSearch.current.value = "";
+  //     inputSearch.current.focus();
+  //   };
+  //   document.addEventListener("keydown", handleKeyEnter);
+
+  //   return () => document.removeEventListener("keydown", handleKeyEnter);
+  // }, [onSetQuery]);
 
   return (
     <input

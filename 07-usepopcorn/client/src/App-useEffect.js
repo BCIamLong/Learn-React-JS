@@ -123,6 +123,18 @@ function App() {
     setSelectedId(null);
   }
 
+  // useEffect(() => {
+  //   function globalKeyPress(e) {
+  //     if (e.key === "Escape") {
+  //       setSelectedId(null);
+  //       // console.log("CLOSING");
+  //     }
+  //   }
+  //   document.addEventListener("keydown", globalKeyPress);
+
+  //   return () => document.removeEventListener("keydown", globalKeyPress);
+  // }, [setSelectedId]);
+
   useEffect(() => {
     if (!movieRating) {
       count.current = 0;

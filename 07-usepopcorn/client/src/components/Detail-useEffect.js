@@ -4,6 +4,7 @@ import StarRating from "./StarRating";
 import { getMovieDetail } from "../api/movie";
 // import { getWatchedDetail } from "../api/watched";
 import Loader from "./Loader";
+import { useKey } from "../hooks/useKey";
 
 export default function Detail({
   selectedId,
@@ -52,17 +53,21 @@ export default function Detail({
   // const isTop = movieDetail.imdbRating > 8;
   // console.log(isTop);
 
-  useEffect(() => {
-    function globalKeyPress(e) {
-      if (e.key === "Escape") {
-        setSelectedId(null);
-        // console.log("CLOSING");
-      }
-    }
-    document.addEventListener("keydown", globalKeyPress);
+  useKey("Escape", () => {
+    setSelectedId(null);
+  });
 
-    return () => document.removeEventListener("keydown", globalKeyPress);
-  }, [setSelectedId]);
+  // useEffect(() => {
+  //   function globalKeyPress(e) {
+  //     if (e.key === "Escape") {
+  //       setSelectedId(null);
+  //       // console.log("CLOSING");
+  //     }
+  //   }
+  //   document.addEventListener("keydown", globalKeyPress);
+
+  //   return () => document.removeEventListener("keydown", globalKeyPress);
+  // }, [setSelectedId]);
 
   // console.log(data);
   useEffect(() => {
