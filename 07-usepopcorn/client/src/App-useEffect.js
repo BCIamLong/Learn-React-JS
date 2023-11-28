@@ -19,16 +19,17 @@ import Loader from "./components/Loader";
 import ErrorMessage from "./components/ErrorMessage";
 import Detail from "./components/Detail-useEffect";
 import Item from "./components/Item";
+import { useMovies } from "./hooks/useMovies";
 
 function App() {
-  const [movies, setMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [stats, setStats] = useState();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  // const [selectedId, setSelectedId] = useState(null);
+  // const [movies, setMovies] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [error, setError] = useState("");
   const [selectedId, setSelectedId] = useState(null);
   const [movieRating, setMovieRating] = useState(0);
+  // const [selectedId, setSelectedId] = useState(null);
   // const [watched, setWatched] = useState([]);
   const [watched, setWatched] = useState(() => {
     const watchedData = localStorage.getItem("watched")
@@ -37,7 +38,10 @@ function App() {
     return watchedData;
   });
   const count = useRef(0);
-  let countTest = 0;
+
+  const { movies, isLoading, error } = useMovies(query);
+
+  // let countTest = 0;
 
   // const isTop = movieRating > 8;
   // const [avgRating, setAvgRating] = useState(0);
@@ -122,11 +126,11 @@ function App() {
       count.current = 0;
       return;
     }
-    countTest++;
+    // countTest++;
     count.current++;
-    console.log(countTest);
+    // console.log(countTest);
     // console.log(count.current);
-  }, [movieRating, countTest]);
+  }, [movieRating]);
 
   useEffect(() => {
     // if (!watched.length) return;
@@ -156,31 +160,31 @@ function App() {
     loadData();
   }, []);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    setError("");
-    setIsLoading(true);
-    if (!query || query.length < 3) {
-      setIsLoading(false);
-      return setMovies([]);
-    }
-    async function searchMovies() {
-      try {
-        const movies = await getMovies(query, controller);
-        if (movies?.length === 0) throw new Error("No movies data found!");
+  // useEffect(() => {
+  //   const controller = new AbortController();
+  //   setError("");
+  //   setIsLoading(true);
+  //   if (!query || query.length < 3) {
+  //     setIsLoading(false);
+  //     return setMovies([]);
+  //   }
+  //   async function searchMovies() {
+  //     try {
+  //       const movies = await getMovies(query, controller);
+  //       if (movies?.length === 0) throw new Error("No movies data found!");
 
-        setMovies(movies);
-      } catch (err) {
-        // console.log(err.message);
-        // setIsLoading(false);
-        setError(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    searchMovies();
-    return () => controller.abort();
-  }, [query]);
+  //       setMovies(movies);
+  //     } catch (err) {
+  //       // console.log(err.message);
+  //       // setIsLoading(false);
+  //       setError(err.message);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   }
+  //   searchMovies();
+  //   return () => controller.abort();
+  // }, [query]);
 
   return (
     <div className="container">
@@ -189,7 +193,7 @@ function App() {
         <Result movies={movies} />
       </Header>
       {/* <p>{avgRating}</p> */}
-      <Main onSetMovies={setMovies} onSetWatched={setWatched}>
+      <Main>
         {/* <Box element={<List type="movies" data={movies} />} /> */}
         <Box>
           {error && <ErrorMessage error={error} />}
