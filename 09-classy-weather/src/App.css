@@ -43,7 +43,7 @@
 }
 
 .weather-list {
-  display: none;
+  /* display: none; */
   padding: 0 1.2rem;
   font-family: "Lora", sans-serif;
 }
@@ -57,7 +57,7 @@
 .list {
   display: grid;
   column-gap: 1.2rem;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   list-style: none;
 }
 
@@ -66,14 +66,22 @@
   flex-direction: column;
   gap: 1.2rem;
   background-color: #fee2e2;
-  padding: 1.2rem;
+  padding: 2.4rem 1.2rem;
 }
 
 .icon {
-  font-size: 4rem;
+  font-size: 8rem;
   color: #fff;
 }
 
 .show {
   display: block;
+}
+
+.loader {
+  font-family: "Lora", sans-serif;
+  color: #262626;
+  font-size: 1.6rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
 }
