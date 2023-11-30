@@ -1,6 +1,7 @@
 import React from "react";
 import WeatherBox from "./WeatherBox";
 import Loader from "./Loader";
+import Search from "./Search";
 
 class Weather extends React.Component {
   controller = new AbortController();
@@ -21,11 +22,11 @@ class Weather extends React.Component {
     this.setState({ location: loc });
   };
 
-  setQuery = (q) => {
+  setQuery = (e) => {
     // this.setState((curState) => {
     //   return { ...curState, query: q };
     // });
-    this.setState({ query: q });
+    this.setState({ query: e.target.value });
   };
 
   setIsLoading = (is) => {
@@ -95,6 +96,9 @@ class Weather extends React.Component {
   //     alert(err);
   //   }
   // }
+  // componentDidMount() {
+  //   // alert("Our application painted to the DOM");
+  // }
 
   async componentDidUpdate(_, prevState) {
     if (prevState.query === this.state.query) return;
@@ -120,13 +124,7 @@ class Weather extends React.Component {
     return (
       <div className="weather-box">
         <h1 className="heading-primary">classy Weather</h1>
-        <input
-          className="search"
-          type="text"
-          value={this.state.query}
-          placeholder="Search for location..."
-          onChange={(e) => this.setQuery(e.target.value)}
-        />
+        <Search onSetQuery={this.setQuery} query={this.state.query} />
         {this.state.isLoading ? (
           <Loader />
         ) : this.state.weather?.length ? (
