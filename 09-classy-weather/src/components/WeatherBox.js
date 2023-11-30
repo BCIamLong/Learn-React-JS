@@ -8,6 +8,11 @@ class WeatherBox extends React.Component {
     this.state = {};
   }
 
+  componentWillUnmount() {
+    // this.props.controller.abort();
+    console.log("Will unmount");
+  }
+  compo;
   render() {
     const {
       location: { city, country },

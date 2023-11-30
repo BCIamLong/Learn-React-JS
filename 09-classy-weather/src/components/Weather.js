@@ -22,11 +22,11 @@ class Weather extends React.Component {
     this.setState({ location: loc });
   };
 
-  setQuery = (e) => {
+  setQuery = (q) => {
     // this.setState((curState) => {
     //   return { ...curState, query: q };
     // });
-    this.setState({ query: e.target.value });
+    this.setState({ query: q });
   };
 
   setIsLoading = (is) => {
@@ -47,7 +47,7 @@ class Weather extends React.Component {
     const options = {
       method: "GET",
       headers: {
-        "X-RapidAPI-Key": "b9b6ebea93msh4b970af5ab1dc5cp13c490jsn5bfea61646e3",
+        "X-RapidAPI-Key": "583953c4d0msh878ba482a8c2c60p11cf01jsn1088d773f453",
         "X-RapidAPI-Host": "weatherapi-com.p.rapidapi.com",
       },
       signal: this.controller.signal,
@@ -57,6 +57,7 @@ class Weather extends React.Component {
         `https://weatherapi-com.p.rapidapi.com/forecast.json?q=${this.state.query}&days=6`,
         options
       );
+
       const data = await res.json();
       this.setWeather(data.forecast?.forecastday);
       this.setLocation({
@@ -64,7 +65,6 @@ class Weather extends React.Component {
         country: data.location?.country,
       });
     } catch (err) {
-      console.log(err);
       if (err.name === "AbortError") return;
       alert(err);
     }
@@ -96,31 +96,42 @@ class Weather extends React.Component {
   //     alert(err);
   //   }
   // }
-  // componentDidMount() {
-  //   // alert("Our application painted to the DOM");
-  // }
+  componentDidMount() {
+    // console.log("hello");
+    if (localStorage.getItem("query")) {
+      const q = JSON.parse(localStorage.getItem("query"));
+      this.setQuery(q.location);
+      // this.setLocation(data);
+    }
+  }
 
   async componentDidUpdate(_, prevState) {
+    // console.log(prevState.query === this.state.query);
     if (prevState.query === this.state.query) return;
     this.setIsLoading(true);
     // console.log(prevState.query?.length);
-    if (prevState.query?.length < 4) {
+    // console.log(prevState);
+    if (this.state.query?.length < 3) {
       this.setIsLoading(false);
       return this.setWeather([]);
     }
+    // console.log("hello");
 
     await this.fetchWeather();
 
+    localStorage.setItem(
+      "query",
+      JSON.stringify({
+        location: this.state.query,
+      })
+    );
     // console.log(data.forecast.forecastday);
     // this.setWeather([1, 2, 3]);
     this.setIsLoading(false);
   }
 
-  componentWillUnmount() {
-    this.controller.abort();
-  }
-
   render() {
+    // console.log(this.state);
     return (
       <div className="weather-box">
         <h1 className="heading-primary">classy Weather</h1>
@@ -131,6 +142,7 @@ class Weather extends React.Component {
           <WeatherBox
             weather={this.state.weather}
             location={this.state.location}
+            controller={this.controller}
           />
         ) : null}
       </div>

@@ -1,6 +1,9 @@
 import React from "react";
 
 export default class Search extends React.Component {
+  componentWillUnmount() {
+    this.props.controller.abort();
+  }
   render() {
     // console.log(this.props);
     return (
@@ -9,7 +12,7 @@ export default class Search extends React.Component {
         type="text"
         value={this.props.query}
         placeholder="Search for location..."
-        onChange={this.props.onSetQuery}
+        onChange={(e) => this.props.onSetQuery(e.target.value)}
       />
     );
   }
