@@ -1,46 +1,211 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500;1,600;1,700&family=Raleway+Dots&display=swap");
+
 .container {
-  max-width: 40rem;
-  margin: 8rem auto;
+  max-width: 60rem;
+  margin: 2.4rem auto;
 }
 
-.date-counter {
+.react-quiz {
+  text-align: center;
+}
+
+.quiz {
+  display: block;
+}
+
+.quiz-headers {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+.logo {
+  display: inline-block;
+  /* width: 4.8rem; */
+  height: 12rem;
+}
+
+.heading-secondary {
+  font-size: 4.8rem;
+  font-family: "Raleway Dots", sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.heading-tertiary {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.welcome p {
+  font-size: 1.6rem;
+  margin-bottom: 3rem;
+  font-weight: 600;
+}
+
+.progress {
+  padding: 0 12rem;
+}
+
+.slider {
+  width: 100%;
+  /* -webkit-appearance: none; */
+
+  /* appearance: none; */
+  border-radius: 3rem;
+  overflow: hidden;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  /* border-radius: 15px; */
+  height: 1rem;
+  background: #fff;
+  background: linear-gradient(to right, #1098ad 6.67%, #fff 6.67%);
+}
+
+/* .slider::-webkit-slider-runnable-track {
+  background-color: #fff;
+} */
+
+/* .slider::-moz-range-thumb {
+  background-color: #1098ad;
+  height: 1.2rem;
+} */
+/* 
+.slider::-moz-range-track {
+  background-color: #1098ad;
+} */
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  /* height: 1.2rem;
+  width: 1.2rem;
+  background-color: #1098ad;
+  border-radius: 50%;
+  border: none;
+  transition: all 0.2s ease-in-out; */
+}
+
+/* .slider::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 10px rgba(255, 85, 0, 0.1);
+}
+.slider:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.2);
+}
+.slider:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.2);
+} */
+
+/* .slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+} */
+
+.progress-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+  font-size: 1.4rem;
+  color: #dee2e6;
+  line-height: 2;
+}
+
+.num-questions {
+}
+
+.points {
+}
+
+.quiz-box {
+  padding: 0 12rem;
+}
+
+.question {
+  line-height: 1.1;
+}
+
+.answers {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  align-items: center;
-  /* text-align: center; */
+  gap: 1.2rem;
+  list-style: none;
+  padding: 2rem 0;
 }
 
-.range {
-  accent-color: #1971c2;
-}
-
-.counter {
-  display: flex;
-  gap: 0.6rem;
-}
-
-.counter input {
-  padding: 0 0.3rem;
-  font-size: 1.6rem;
-  line-height: 1.5;
-}
-
-.date {
-  font-weight: 600;
-}
-
-button {
+.answer {
+  border: 0.15rem solid #495057;
+  text-align: left;
   cursor: pointer;
-  border: none;
-  padding: 0.6rem 1.2rem;
+  width: 100%;
+  background-color: #495057;
+  border-radius: 3rem;
+  padding: 0.8rem 1.8rem;
+  font-size: 1.4rem;
   transition: all 0.3s;
-  font-size: 1.6rem;
-  font-weight: 600;
-  border-radius: 0.3rem;
 }
 
-button:hover {
-  background-color: #212529;
+.answer:hover {
+  transform: translateX(3%);
+  background-color: #343a40;
+}
+
+.click .answer {
+  background-color: #fab005;
+  color: #343a40;
+}
+
+.click .answers {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.click .correct {
+  background-color: #1098ad !important;
   color: #fff;
+}
+
+.click .target {
+  transform: translateX(4%);
+}
+
+.quiz-controls {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+}
+
+.timer {
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+  border: 0.15rem solid #495057;
+  font-size: 1.4rem;
+}
+
+.btn {
+  cursor: pointer;
+  border: 0.15rem solid #495057;
+  background-color: #495057;
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+  transition: all 0.3s;
+}
+
+.btn:hover {
+  background-color: #343a40;
+}
+
+.btn--next {
+  display: none;
+}
+
+.click .btn {
+  display: block;
+}
+
+.result {
 }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Quiz</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="App.css" />
+  </head>
+  <body>
+    <div class="container">
+      <main class="react-quiz">
+        <div class="quiz-headers">
+          <img class="logo" src="logo.svg" alt="logo" />
+          <h2 class="heading-secondary">The react quiz</h2>
+        </div>
+        <div class="welcome">
+          <h3 class="heading-tertiary">Welcome to The React Quiz!</h3>
+          <p>15 questions to test your React mastery</p>
+          <button class="btn">Let's start!</button>
+        </div>
+        <div class="quiz">
+          <div class="progress">
+            <input class="slider" type="range" max="15" min="0" value="1" />
+            <div class="progress-info">
+              <p class="num-questions">Question 2/15</p>
+              <p class="points">10/280 points</p>
+            </div>
+          </div>
+          <!-- <div class="quiz-box click"> -->
+          <div class="quiz-box">
+            <p class="question">Which company invented React?</p>
+            <ul class="answers">
+              <li class="answer">Google</li>
+              <li class="answer">Google</li>
+              <!-- <li class="answer target">Google</li>
+            <li class="answer correct">Google</li> -->
+              <li class="answer">Google</li>
+              <li class="answer">Google</li>
+            </ul>
+            <div class="quiz-controls">
+              <div class="timer">06:28</div>
+              <button class="btn btn--next">Next</button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+.container {
+  max-width: 40rem;
+  margin: 8rem auto;
+}
+
+.date-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  /* text-align: center; */
+}
+
+.range {
+  accent-color: #1971c2;
+}
+
+.counter {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.counter input {
+  padding: 0 0.3rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+}
+
+.date {
+  font-weight: 600;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  transition: all 0.3s;
+  font-size: 1.6rem;
+  font-weight: 600;
+  border-radius: 0.3rem;
+}
+
+button:hover {
+  background-color: #212529;
+  color: #fff;
+}

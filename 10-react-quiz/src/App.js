@@ -1,10 +1,12 @@
 import "./App.css";
-import DateCounter from "./components/DateCounter";
+// import DateCounter from "./components/DateCounter";
+import ReactQuiz from "./components/ReactQuiz";
 
 function App() {
   return (
     <div className="container">
-      <DateCounter />
+      {/* <DateCounter /> */}
+      <ReactQuiz />
     </div>
   );
 }
