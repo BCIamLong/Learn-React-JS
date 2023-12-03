@@ -12,25 +12,31 @@ import Question from "./Question";
 import { getQuestions } from "../services/apiQuestions";
 import Timer from "./Timer";
 import Result from "./Result";
+import Loader from "./Loader";
+import Message from "./Message";
 
 const initialState = {
-  start: false,
+  status: "loading",
+  // start: false,
   selectedId: undefined,
   questions: [],
   numQuestion: 0,
   score: 0,
-  timer: 0,
+  timer: 1,
+  message: "",
 };
 
 const reducer = (state, action) => {
-  const { start, selectedId, score, numQuestion, timer } = state;
+  const { score, numQuestion, timer } = state;
   const { type, payload } = action;
 
   switch (type) {
     case "start":
-      return { ...state, start: true, timer: 540 };
+      return { ...state, timer: 5, status: "active" };
     case "setQuestions":
-      return { ...state, questions: payload };
+      return { ...state, questions: payload, status: "ready" };
+    case "fetchDataFail":
+      return { ...state, status: "error", message: payload };
     case "setSelectedId":
       return { ...state, selectedId: payload };
     case "setScore":
@@ -45,6 +51,8 @@ const reducer = (state, action) => {
       };
     case "setTimer":
       return { ...state, timer: timer - 1 };
+    case "finish":
+      return { ...state, status: "finished" };
     default:
       throw new Error("Unknown action");
   }
@@ -52,7 +60,8 @@ const reducer = (state, action) => {
 
 export default function ReactQuiz() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { start, selectedId, questions, numQuestion, score, timer } = state;
+  const { selectedId, questions, numQuestion, score, timer, status, message } =
+    state;
   const questionObj = questions.at(numQuestion)
     ? questions.at(numQuestion)
     : {};
@@ -62,13 +71,6 @@ export default function ReactQuiz() {
     correctOption: correct,
     points,
   } = questionObj;
-
-  const minute = Math.floor(timer / 60);
-  const minuteFormat = minute.toString().length === 1 ? `0${minute}` : minute;
-
-  const seconds = timer % 60 === 0 ? 0 : timer - minute * 60;
-  const secondsFormat =
-    seconds.toString().length === 1 ? `0${seconds}` : seconds;
 
   const handleClickStart = () => {
     dispatch({ type: "start" });
@@ -82,6 +84,8 @@ export default function ReactQuiz() {
   const handleClickNext = () => {
     // dispatch({ type: "setNumQuestion" });
     dispatch({ type: "next" });
+    // console.log(numQuestion, questions.length - 1);
+    if (numQuestion === questions.length - 1) dispatch({ type: "finish" });
   };
 
   // const handleCalcScore = (s) => {
@@ -94,24 +98,60 @@ export default function ReactQuiz() {
         const questionsData = await getQuestions();
         dispatch({ type: "setQuestions", payload: questionsData });
       } catch (err) {
-        alert(err);
+        dispatch({ type: "fetchDataFail", payload: err.message });
+        // alert(err);
       }
     };
 
     fetchQuestions();
-
-    const intervalId = setInterval(() => {
-      if (timer === 0) return clearInterval(intervalId);
-      dispatch({ type: "setTimer" });
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, [timer]);
+  }, []);
 
   return (
     <main className="react-quiz">
       <QuizHeader />
-      {!start ? (
+
+      {status === "loading" && <Loader />}
+      {status === "ready" && (
+        <Welcome>
+          <Button onBtnClick={handleClickStart}>Let's start!</Button>
+        </Welcome>
+      )}
+      {status === "active" && (
+        <Quiz>
+          <Progress
+            score={score}
+            questions={questions}
+            numQuestion={numQuestion}
+          />
+          <QuizBox selectedId={selectedId}>
+            <Question>{question}</Question>
+            <Answers>
+              {answers?.map((a, i) => (
+                <Answer
+                  key={i}
+                  onAnswerClick={handleSelectedId}
+                  answer={{ answer: a, id: i, correct }}
+                  isSelected={i === selectedId}
+                  selectedId={selectedId}
+                />
+              ))}
+            </Answers>
+            <Control>
+              <Timer timer={timer} dispatch={dispatch} />
+              <Button onBtnClick={handleClickNext} type="next">
+                {numQuestion === 14 ? "End" : "Next"}
+              </Button>
+            </Control>
+          </QuizBox>
+        </Quiz>
+      )}
+      {status === "finished" && <Result score={score} />}
+      {status === "error" && <Message type="error" message={message} />}
+      {/* {(timer === 0 || numQuestion > questions.length - 1) && (
+        <Result score={score} />
+      )} */}
+
+      {/* {!start ? (
         <Welcome>
           <Button onBtnClick={handleClickStart}>Let's start!</Button>
         </Welcome>
@@ -145,7 +185,7 @@ export default function ReactQuiz() {
             </Control>
           </QuizBox>
         </Quiz>
-      )}
+      )} */}
     </main>
   );
 }

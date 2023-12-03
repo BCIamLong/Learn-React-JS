@@ -209,3 +209,16 @@
 
 .result {
 }
+
+.msg {
+  font-size: 2rem;
+  letter-spacing: 0.1rem;
+}
+
+.msg h3 {
+  text-transform: uppercase;
+}
+
+.error {
+  color: #c92a2a;
+}
