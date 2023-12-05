@@ -1,14 +1,17 @@
 export default function Progress({
   selectedId,
   score,
-  questions,
+  totalPoints,
+  numQuestions,
   numQuestion,
 }) {
-  const totalPoints = questions?.reduce((acc, el) => acc + el.points, 0);
+  // const totalPoints = questions?.reduce((acc, el) => acc + el.points, 0);
   // const numQuestionFormat = selectedId >= 0 ? numQuestion + 1 : numQuestion;
   // const progress = ((numQuestion + +(selectedId >= 0)) / questions.length) * 100;
+  // const progress =
+  //   ((numQuestion + Number(selectedId >= 0)) / questions.length) * 100;
   const progress =
-    ((numQuestion + Number(selectedId >= 0)) / questions.length) * 100;
+    ((numQuestion + Number(selectedId >= 0)) / numQuestions) * 100;
 
   return (
     <div className="progress">
@@ -26,10 +29,12 @@ export default function Progress({
       />
       <div className="progress-info">
         <p className="num-questions">
-          Question <strong>{numQuestion + 1}</strong> / {questions.length}
+          {/* Question <strong>{numQuestion + 1}</strong> / {questions.length} */}
+          Question <strong>{numQuestion + 1}</strong> / {numQuestions}
         </p>
         <p className="points">
-          <strong>{score}</strong> / {totalPoints} points
+          {/* <strong>{score}</strong> / {totalPoints} points */}
+          Total points: {totalPoints} points
         </p>
       </div>
     </div>

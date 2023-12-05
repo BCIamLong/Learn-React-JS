@@ -9,7 +9,11 @@ import Button from "./Button";
 import { useEffect, useReducer } from "react";
 import Answer from "./Answer";
 import Question from "./Question";
-import { getQuestions } from "../services/apiQuestions";
+import {
+  getHighScore,
+  getQuestions,
+  postHighScore,
+} from "../services/apiQuestions";
 import Timer from "./Timer";
 import Result from "./Result";
 import Loader from "./Loader";
@@ -27,17 +31,32 @@ const initialState = {
   timer: 1,
   message: "",
   highScore: 0,
+  numQuestions: null,
+  answers: [],
 };
+// postHighScore({ id: 1, highScore: 10 });
 
 const reducer = (state, action) => {
-  const { score, numQuestion, timer, questions, status, highScore } = state;
+  const {
+    score,
+    numQuestion,
+    timer,
+    questions,
+    status,
+    highScore,
+    numQuestions,
+    answers,
+    selectedId,
+  } = state;
   const { type, payload } = action;
+  const currentQuestion = questions[numQuestion];
 
   switch (type) {
     case "start":
       return {
         ...state,
-        timer: questions.length * SECS_PER_QUESTION,
+        timer: numQuestions * SECS_PER_QUESTION,
+        // timer: questions.length * SECS_PER_QUESTION,
         status: "active",
       };
     case "setQuestions":
@@ -45,7 +64,6 @@ const reducer = (state, action) => {
     case "fetchDataFail":
       return { ...state, status: "error", message: payload };
     case "setSelectedId":
-      const currentQuestion = questions[numQuestion];
       return {
         ...state,
         selectedId: payload,
@@ -61,16 +79,44 @@ const reducer = (state, action) => {
     case "next":
       // if (numQuestion === questions.length - 1 && score > highScore)
       //   localStorage.setItem("highScore", score);
+      // console.log(highScore, score);
+      // console.log(numQuestion === numQuestions - 1 && score > highScore);
+      if (numQuestion === numQuestions - 1 && score > highScore)
+        postHighScore({ id: Date.now(), highScore: score });
       return {
         ...state,
         // selectedId: undefined,
-        selectedId: -1,
+        selectedId: answers[numQuestion + 1]
+          ? answers[numQuestion + 1].select
+          : -1,
         numQuestion: numQuestion + 1,
-        status: numQuestion === questions.length - 1 ? "finished" : status,
+        status: numQuestion === numQuestions - 1 ? "finished" : status,
+        answers: !answers[numQuestion]
+          ? [
+              ...answers,
+              {
+                select: selectedId,
+                points:
+                  selectedId === currentQuestion.correctOption
+                    ? currentQuestion.points
+                    : 0,
+              },
+            ]
+          : answers?.map((a) =>
+              selectedId === currentQuestion.correctOption
+                ? { ...a, select: selectedId, points: currentQuestion.points }
+                : { ...a, select: selectedId, points: 0 }
+            ),
         highScore:
-          numQuestion === questions.length - 1 && score > highScore
+          numQuestion === numQuestions - 1 && score > highScore
             ? score
             : highScore,
+
+        // status: numQuestion === questions.length - 1 ? "finished" : status,
+        // highScore:
+        //   numQuestion === questions.length - 1 && score > highScore
+        //     ? score
+        //     : highScore,
       };
     case "setTimer":
       // console.log(timer);
@@ -83,6 +129,20 @@ const reducer = (state, action) => {
       return { ...state, status: "finished" };
     case "reset":
       return { ...initialState, highScore: highScore };
+    case "setNumQuestions":
+      return {
+        ...state,
+        numQuestions:
+          questions.length === numQuestions ? numQuestions : payload,
+      };
+    case "setHighScore":
+      return { ...state, highScore: payload };
+    case "back":
+      return {
+        ...state,
+        numQuestion: numQuestion - 1,
+        selectedId: answers[numQuestion - 1].select,
+      };
     default:
       throw new Error("Unknown action");
   }
@@ -99,12 +159,18 @@ export default function ReactQuiz() {
     status,
     message,
     highScore,
+    numQuestions,
+    answers: answersArr,
   } = state;
-  const numQuestions = questions.length;
-  const totalPoints = questions?.reduce((acc, el) => acc + el.points, 0);
+  // const numQuestions = questions.length;
+  const userQuestions = questions?.slice(0, numQuestions);
 
-  const questionObj = questions.at(numQuestion)
-    ? questions.at(numQuestion)
+  const totalPoints = userQuestions?.reduce((acc, el) => acc + el.points, 0);
+  // console.log(totalPoints);
+  const totalScores = answersArr.reduce((acc, el) => acc + el.points, 0);
+
+  const questionObj = userQuestions?.at(numQuestion)
+    ? userQuestions?.at(numQuestion)
     : {};
   const {
     question,
@@ -138,7 +204,12 @@ export default function ReactQuiz() {
     const fetchQuestions = async () => {
       try {
         const questionsData = await getQuestions();
+        const highScoreData = await getHighScore();
         dispatch({ type: "setQuestions", payload: questionsData });
+        dispatch({
+          type: "setHighScore",
+          payload: highScoreData[highScoreData.length - 1].highScore,
+        });
       } catch (err) {
         dispatch({ type: "fetchDataFail", payload: err.message });
         // alert(err);
@@ -154,7 +225,11 @@ export default function ReactQuiz() {
 
       {status === "loading" && <Loader />}
       {status === "ready" && (
-        <Welcome numQuestions={numQuestions}>
+        <Welcome
+          numQuestions={numQuestions}
+          dispatch={dispatch}
+          questions={questions}
+        >
           {/* <Button onBtnClick={handleClickStart}>Let's start!</Button> */}
           <Button onBtnClick={() => dispatch({ type: "start" })}>
             Let's start!
@@ -165,7 +240,8 @@ export default function ReactQuiz() {
         <Quiz>
           <Progress
             score={score}
-            questions={questions}
+            totalPoints={totalPoints}
+            numQuestions={numQuestions}
             numQuestion={numQuestion}
             selectedId={selectedId}
           />
@@ -184,15 +260,27 @@ export default function ReactQuiz() {
             </Answers>
             <Control>
               <Timer timer={timer} dispatch={dispatch} />
+              {numQuestion > 0 && (
+                <Button
+                  type="back"
+                  onBtnClick={() => dispatch({ type: "back" })}
+                >
+                  Back
+                </Button>
+              )}
               <Button onBtnClick={() => dispatch({ type: "next" })} type="next">
-                {numQuestion === 14 ? "End" : "Next"}
+                {numQuestion === numQuestions ? "End" : "Next"}
               </Button>
             </Control>
           </QuizBox>
         </Quiz>
       )}
       {status === "finished" && (
-        <Result score={score} totalPoints={totalPoints} highScore={highScore}>
+        <Result
+          score={totalScores}
+          totalPoints={totalPoints}
+          highScore={highScore}
+        >
           <Button onBtnClick={() => dispatch({ type: "reset" })}>
             Restart quiz
           </Button>

@@ -157,8 +157,8 @@
 }
 
 .click .answers {
-  cursor: not-allowed;
-  pointer-events: none;
+  /* cursor: not-allowed; */
+  /* pointer-events: none; */
 }
 
 .click .correct {
@@ -247,4 +247,17 @@ progress::-webkit-progress-value {
   margin-bottom: 3rem;
   font-size: 1.6rem;
   /* text-transform: uppercase; */
+}
+
+.welcome input {
+  width: 40%;
+  padding: 0.6rem 1.2rem;
+  margin-bottom: 1.2rem;
+  margin-right: 1.2rem;
+}
+
+.filter {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #868e96;
 }
