@@ -4,4 +4,11 @@ export default function Button({ type, onBtnClick, children }) {
       {children}
     </button>
   );
+  // return (
+  //   selectedId && (
+  //     <button className={`btn btn--${type}`} onClick={onBtnClick}>
+  //       {children}
+  //     </button>
+  //   )
+  // );
 }

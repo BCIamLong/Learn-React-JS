@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,400;1,500;1,600;1,700&family=Raleway+Dots&display=swap");
-
 .container {
   max-width: 60rem;
   margin: 2.4rem auto;
@@ -213,12 +211,40 @@
 .msg {
   font-size: 2rem;
   letter-spacing: 0.1rem;
+  /* padding: 1rem 1rem; */
+  padding: 3rem 0;
+  border-radius: 6rem;
+  background-color: #495057;
 }
 
 .msg h3 {
+  font-size: 2rem;
   text-transform: uppercase;
 }
 
 .error {
   color: #c92a2a;
+}
+
+.result {
+  background-color: #1098ad;
+  border-radius: 12rem;
+  padding: 4rem 0;
+}
+
+progress {
+  width: 100%;
+}
+
+progress::-webkit-progress-bar {
+  background-color: green;
+}
+progress::-webkit-progress-value {
+  background-color: red;
+}
+
+.high-score {
+  margin-bottom: 3rem;
+  font-size: 1.6rem;
+  /* text-transform: uppercase; */
 }

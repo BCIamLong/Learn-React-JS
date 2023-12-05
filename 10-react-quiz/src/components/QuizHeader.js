@@ -2,9 +2,9 @@ import logo from "../logo.svg";
 
 export default function QuizHeader() {
   return (
-    <div className="quiz-headers">
+    <header className="quiz-headers">
       <img className="logo" src={logo} alt="logo" />
       <h2 className="heading-secondary">The react quiz</h2>
-    </div>
+    </header>
   );
 }

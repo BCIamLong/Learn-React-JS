@@ -10,11 +10,10 @@ function Timer({ timer, dispatch }) {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (timer === 0) {
-        dispatch({ type: "finish" });
-        return clearInterval(intervalId);
-      }
       dispatch({ type: "setTimer" });
+      if (timer === 0)
+        // dispatch({ type: "finish" });
+        return clearInterval(intervalId);
     }, 1000);
 
     return () => clearInterval(intervalId);

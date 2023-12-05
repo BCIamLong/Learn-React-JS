@@ -1,9 +1,9 @@
-function Answer({ isSelected, answer, selectedId, onAnswerClick }) {
+function Answer({ isSelected, answer, selectedId, dispatch }) {
   return (
     <li
-      onClick={() => onAnswerClick(answer.id)}
+      onClick={() => dispatch({ type: "setSelectedId", payload: answer.id })}
       className={`answer ${isSelected ? "target" : ""} ${
-        answer.id === answer.correct ? "correct" : ""
+        selectedId >= 0 && answer.id === answer.correct ? "correct" : ""
       }`}
     >
       {answer.answer}
