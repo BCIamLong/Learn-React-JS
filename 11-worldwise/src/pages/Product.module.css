@@ -1,0 +1,37 @@
+.product {
+  background-color: #343a40;
+  height: 100%;
+}
+
+.main {
+  display: grid;
+  align-content: center;
+  height: 72%;
+}
+
+.heading {
+  font-size: 4.8rem !important;
+  line-height: 1.2 !important;
+  font-weight: 500;
+  margin-bottom: 2.4rem;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  gap: 4.8rem;
+  align-items: center;
+}
+
+.box img {
+  width: 33%;
+}
+
+.content {
+  width: 36%;
+}
+
+.content p {
+  font-size: 1.6rem;
+  line-height: 1.6;
+}

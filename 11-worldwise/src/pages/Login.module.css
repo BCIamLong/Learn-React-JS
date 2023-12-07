@@ -1,0 +1,60 @@
+.login {
+  background-color: #343a40;
+  height: 100%;
+}
+
+.main {
+  display: grid;
+  align-content: center;
+  height: 72%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4rem;
+  width: 45rem;
+  margin: 0 auto;
+  background-color: #495057;
+  border-radius: 1rem;
+  padding: 3rem;
+}
+
+.form label {
+  font-size: 1.6rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.form input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  font-size: 1.6rem;
+  line-height: 1.5;
+  border-radius: 0.6rem;
+  border: none;
+}
+
+.form .formItem:nth-child(2) input {
+  letter-spacing: 0.3rem !important;
+}
+
+.formItem {
+}
+
+.form button {
+  padding: 1.2rem 2.4rem;
+  background-color: #37b24d;
+  border: none;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #343a40;
+  color: #f8f9fa;
+}
