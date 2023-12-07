@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import Logo from "./Logo";
 import styles from "./PageNav.module.css";
 
 function PageNav() {
@@ -6,9 +7,14 @@ function PageNav() {
     <nav className={styles.nav}>
       <ul>
         <li className={styles.logo}>
-          <NavLink to="/">
+          {/* <NavLink to="/">
             <img src="../../public/logo.png" />
-          </NavLink>
+            <Logo />
+          </NavLink> */}
+          <Link to="/">
+            {/* <img src="../../public/logo.png" /> */}
+            <Logo />
+          </Link>
         </li>
         <li>
           <NavLink to="/product">Product</NavLink>

@@ -1,7 +1,10 @@
+import { useState } from "react";
 import PageNav from "../components/PageNav";
 import styles from "./Login.module.css";
 
 function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   return (
     <div className="container">
       <div className={styles.login}>
@@ -14,6 +17,8 @@ function Login() {
                 id="email"
                 type="text"
                 placeholder="jack@example.com"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 required
               />
             </div>
@@ -23,6 +28,8 @@ function Login() {
                 id="password"
                 type="password"
                 placeholder="••••••"
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
                 required
               />
             </div>
