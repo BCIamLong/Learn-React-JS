@@ -1,0 +1,29 @@
+.map {
+  background-color: #f8f9fa;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.map button {
+  border: none;
+  background-color: #37b24d;
+  padding: 0.8rem 1.6rem;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-radius: 0.8rem;
+  position: absolute;
+  bottom: 9%;
+  right: 50%;
+  transform: translateX(50%);
+  cursor: pointer;
+  line-height: 1.4;
+  z-index: 1000;
+}
+
+:global(.leaflet-container) {
+  height: 100%;
+  width: 100%;
+  /* z-index: 100; */
+}

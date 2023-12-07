@@ -1,10 +1,14 @@
 // import { nav } from "./AppNav.module.css";
+import { Link } from "react-router-dom";
 import styles from "./AppNav.module.css";
+import Logo from "./Logo";
 
 function AppNav() {
   return (
     <nav className={styles.nav}>
-      <h2>App navigation</h2>
+      <Link to="/">
+        <Logo />
+      </Link>
     </nav>
   );
 }

@@ -1,0 +1,11 @@
+.copyright {
+  /* display: block; */
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: 4.8rem;
+}
+
+.copyright p {
+  font-size: 1.4rem;
+  color: #868e96;
+}

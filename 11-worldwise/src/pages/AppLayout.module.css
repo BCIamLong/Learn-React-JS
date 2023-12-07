@@ -1,0 +1,43 @@
+.app {
+  height: 100%;
+  background-color: #343a40;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 5fr 6fr;
+  height: 100%;
+  position: relative;
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  position: absolute;
+  padding: 0.8rem 1.6rem;
+  background-color: #343a40;
+  border-radius: 0.8rem;
+  top: 6%;
+  right: 3%;
+  z-index: 1000;
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.account img {
+  width: 4.8rem;
+  height: 4.8rem;
+  border-radius: 50%;
+}
+
+.account a:link,
+.account a:visited {
+  text-decoration: none;
+  color: #f8f9fa;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  padding: 0.8rem 1.6rem;
+  background-color: #495057;
+  border-radius: 0.6rem;
+}
