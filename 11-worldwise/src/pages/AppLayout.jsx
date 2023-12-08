@@ -3,8 +3,13 @@ import { Link } from "react-router-dom";
 import styles from "./AppLayout.module.css";
 import Map from "../components/Map";
 import Sidebar from "../components/Sidebar";
+import PropTypes from "prop-types";
 
-function AppLayout() {
+AppLayout.propTypes = {
+  isLoading: PropTypes.bool,
+};
+
+function AppLayout({ isLoading }) {
   return (
     <div className="container">
       <div className={styles.account}>
@@ -17,7 +22,7 @@ function AppLayout() {
       </div>
       <div className={styles.app}>
         <main className={styles.main}>
-          <Sidebar />
+          <Sidebar isLoading={isLoading} />
           <Map />
         </main>
       </div>
