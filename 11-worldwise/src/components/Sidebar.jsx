@@ -1,17 +1,23 @@
 import styles from "./Sidebar.module.css";
 import AppNav from "../components/AppNav";
-import Cities from "../components/Cities";
 import Copyright from "../components/Copyright";
-import Countries from "../components/Countries";
 import Filter from "../components/Filter";
+// import Cities from "../components/Cities";
+// import Countries from "../components/Countries";
+// import Spinner from "./Spinner";
+// import Form from "./Form";
+import { Outlet } from "react-router-dom";
 
 function Sidebar() {
   return (
     <div className={styles.sidebar}>
       <AppNav />
       <Filter />
-      <Countries />
+      <Outlet />
+      {/* <Countries /> */}
       {/* <Cities /> */}
+      {/* <Form /> */}
+      {/* <Spinner /> */}
       <Copyright />
     </div>
   );

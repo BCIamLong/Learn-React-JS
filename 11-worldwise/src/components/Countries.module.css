@@ -1,65 +1,30 @@
-.countries {
+.cities {
+  width: 45rem;
   height: 100%;
   /* overflow-y: scroll; */
 }
 
 .list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   list-style: none;
+  gap: 1.6rem;
 }
 
 .item {
-  display: flex;
-  justify-content: flex-end;
-  gap: 2rem;
-  width: 45rem;
-  padding: 1.4rem 2.4rem;
   background-color: #495057;
   border-radius: 0.8rem;
-  cursor: pointer;
-  align-items: center;
-  border-left: 0.6rem solid #37b24d;
-}
-
-.info {
-  display: flex;
-  gap: 1.2rem;
-  margin-left: 0;
-  margin-right: auto;
+  text-align: center;
+  padding: 1.2rem 0;
+  border-left: 0.6rem solid #f59f00;
 }
 
 .code {
-  padding-top: 0.3rem;
+  font-size: 2.4rem;
   font-weight: 600;
-  font-size: 1.8rem;
 }
 
 .name {
-  font-size: 1.8rem;
-}
-
-.date {
-  font-size: 1.4rem;
-}
-
-.btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  cursor: pointer;
-  font-weight: 600;
-  color: #f8f9fa;
-  background-color: #343a40;
-  transition: all 0.3s;
-}
-
-.btn:hover {
-  color: #343a40;
-  background-color: #f59f00;
+  font-size: 2rem;
+  line-height: 1.5;
 }

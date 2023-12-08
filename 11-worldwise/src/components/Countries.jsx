@@ -2,34 +2,19 @@ import styles from "./Countries.module.css";
 
 function Countries() {
   return (
-    <div className={styles.countries}>
+    <div className={styles.cities}>
       <ul className={styles.list}>
         <li className={styles.item}>
-          <div className={styles.info}>
-            <p className={styles.code}>PT</p>
-            <p className={styles.name}>Lisbon</p>
-          </div>
-
-          <p className={styles.date}>(October 31, 2027)</p>
-          <button className={styles.btn}>&times;</button>
+          <p className={styles.code}>PT</p>
+          <p className={styles.name}>Portugal</p>
         </li>
         <li className={styles.item}>
-          <div className={styles.info}>
-            <p className={styles.code}>PT</p>
-            <p className={styles.name}>Lisbon</p>
-          </div>
-
-          <p className={styles.date}>(October 31, 2027)</p>
-          <button className={styles.btn}>&times;</button>
+          <p className={styles.code}>PT</p>
+          <p className={styles.name}>Portugal</p>
         </li>
         <li className={styles.item}>
-          <div className={styles.info}>
-            <p className={styles.code}>PT</p>
-            <p className={styles.name}>Lisbon</p>
-          </div>
-
-          <p className={styles.date}>(October 31, 2027)</p>
-          <button className={styles.btn}>&times;</button>
+          <p className={styles.code}>PT</p>
+          <p className={styles.name}>Portugal</p>
         </li>
       </ul>
     </div>

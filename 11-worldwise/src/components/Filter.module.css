@@ -18,11 +18,18 @@
 .filter li {
   cursor: pointer;
   text-transform: uppercase;
-  padding: 0.8rem 1.6rem;
+  /* padding: 0.8rem 1.6rem; */
   /* width: 100%; */
 }
+.filter a:link,
+.filter a:visited {
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.8rem 1.6rem;
+  color: #f8f9fa;
+}
 
-.clicked {
+.filter a:global(.active) {
   background-color: #212529;
   border-radius: 0.6rem;
 }

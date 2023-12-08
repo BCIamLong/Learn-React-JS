@@ -6,6 +6,9 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import "./App.css";
 import Login from "./pages/Login";
+import Cities from "./components/Cities";
+import Countries from "./components/Countries";
+import Form from "./components/Form";
 
 function App() {
   return (
@@ -13,11 +16,19 @@ function App() {
     //   <h1>Hello Routers!</h1>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        {/* <Route path="/" element={<Homepage />} /> */}
+        <Route index element={<Homepage />} />
         <Route path="product" element={<Product />} />
         <Route path="pricing" element={<Pricing />} />
-        <Route path="app" element={<AppLayout />} />
         <Route path="login" element={<Login />} />
+        <Route path="app" element={<AppLayout />}>
+          {/* declare nested route here */}
+          <Route index element={<Cities />} />
+          <Route path="cities" element={<Cities />} />
+          <Route path="countries" element={<Countries />} />
+          <Route path="form" element={<Form />} />
+          {/* <Route path="form" element={<p>Form</p>} /> */}
+        </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
