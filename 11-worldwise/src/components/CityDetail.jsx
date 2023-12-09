@@ -23,6 +23,11 @@ function CityDetail() {
   // const param = useParams();
   const { id } = useParams();
   const [city, setCity] = useState({});
+  // const [searchParams, setSearchParams] = useSearchParams();
+
+  // const lat = searchParams.get("lat");
+  // const lng = searchParams.get("lng");
+  // console.log(lat, lng);
   // console.log(param);
   const { cityName, notes, date, emoji } = city;
   useEffect(() => {

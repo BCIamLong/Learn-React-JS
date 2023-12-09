@@ -15,3 +15,7 @@
   text-decoration: none;
   color: inherit;
 }
+
+.list a:global(.active) {
+  border: 0.2rem solid #37b24d;
+}

@@ -1,10 +1,11 @@
-import { MapContainer } from "react-leaflet/MapContainer";
-import { TileLayer } from "react-leaflet/TileLayer";
-import styles from "./Map.module.css";
-import { Marker, Popup } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { Icon } from "leaflet";
+import { MapContainer } from "react-leaflet/MapContainer";
+import { TileLayer } from "react-leaflet/TileLayer";
+import { Marker, Popup } from "react-leaflet";
+import styles from "./Map.module.css";
+import "leaflet/dist/leaflet.css";
 
 const makers = [
   {
@@ -28,12 +29,19 @@ const customIcon = new Icon({
 
 function Map() {
   const [center, setCenter] = useState([16, 108]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const lat = searchParams.get("lat");
+  const lng = searchParams.get("lng");
+  console.log(lat, lng);
 
   const handleUseYourPosition = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
       const { latitude, longitude } = pos.coords;
       // console.log(pos.coords)
       setCenter([latitude, longitude]);
+      // setSearchParams([latitude, longitude]);
+      setSearchParams({ latitude, longitude });
     });
   };
 
@@ -53,6 +61,12 @@ function Map() {
             </Popup>
           </Marker>
         ))}
+
+        {/* <Marker position={[lat, lng]} icon={customIcon}>
+          <Popup>
+            <h2>hello</h2>
+          </Popup>
+        </Marker> */}
       </MapContainer>
       <button onClick={handleUseYourPosition}>Use your position</button>
     </div>
