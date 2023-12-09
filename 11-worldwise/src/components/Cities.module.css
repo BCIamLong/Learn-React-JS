@@ -9,3 +9,9 @@
   gap: 1.2rem;
   list-style: none;
 }
+
+.list a:link,
+.list a:visited {
+  text-decoration: none;
+  color: inherit;
+}

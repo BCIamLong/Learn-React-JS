@@ -2,6 +2,7 @@ import styles from "./Cities.module.css";
 import City from "./City";
 import PropTypes from "prop-types";
 import Message from "./Message";
+import { Link } from "react-router-dom";
 
 Cities.propTypes = {
   cities: PropTypes.array,
@@ -16,7 +17,9 @@ function Cities({ cities }) {
     <div className={styles.countries}>
       <ul className={styles.list}>
         {cities?.map((ct) => (
-          <City key={ct.id} city={ct} />
+          <Link to={`${ct.id}`} key={ct.id}>
+            <City city={ct} />
+          </Link>
         ))}
       </ul>
     </div>

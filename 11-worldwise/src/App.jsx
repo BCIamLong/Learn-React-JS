@@ -1,15 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import "./App.css";
 import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
 import Homepage from "./pages/Homepage";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
-import "./App.css";
 import Login from "./pages/Login";
 import Cities from "./components/Cities";
 import Countries from "./components/Countries";
 import Form from "./components/Form";
+import CityDetail from "./components/CityDetail";
 import { getCities } from "./services/apiCities";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
           {/* declare nested route here */}
           <Route index element={<Cities cities={cities} />} />
           <Route path="cities" element={<Cities cities={cities} />} />
+          <Route path="cities/:id" element={<CityDetail cities={cities} />} />
           <Route path="countries" element={<Countries cities={cities} />} />
           <Route path="form" element={<Form />} />
           {/* <Route path="form" element={<p>Form</p>} /> */}
