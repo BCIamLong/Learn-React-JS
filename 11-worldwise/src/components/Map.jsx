@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { Icon } from "leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
@@ -29,6 +29,7 @@ const customIcon = new Icon({
 
 function Map() {
   const [center, setCenter] = useState([16, 108]);
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const lat = searchParams.get("lat");
@@ -44,9 +45,12 @@ function Map() {
       setSearchParams({ latitude, longitude });
     });
   };
+  const handleClickMap = () => {
+    navigate("form");
+  };
 
   return (
-    <div className={styles.map}>
+    <div className={styles.map} onClick={handleClickMap}>
       <MapContainer center={center} zoom={9} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
