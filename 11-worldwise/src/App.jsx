@@ -16,6 +16,10 @@ function App() {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  //filter for all country in city duplicate
+  //1,how can we filter duplicate cities with country
+  // const countries = cities.map((ct) => ({ country: ct.country }));
+
   useEffect(() => {
     const fetchCities = async () => {
       try {
@@ -44,7 +48,7 @@ function App() {
           {/* declare nested route here */}
           <Route index element={<Cities cities={cities} />} />
           <Route path="cities" element={<Cities cities={cities} />} />
-          <Route path="countries" element={<Countries />} />
+          <Route path="countries" element={<Countries cities={cities} />} />
           <Route path="form" element={<Form />} />
           {/* <Route path="form" element={<p>Form</p>} /> */}
         </Route>
