@@ -1,0 +1,64 @@
+.form {
+  display: grid;
+  grid-template-columns: 3fr 5.5fr 1.5fr;
+  /* align-items: center; */
+  gap: 2rem;
+  background-color: #fff9db;
+  padding: 2.4rem;
+}
+
+:global(.dark) .form {
+  background-color: #495057;
+}
+
+:global(.dark) .form input,
+:global(.dark) .form textarea {
+  background-color: #868e96;
+  color: #f8f9fa;
+}
+
+:global(.dark) .form input::placeholder,
+:global(.dark) .form textarea::placeholder {
+  color: #adb5bd;
+}
+
+:global(.dark) .form input:focus,
+:global(.dark) .form textarea:focus {
+  background-color: #868e96;
+  color: #f8f9fa;
+  border: 0.15rem solid #5f3dc4;
+}
+
+.form textarea {
+  width: 100%;
+  resize: none;
+}
+
+.form input {
+}
+
+.form input,
+.form textarea {
+  border: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+  padding: 1rem;
+  border: 0.15rem solid inherit;
+}
+
+.form input:focus,
+.form textarea:focus {
+  outline: none;
+}
+
+.form button {
+  margin-left: auto;
+}
+
+.form button:hover {
+  background-color: #fab005;
+}
+
+:global(.dark) .form button:hover {
+  background-color: #7048e8;
+}

@@ -1,0 +1,42 @@
+.search {
+  display: flex;
+  align-items: center;
+  gap: 2.4rem;
+}
+
+.search p {
+  font-weight: 700;
+}
+
+.search input {
+  padding: 0.6rem 1rem;
+  border: 0.15rem solid #e9ecef;
+  font-family: inherit;
+  font-size: 1.6rem;
+}
+
+.search input:focus {
+  outline: none;
+  border: 0.15rem solid #ffec99;
+}
+
+:global(.dark) .search input {
+  background-color: #868e96;
+  border: 0.15rem solid #868e96;
+}
+
+:global(.dark) .search input::placeholder {
+  color: #adb5bd;
+}
+
+:global(.dark) .search input:focus {
+  border: 0.15rem solid #5f3dc4;
+}
+
+.search button:hover {
+  background-color: #fab005;
+}
+
+:global(.dark) .search button:hover {
+  background-color: #7048e8;
+}

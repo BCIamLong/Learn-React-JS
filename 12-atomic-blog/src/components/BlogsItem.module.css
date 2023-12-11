@@ -1,0 +1,27 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  border: 0.15rem solid #fff9db;
+  cursor: pointer;
+}
+
+.item:hover {
+  background-color: #fff9db;
+}
+
+:global(.dark) .item:hover {
+  background-color: #845ef7;
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.content {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}

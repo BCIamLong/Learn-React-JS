@@ -1,0 +1,39 @@
+.btn {
+  cursor: pointer;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  border-radius: 0;
+}
+
+:global(.dark) .primary {
+  background-color: #5f3dc4;
+  color: #f8f9fa;
+}
+
+.primary {
+  color: #212529;
+  background-color: #f59f00;
+  border: none;
+}
+
+/* .primary:focus {
+  border: none !important;
+  outline: none !important;
+} */
+
+.darkMode {
+  position: fixed;
+  padding: 0.6rem 1.2rem;
+  top: 1%;
+  right: 2%;
+  background-color: #ffd43b;
+  color: #ffec99;
+  font-size: 4.8rem;
+}
+
+:global(.dark) .darkMode {
+  background-color: #b197fc;
+  color: #6741d9;
+}
