@@ -4,12 +4,16 @@ import styles from "./AppLayout.module.css";
 import Map from "../components/Map";
 import Sidebar from "../components/Sidebar";
 import PropTypes from "prop-types";
+import { useCities } from "../contexts/CitiesContext";
 
 AppLayout.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-function AppLayout({ isLoading }) {
+// function AppLayout({ isLoading }) {
+function AppLayout() {
+  const { isLoading } = useCities();
+
   return (
     <div className="container">
       <div className={styles.account}>

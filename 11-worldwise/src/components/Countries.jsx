@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styles from "./Countries.module.css";
 import Country from "./Country";
+import { useCities } from "../contexts/CitiesContext";
 
 Countries.propTypes = {
   cities: PropTypes.array,
@@ -17,7 +18,9 @@ Countries.propTypes = {
 //   return countries;
 // };
 
-function Countries({ cities }) {
+// function Countries({ cities }) {
+function Countries() {
+  const { cities } = useCities();
   // const countries = getCountries(cities);
   const countries = cities.reduce((arr, city) => {
     if (!arr.find((ct) => ct.country === city.country))

@@ -15,8 +15,8 @@ function App() {
   //   [isFakeDark]
   // );
   const [isFakeDark, setIsFakeDark] = useIsFakeDark();
-  const context = usePosts();
-  console.log(context);
+  // const context = usePosts();
+  // console.log(context);
 
   return (
     <section>
