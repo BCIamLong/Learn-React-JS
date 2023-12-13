@@ -34,7 +34,7 @@ function Map() {
 
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
-  console.log(lat, lng);
+  // console.log(lat, lng);
 
   const handleUseYourPosition = () => {
     navigator.geolocation.getCurrentPosition((pos) => {

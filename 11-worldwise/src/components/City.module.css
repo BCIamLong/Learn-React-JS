@@ -51,3 +51,8 @@
   color: #343a40;
   background-color: #f59f00;
 }
+
+.selected {
+  border: 0.15rem solid #37b24d;
+  border-left: 0.6rem solid #37b24d;
+}

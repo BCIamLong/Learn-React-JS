@@ -40,37 +40,37 @@ function App() {
   return (
     // <div className="container">
     //   <h1>Hello Routers!</h1>
-    <BrowserRouter>
-      <Routes>
-        {/* <Route path="/" element={<Homepage />} /> */}
-        <Route index element={<Homepage />} />
-        <Route path="product" element={<Product />} />
-        <Route path="pricing" element={<Pricing />} />
-        <Route path="login" element={<Login />} />
-        <Route
-          path="app"
-          element={
-            <CitiesProvider>
+    <CitiesProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* <Route path="/" element={<Homepage />} /> */}
+          <Route index element={<Homepage />} />
+          <Route path="product" element={<Product />} />
+          <Route path="pricing" element={<Pricing />} />
+          <Route path="login" element={<Login />} />
+          <Route
+            path="app"
+            element={
               <AppLayout />
-              {/* <AppLayout isLoading={isLoading} /> */}
-            </CitiesProvider>
-          }
-        >
-          {/* declare nested route here */}
-          {/* <Route index element={<Cities cities={cities} />} /> */}
-          <Route index element={<Navigate replace to="cities" />} />
-          <Route path="cities" element={<Cities />} />
-          <Route path="cities/:id" element={<CityDetail />} />
-          <Route path="countries" element={<Countries />} />
-          {/* <Route path="cities" element={<Cities cities={cities} />} />
+              // <AppLayout isLoading={isLoading} />
+            }
+          >
+            {/* declare nested route here */}
+            {/* <Route index element={<Cities cities={cities} />} /> */}
+            <Route index element={<Navigate replace to="cities" />} />
+            <Route path="cities" element={<Cities />} />
+            <Route path="cities/:id" element={<CityDetail />} />
+            <Route path="countries" element={<Countries />} />
+            {/* <Route path="cities" element={<Cities cities={cities} />} />
           <Route path="cities/:id" element={<CityDetail cities={cities} />} />
           <Route path="countries" element={<Countries cities={cities} />} /> */}
-          <Route path="form" element={<Form />} />
-          {/* <Route path="form" element={<p>Form</p>} /> */}
-        </Route>
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+            <Route path="form" element={<Form />} />
+            {/* <Route path="form" element={<p>Form</p>} /> */}
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </CitiesProvider>
     // </div>
   );
 }

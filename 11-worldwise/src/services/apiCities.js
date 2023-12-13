@@ -16,6 +16,7 @@ export const getCity = async (id) => {
     const data = await res.json();
     return data;
   } catch (err) {
+    // if (err.name === "AbortError") return;
     throw new Error("Fetch cities data error");
   }
 };

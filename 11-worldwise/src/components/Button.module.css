@@ -13,6 +13,7 @@
 .back {
   border: 0.1rem solid #dee2e6;
   color: #dee2e6;
+  width: 27%;
 }
 
 :global(.btn--back) {
