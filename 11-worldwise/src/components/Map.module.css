@@ -5,7 +5,7 @@
   height: 100%;
 }
 
-.map button {
+/* .map button {
   border: none;
   background-color: #37b24d;
   padding: 0.8rem 1.6rem;
@@ -20,7 +20,7 @@
   cursor: pointer;
   line-height: 1.4;
   z-index: 1000;
-}
+} */
 
 :global(.leaflet-container) {
   height: 100%;

@@ -37,3 +37,20 @@
   color: #343a40;
   background-color: #37b24d;
 } */
+
+.position {
+  border: none;
+  background-color: #37b24d;
+  padding: 0.8rem 1.6rem;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  font-weight: 500;
+  border-radius: 0.8rem;
+  position: absolute;
+  bottom: 9%;
+  right: 50%;
+  transform: translateX(50%);
+  cursor: pointer;
+  line-height: 1.4;
+  z-index: 1000;
+}
