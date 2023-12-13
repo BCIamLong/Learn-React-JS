@@ -6,21 +6,22 @@ import { TileLayer } from "react-leaflet/TileLayer";
 import { Marker, Popup } from "react-leaflet";
 import styles from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
+import { useCities } from "../contexts/CitiesContext";
 
-const makers = [
-  {
-    coords: [16, 108],
-    popup: "Hello",
-  },
-  {
-    coords: [18, 100],
-    popup: "Hello",
-  },
-  {
-    coords: [16, 105],
-    popup: "Hello",
-  },
-];
+// const makers = [
+//   {
+//     coords: [16, 108],
+//     popup: "Hello",
+//   },
+//   {
+//     coords: [18, 100],
+//     popup: "Hello",
+//   },
+//   {
+//     coords: [16, 105],
+//     popup: "Hello",
+//   },
+// ];
 
 const customIcon = new Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/128/9101/9101314.png",
@@ -31,10 +32,11 @@ function Map() {
   const [center, setCenter] = useState([16, 108]);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { cities } = useCities();
 
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
-  // console.log(lat, lng);
+  console.log(lat, lng);
 
   const handleUseYourPosition = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -58,10 +60,13 @@ function Map() {
           url="https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png"
         />
 
-        {makers.map((mrk, i) => (
-          <Marker key={i} position={mrk.coords} icon={customIcon}>
+        {cities.map((city) => (
+          <Marker key={city.id} position={city.position} icon={customIcon}>
             <Popup>
-              <h2>{mrk.popup}</h2>
+              <h2>
+                <span>{city.emoji}</span>
+                <span> {city.cityName}</span>
+              </h2>
             </Popup>
           </Marker>
         ))}

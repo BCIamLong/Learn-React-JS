@@ -5,7 +5,7 @@
       rgba(53, 59, 65, 0.7),
       rgba(53, 59, 65, 0.7)
     ),
-    url(imgs/bg.jpg);
+    url(/imgs/bg.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

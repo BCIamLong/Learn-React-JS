@@ -27,3 +27,23 @@
   width: 100%;
   /* z-index: 100; */
 }
+
+:global(.leaflet-popup-content) {
+  font-family: inherit;
+}
+
+:global(.leaflet-popup-content-wrapper) {
+  border-radius: 0.6rem !important;
+  border-left: 0.6rem solid #0ca678;
+  width: 100%;
+  background-color: #212529 !important;
+  color: #fff !important;
+}
+
+:global(.leaflet-popup-tip) {
+  background-color: #212529 !important;
+}
+
+:global(.leaflet-popup-close-button) {
+  color: #fff !important;
+}
