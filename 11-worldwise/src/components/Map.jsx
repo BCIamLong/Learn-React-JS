@@ -1,12 +1,19 @@
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "leaflet";
 import { MapContainer } from "react-leaflet/MapContainer";
 import { TileLayer } from "react-leaflet/TileLayer";
-import { Marker, Popup } from "react-leaflet";
+import {
+  Marker,
+  Popup,
+  useMap,
+  useMapEvent,
+  useMapEvents,
+} from "react-leaflet";
 import styles from "./Map.module.css";
 import "leaflet/dist/leaflet.css";
 import { useCities } from "../contexts/CitiesContext";
+import PropTypes from "prop-types";
 
 // const makers = [
 //   {
@@ -30,13 +37,19 @@ const customIcon = new Icon({
 
 function Map() {
   const [center, setCenter] = useState([16, 108]);
-  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
+  // const { id } = useParams();
   const { cities } = useCities();
 
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
-  console.log(lat, lng);
+  useEffect(() => {
+    const lat = searchParams?.get("lat");
+    const lng = searchParams?.get("lng");
+    if (!lat || !lng) return;
+    // console.log(lat, lng);
+    // console.log("ok");
+    setCenter([lat, lng]);
+  }, [searchParams]);
 
   const handleUseYourPosition = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
@@ -47,12 +60,13 @@ function Map() {
       setSearchParams({ latitude, longitude });
     });
   };
-  const handleClickMap = () => {
-    navigate("form");
-  };
+  // const handleClickMap = () => {
+  //   navigate("form");
+  // };
 
   return (
-    <div className={styles.map} onClick={handleClickMap}>
+    // <div className={styles.map} onClick={handleClickMap} key={id}>
+    <div className={styles.map}>
       <MapContainer center={center} zoom={9} scrollWheelZoom={true}>
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -70,16 +84,72 @@ function Map() {
             </Popup>
           </Marker>
         ))}
+        <Marker position={center} icon={customIcon}>
+          <Popup>
+            <h2></h2>
+          </Popup>
+        </Marker>
 
         {/* <Marker position={[lat, lng]} icon={customIcon}>
           <Popup>
             <h2>hello</h2>
           </Popup>
         </Marker> */}
+        <ChangeCenter position={center} />
+        <DetectClick setCenter={setCenter} />
       </MapContainer>
       <button onClick={handleUseYourPosition}>Use your position</button>
     </div>
   );
+}
+
+ChangeCenter.propTypes = {
+  position: PropTypes.any,
+};
+
+function ChangeCenter({ position }) {
+  const map = useMap();
+  map.setView(position);
+
+  return null;
+}
+
+DetectClick.propTypes = {
+  setCenter: PropTypes.func,
+  setSearchParams: PropTypes.func,
+};
+
+function DetectClick({ setCenter }) {
+  const navigate = useNavigate();
+  // const map = useMapEvent("click", (e) => {
+  // useMapEvent("click", (e) => {
+  //   // console.log(e);
+  //   // console.log(e.latlng);
+  //   setCenter(e.latlng);
+  //   const { lat: latitude, lng: longitude } = e.latlng;
+  //   navigate(`form?lat=${latitude}&lng=${longitude}`);
+  //   // console.log(latitude, longitude);
+
+  //   setSearchParams({ latitude, longitude });
+  // });
+  // console.log(map);
+  useMapEvents({
+    click(e) {
+      // map.locate();
+      // console.log(e.latlng);
+      console.log(e);
+      // setCenter(e.latlng);
+      const { lat: latitude, lng: longitude } = e.latlng;
+      navigate(`form?lat=${latitude}&lng=${longitude}`);
+    },
+    // locationfound(e) {
+    //   console.log(e.latlng);
+    //   const { lat, lng } = e.latlng;
+    //   setCenter([lat, lng]);
+    //   map.flyTo(e.latlng, map.getZoom());
+    // },
+  });
+  return null;
 }
 
 export default Map;

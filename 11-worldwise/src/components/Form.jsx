@@ -2,9 +2,18 @@
 import Button from "./Button";
 import styles from "./Form.module.css";
 import BackButton from "./BackButton";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
 
 function Form() {
   // const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  // console.log(searchParams);
+
+  useEffect(() => {
+    const lat = searchParams.get("lat");
+    const lng = searchParams.get("lng");
+  }, [searchParams]);
 
   return (
     <form className={styles.form}>
