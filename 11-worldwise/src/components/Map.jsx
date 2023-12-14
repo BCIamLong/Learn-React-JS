@@ -16,6 +16,7 @@ import { useCities } from "../contexts/CitiesContext";
 import PropTypes from "prop-types";
 import { useGeolocation } from "../hooks/useGeolocation";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
 
 // const makers = [
 //   {
@@ -46,6 +47,7 @@ function Map() {
     position: geoPosition,
     isLoading: isLoadingPosition,
   } = useGeolocation();
+  const [mapLat, mapLng] = useUrlPosition();
   // const [center, setCenter] = useState([16, 108]);
   // const { id } = useParams();
 
@@ -58,13 +60,20 @@ function Map() {
   }, [geoPosition]);
 
   useEffect(() => {
-    const lat = searchParams?.get("lat");
-    const lng = searchParams?.get("lng");
-    if (!lat || !lng) return;
+    if (!mapLat || !mapLng) return;
     // console.log(lat, lng);
     // console.log("ok");
-    setCenter([lat, lng]);
+    setCenter([mapLat, mapLng]);
   }, [searchParams]);
+
+  // useEffect(() => {
+  //   const lat = searchParams?.get("lat");
+  //   const lng = searchParams?.get("lng");
+  //   if (!lat || !lng) return;
+  //   // console.log(lat, lng);
+  //   // console.log("ok");
+  //   setCenter([lat, lng]);
+  // }, [searchParams]);
 
   // const handleUseYourPosition = () => {
   //   navigator.geolocation.getCurrentPosition((pos) => {

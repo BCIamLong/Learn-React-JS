@@ -1,4 +1,6 @@
-const BASE_URL = "http://localhost:3010";
+import { BASE_URL } from "../configs/serverApi";
+
+// const BASE_URL = "http://localhost:3010";
 
 export const getCities = async () => {
   try {
