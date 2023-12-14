@@ -70,7 +70,7 @@ function CityDetail() {
         </p>
       </div>
       <div className={styles.detail}>
-        <p className={styles.tittle}>YOU WENT TO LISBON ON</p>
+        <p className={styles.tittle}>YOU WENT TO {cityName} ON</p>
         <p className={styles.content}>{formatDate(date)}</p>
       </div>
       <div className={styles.detail}>

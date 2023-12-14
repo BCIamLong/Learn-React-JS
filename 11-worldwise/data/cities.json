@@ -35,6 +35,30 @@
         "lng": 13.376933665713324
       },
       "id": 98443197
+    },
+    {
+      "id": 1702566988887,
+      "cityName": "Da Nang",
+      "country": "Viet Nam",
+      "position": {
+        "lat": 16.06692895745012,
+        "lng": 107.92916287913182
+      },
+      "date": "2023-12-14T15:16:16.559Z",
+      "emoji": "🇻🇳",
+      "notes": "This is a beautiful city"
+    },
+    {
+      "id": 1702572450720,
+      "cityName": "Vinh",
+      "country": "Viet Nam",
+      "position": {
+        "lat": 18.678772221921143,
+        "lng": 105.70744323991326
+      },
+      "date": "2023-12-14T16:47:17.089Z",
+      "emoji": "🇻🇳",
+      "notes": "Hehe"
     }
   ]
 }

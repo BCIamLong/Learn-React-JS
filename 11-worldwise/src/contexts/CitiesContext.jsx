@@ -1,7 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { getCities } from "../services/apiCities";
+import { getCities, postCity } from "../services/apiCities";
 import { getCity } from "../services/apiCities";
+// import { useNavigate } from "react-router-dom";
 
 CitiesProvider.propTypes = {
   children: PropTypes.any,
@@ -13,6 +14,7 @@ function CitiesProvider({ children }) {
   const [cities, setCities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [city, setCity] = useState({});
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -42,16 +44,31 @@ function CitiesProvider({ children }) {
     // console.log(cityData);
   };
 
+  const createCity = async (newCity) => {
+    try {
+      setIsLoading(true);
+      await postCity(newCity);
+      // setCities((cities) => [...cities, newCity]);
+      setCities((cities) => [...cities, newCity]);
+      // navigate("/app/cities");
+    } catch (err) {
+      alert(err.message);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <CitiesContext.Provider
       value={{
         cities,
         // onSetCities: setCities,
+        setCities,
         isLoading,
         setIsLoading,
         city,
         setCity,
         fetchCity,
+        createCity,
       }}
     >
       {children}

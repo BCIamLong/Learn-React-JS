@@ -48,9 +48,10 @@ function Map() {
     isLoading: isLoadingPosition,
   } = useGeolocation();
   const [mapLat, mapLng] = useUrlPosition();
+
   // const [center, setCenter] = useState([16, 108]);
   // const { id } = useParams();
-
+  // console.log(geoPosition, center);
   useEffect(() => {
     if (!geoPosition) return;
 
@@ -123,8 +124,8 @@ function Map() {
         <DetectClick setCenter={setCenter} />
       </MapContainer>
       {/* <button onClick={handleUseYourPosition}>Use your position</button> */}
-      {geoPosition?.latitude !== center[0] &&
-        geoPosition?.longitude !== center[1] && (
+      {geoPosition?.latitude !== +center[0] &&
+        geoPosition?.longitude !== +center[1] && (
           <Button type="position" onClick={handleGetPosition}>
             {isLoadingPosition ? "Loading..." : "Use your position"}
           </Button>
