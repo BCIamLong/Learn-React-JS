@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import PageNav from "../components/PageNav";
 // import AppNav from "../components/AppNav";
 import styles from "./Homepage.module.css";
+// import { useAuth } from "../contexts/authContext";
 
 function Homepage() {
+  // const { user } = useAuth();
+
   return (
     <div className="container">
       <div className={styles.homepage}>
@@ -22,7 +25,11 @@ function Homepage() {
             of. Never forget your wonderful experiences, and show your friends
             how you have wandered the world.
           </p>
+          {/* {user.name ? ( */}
           <Link to="/app">Start tracking now</Link>
+          {/* ) : (
+            <Link to="/login">Start tracking now</Link>
+          )} */}
         </main>
         {/* <a href="/product">Product</a> <br />
       <a href="/pricing">Pricing</a> */}

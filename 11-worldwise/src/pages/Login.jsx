@@ -1,16 +1,27 @@
 import { useState } from "react";
 import PageNav from "../components/PageNav";
 import styles from "./Login.module.css";
+import { useAuth } from "../contexts/authContext";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const user = login(email, password);
+    if (!user) return;
+    navigate("/app");
+  };
   return (
     <div className="container">
       <div className={styles.login}>
         <PageNav />
         <main className={styles.main}>
-          <form action="" className={styles.form}>
+          <form action="" className={styles.form} onSubmit={handleSubmit}>
             <div className={styles.formItem}>
               <label htmlFor="email">Email address</label>
               <input

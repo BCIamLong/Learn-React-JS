@@ -1,8 +1,11 @@
 import { NavLink, Link } from "react-router-dom";
 import Logo from "./Logo";
 import styles from "./PageNav.module.css";
+import { useAuth } from "../contexts/authContext";
 
 function PageNav() {
+  const { isAuthenticated, user } = useAuth();
+
   return (
     <nav className={styles.nav}>
       <ul>
@@ -23,7 +26,12 @@ function PageNav() {
           <NavLink to="/pricing">Pricing</NavLink>
         </li>
         <li className={styles.login}>
-          <NavLink to="/login">Login</NavLink>
+          {/* {user.name ? ( */}
+          {isAuthenticated ? (
+            <NavLink to="/app">{user.name}</NavLink>
+          ) : (
+            <NavLink to="/login">Login</NavLink>
+          )}
         </li>
       </ul>
     </nav>
