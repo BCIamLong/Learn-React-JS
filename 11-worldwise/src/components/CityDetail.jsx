@@ -66,7 +66,8 @@ function CityDetail() {
       <div className={styles.detail}>
         <p className={styles.tittle}>CITY NAME</p>
         <p className={styles.content}>
-          <span>{emoji}</span> {cityName}
+          <span>{cityName}</span>
+          <span className={styles.emoji}>{emoji}</span>
         </p>
       </div>
       <div className={styles.detail}>
