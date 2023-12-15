@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { getCities, postCity } from "../services/apiCities";
+import { deleteCity, getCities, postCity } from "../services/apiCities";
 import { getCity } from "../services/apiCities";
 // import { useNavigate } from "react-router-dom";
 
@@ -57,6 +57,17 @@ function CitiesProvider({ children }) {
     setIsLoading(false);
   };
 
+  const removeCity = async (id) => {
+    try {
+      setIsLoading(true);
+      await deleteCity(id);
+      setCities((cities) => cities.filter((city) => city.id !== id));
+    } catch (err) {
+      alert(err.message);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <CitiesContext.Provider
       value={{
@@ -69,6 +80,7 @@ function CitiesProvider({ children }) {
         setCity,
         fetchCity,
         createCity,
+        removeCity,
       }}
     >
       {children}

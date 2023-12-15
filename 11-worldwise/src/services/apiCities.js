@@ -41,3 +41,14 @@ export const postCity = async (city) => {
     throw new Error("Add new city error bad request!");
   }
 };
+
+export const deleteCity = async (id) => {
+  try {
+    await fetch(`${BASE_URL}/cities/${id}`, {
+      method: "DELETE",
+    });
+  } catch (err) {
+    // if (err.name === "AbortError") return;
+    throw new Error("No city found with this id!");
+  }
+};

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 import styles from "./Sidebar.module.css";
-import AppNav from "../components/AppNav";
+import AppNav from "./AppNav";
 import Copyright from "../components/Copyright";
 import Filter from "../components/Filter";
 import Spinner from "./Spinner";

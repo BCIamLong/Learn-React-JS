@@ -1,6 +1,7 @@
 .countries {
   height: 100%;
   /* overflow-y: scroll; */
+  /* overflow: hidden; */
 }
 
 .list {
@@ -8,6 +9,8 @@
   flex-direction: column;
   gap: 1.2rem;
   list-style: none;
+  height: 34rem;
+  overflow-y: scroll;
 }
 
 .list a:link,

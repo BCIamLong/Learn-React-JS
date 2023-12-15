@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import formatDate from "../utils/formatDate";
 import { useCities } from "../contexts/CitiesContext";
 // import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import { Navigate } from "react-router-dom";
 
 City.propTypes = {
@@ -24,13 +25,22 @@ City.propTypes = {
 // };
 
 function City({ city }) {
-  const { city: currentCity } = useCities();
+  const { city: currentCity, removeCity } = useCities();
   const { emoji, cityName, date } = city;
+  // const navigate = useNavigate();
+
   // const dateFormat = new Date(date).toLocaleDateString("en-US", {
   //   month: "long",
   //   day: "2-digit",
   //   year: "numeric",
   // });
+  const handleClick = (e) => {
+    e.preventDefault();
+    removeCity(city.id);
+    // console.log("ok");
+    // navigate(0);
+    // navigate("/app/cities");
+  };
 
   return (
     <li
@@ -43,7 +53,9 @@ function City({ city }) {
         <p className={styles.name}>{cityName}</p>
       </div>
       <p className={styles.date}>({formatDate(date)})</p>
-      <button className={styles.btn}>&times;</button>
+      <button className={styles.btn} onClick={handleClick}>
+        &times;
+      </button>
     </li>
   );
 }
