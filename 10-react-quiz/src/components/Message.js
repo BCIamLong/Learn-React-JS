@@ -1,4 +1,7 @@
-function Error({ type, message }) {
+import { useQuiz } from "../context/QuizContext";
+
+function Error({ type }) {
+  const { message } = useQuiz();
   return (
     <div className="msg">
       <h3 className="heading-tertiary">

@@ -1,4 +1,7 @@
-function Answer({ isSelected, answer, selectedId, dispatch }) {
+import { useQuiz } from "../context/QuizContext";
+
+function Answer({ answer }) {
+  const { isSelected, selectedId, dispatch } = useQuiz();
   return (
     <li
       onClick={() => dispatch({ type: "setSelectedId", payload: answer.id })}

@@ -1,0 +1,3 @@
+const SECS_PER_QUESTION = 30;
+
+export { SECS_PER_QUESTION };

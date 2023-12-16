@@ -1,4 +1,8 @@
-function Result({ score, totalPoints, highScore, children }) {
+import { useQuiz } from "../context/QuizContext";
+
+function Result({ children }) {
+  const { score, totalPoints, highScore } = useQuiz();
+
   const percent = Math.round((score / totalPoints) * 100);
 
   const getEmoji = (scorePercent) => {

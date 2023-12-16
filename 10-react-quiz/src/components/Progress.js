@@ -1,10 +1,8 @@
-export default function Progress({
-  selectedId,
-  score,
-  totalPoints,
-  numQuestions,
-  numQuestion,
-}) {
+import { useQuiz } from "../context/QuizContext";
+
+export default function Progress() {
+  const { selectedId, score, totalPoints, numQuestions, numQuestion } =
+    useQuiz();
   // const totalPoints = questions?.reduce((acc, el) => acc + el.points, 0);
   // const numQuestionFormat = selectedId >= 0 ? numQuestion + 1 : numQuestion;
   // const progress = ((numQuestion + +(selectedId >= 0)) / questions.length) * 100;

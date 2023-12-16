@@ -1,9 +1,8 @@
-export default function Welcome({
-  numQuestions,
-  dispatch,
-  questions,
-  children,
-}) {
+import { useQuiz } from "../context/QuizContext";
+
+export default function Welcome({ children }) {
+  const { numQuestions, dispatch, questions } = useQuiz();
+
   const questionsData = questions.map((q, i) => (i < numQuestions ? q : null));
   const hardQuestions = questionsData.filter((q) => q?.points === 30).length;
   const mediumQuestions = questionsData.filter((q) => q?.points === 20).length;
