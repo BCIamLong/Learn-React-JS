@@ -6,7 +6,8 @@ import Sidebar from "../components/Sidebar";
 import PropTypes from "prop-types";
 import { useCities } from "../contexts/CitiesContext";
 import { useAuth } from "../contexts/authContext";
-import { useEffect } from "react";
+// import { useEffect } from "react";
+// import ProtectedRoute from "./ProtectedRoute";
 
 AppLayout.propTypes = {
   isLoading: PropTypes.bool,
@@ -15,7 +16,7 @@ AppLayout.propTypes = {
 // function AppLayout({ isLoading }) {
 function AppLayout() {
   const { isLoading } = useCities();
-  const { isAuthenticated, user, logout } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -23,15 +24,15 @@ function AppLayout() {
     navigate("/login");
   };
 
-  useEffect(() => {
-    if (!isAuthenticated) navigate("/login");
-  }, []);
+  // useEffect(() => {
+  //   if (!isAuthenticated) navigate("/login");
+  // }, []);
 
   return (
     <div className="container">
       <div className={styles.account}>
-        <img src={user.photo} alt="" />
-        <p>Welcome, {user.name?.split(" ")[0]}</p>
+        <img src={user?.photo} alt="" />
+        <p>Welcome, {user?.name?.split(" ")[0]}</p>
         <button className={styles.logout} onClick={handleClick}>
           Logout
         </button>

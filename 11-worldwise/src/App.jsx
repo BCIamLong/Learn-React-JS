@@ -13,6 +13,7 @@ import Form from "./components/Form";
 import CityDetail from "./components/CityDetail";
 import { CitiesProvider } from "./contexts/CitiesContext";
 import { AuthProvider } from "./contexts/authContext";
+import ProtectedRoute from "./pages/ProtectedRoute";
 // import { getCities } from "./services/apiCities";
 // import { CitiesProvider } from "./contexts/CitiesContext";
 
@@ -41,6 +42,7 @@ function App() {
   return (
     // <div className="container">
     //   <h1>Hello Routers!</h1>
+
     <AuthProvider>
       <CitiesProvider>
         <BrowserRouter>
@@ -53,7 +55,9 @@ function App() {
             <Route
               path="app"
               element={
-                <AppLayout />
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
                 // <AppLayout isLoading={isLoading} />
               }
             >
@@ -74,6 +78,7 @@ function App() {
         </BrowserRouter>
       </CitiesProvider>
     </AuthProvider>
+
     // </div>
   );
 }
