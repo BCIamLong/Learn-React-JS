@@ -4,6 +4,7 @@ import { PostProvider } from "./contexts/PostContext";
 import Button from "./components/Button";
 import { useIsFakeDark } from "./hooks/useIsFakeDark";
 import { usePosts } from "./contexts/PostContext";
+// import Test from "./Test";
 
 function App() {
   // Whenever `isFakeDark` changes, we toggle the `fake-dark-mode` class on the HTML element (see in "Elements" dev tool).
@@ -143,6 +144,7 @@ function List() {
           <p>{post.body}</p>
         </li>
       ))}
+      {/* <Test /> */}
     </ul>
   );
 }
