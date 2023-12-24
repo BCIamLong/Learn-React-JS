@@ -41,7 +41,7 @@ function CityDetail() {
     fetchCity(id);
 
     // return () => controller.abort();
-  }, [id, city]);
+  }, [id, city, fetchCity]);
 
   // useEffect(() => {
   //   const fetchCity = async () => {

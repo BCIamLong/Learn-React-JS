@@ -1,5 +1,6 @@
 import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useReducer,
@@ -98,27 +99,30 @@ function CitiesProvider({ children }) {
     fetchCities();
   }, []);
 
-  const fetchCity = async (id) => {
-    console.log(id, city.id);
-    if (+id === city.id) return;
+  const fetchCity = useCallback(
+    async (id) => {
+      console.log(id, city.id);
+      if (+id === city.id) return;
 
-    dispatch({ type: "loading" });
-    try {
-      // setIsLoading(true);
+      dispatch({ type: "loading" });
+      try {
+        // setIsLoading(true);
+        // dispatch({ type: "setIsLoading" });
+        const cityData = await getCity(id);
+        dispatch({ type: "city/loaded", payload: cityData });
+        // dispatch({ type: "setCity", payload: cityData });
+        // setCity(cityData);
+      } catch (err) {
+        // if (err.name === "AbortError") return;
+        alert(err.message);
+        dispatch({ type: "rejected", payload: err.message });
+      }
       // dispatch({ type: "setIsLoading" });
-      const cityData = await getCity(id);
-      dispatch({ type: "city/loaded", payload: cityData });
-      // dispatch({ type: "setCity", payload: cityData });
-      // setCity(cityData);
-    } catch (err) {
-      // if (err.name === "AbortError") return;
-      alert(err.message);
-      dispatch({ type: "rejected", payload: err.message });
-    }
-    // dispatch({ type: "setIsLoading" });
-    // setIsLoading(false);
-    // console.log(cityData);
-  };
+      // setIsLoading(false);
+      // console.log(cityData);
+    },
+    [city.id]
+  );
 
   const createCity = async (newCity) => {
     dispatch({ type: "loading" });
