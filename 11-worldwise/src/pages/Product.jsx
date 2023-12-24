@@ -8,7 +8,7 @@ function Product() {
         <PageNav />
         <main className={styles.main}>
           <div className={styles.box}>
-            <img src="../../public/imgs/img-1.jpg" alt="" />
+            <img src="/imgs/img-1.jpg" alt="" />
 
             <div className={styles.content}>
               <p className={styles.heading}>About WorldWide.</p>

@@ -19,7 +19,7 @@ function Pricing() {
                 fugit voluptatem iste.
               </p>
             </div>
-            <img src="../../public/imgs/img-2.jpg" alt="" />
+            <img src="/imgs/img-2.jpg" alt="" />
           </div>
         </main>
       </div>
