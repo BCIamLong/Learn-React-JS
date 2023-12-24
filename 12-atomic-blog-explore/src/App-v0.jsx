@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  memo,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { faker } from "@faker-js/faker";
 
 function createRandomPost() {
@@ -43,15 +50,26 @@ function App() {
     [isFakeDark]
   );
 
+  const value = useMemo(() => {
+    return {
+      posts: searchedPosts,
+      onClearPosts: handleClearPosts,
+      onAddPost: handleAddPost,
+      searchQuery,
+      setSearchQuery,
+    };
+  }, [searchQuery, searchedPosts]);
+
   return (
     <PostContext.Provider
-      value={{
-        posts: searchedPosts,
-        onClearPosts: handleClearPosts,
-        searchQuery,
-        setSearchQuery,
-        onAddPost: handleAddPost,
-      }}
+      value={value}
+      // value={{
+      //   posts: searchedPosts,
+      //   onClearPosts: handleClearPosts,
+      //   searchQuery,
+      //   setSearchQuery,
+      //   onAddPost: handleAddPost,
+      // }}
     >
       <section>
         <button
@@ -116,7 +134,7 @@ function Results() {
   return <p>🚀 {posts.length} atomic posts found</p>;
 }
 
-function Main() {
+const Main = memo(function Main() {
   return (
     <main>
       <FormAddPost
@@ -127,7 +145,7 @@ function Main() {
       />
     </main>
   );
-}
+});
 
 function Posts() {
   return (
