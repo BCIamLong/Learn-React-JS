@@ -1,0 +1,19 @@
+.toggleSounds {
+  top: 6%;
+  right: -30%;
+  position: absolute;
+  font-size: 3.6rem;
+  cursor: pointer;
+}
+
+.unsound {
+  display: none;
+}
+
+.mute p {
+  display: none;
+}
+
+.mute .unsound {
+  display: initial;
+}
