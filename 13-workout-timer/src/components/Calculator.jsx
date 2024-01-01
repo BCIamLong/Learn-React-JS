@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import PropsType from "prop-types";
 import clickSound from "../assets/ClickSound.m4a";
 
@@ -6,6 +6,12 @@ Calculator.propTypes = {
   workouts: PropsType.array,
   allowSound: PropsType.bool,
 };
+
+// const playSound = function (allowSound) {
+//   if (!allowSound) return;
+//   const sound = new Audio(clickSound);
+//   sound.play();
+// };
 
 function Calculator({ workouts, allowSound }) {
   const [number, setNumber] = useState(workouts.at(0).numExercises);
@@ -19,17 +25,28 @@ function Calculator({ workouts, allowSound }) {
   const mins = Math.floor(duration);
   const seconds = (duration - mins) * 60;
 
-  const playSound = function () {
-    if (!allowSound) return;
-    const sound = new Audio(clickSound);
-    sound.play();
-  };
+  // const playSound = function () {
+  //   if (!allowSound) return;
+  //   const sound = new Audio(clickSound);
+  //   sound.play();
+  // };
+
+  // const playSound = useCallback(
+  //   function () {
+  //     if (!allowSound) return;
+  //     const sound = new Audio(clickSound);
+  //     sound.play();
+  //   },
+  //   [allowSound]
+  // );
 
   const handleClickIncrease = () => {
     setDuration(
       (duration) => Math.floor(duration) + 1
       // duration > Math.floor(duration) ? Math.ceil(duration) : duration + 1
     );
+    // playSound();
+    // playSound(allowSound);
   };
 
   const handleClickDecrease = () => {
@@ -38,11 +55,26 @@ function Calculator({ workouts, allowSound }) {
       (duration) => (!duration ? duration : Math.ceil(duration) - 1)
       // duration > Math.floor(duration) ? Math.floor(duration) : duration - 1
     );
+    // playSound();
+    // playSound(allowSound);
   };
 
   useEffect(() => {
+    const playSound = function () {
+      if (!allowSound) return;
+      const sound = new Audio(clickSound);
+      sound.play();
+    };
+
+    playSound();
+  }, [duration, allowSound]);
+
+  useEffect(() => {
     setDuration((number * sets * speed) / 60 + (sets - 1) * durationBreak);
+    // playSound();
+    // console.log("ok");
   }, [number, sets, speed, durationBreak]);
+  // }, [number, sets, speed, durationBreak, playSound]);
   // console.log("ok");
 
   return (
