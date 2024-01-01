@@ -60,6 +60,11 @@ function Calculator({ workouts, allowSound }) {
   };
 
   useEffect(() => {
+    console.log(duration);
+    document.title = `Your ${number}-exercise workout`;
+  }, [number]);
+
+  useEffect(() => {
     const playSound = function () {
       if (!allowSound) return;
       const sound = new Audio(clickSound);
