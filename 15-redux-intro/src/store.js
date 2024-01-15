@@ -1,12 +1,64 @@
-import { createStore } from "redux";
+import { combineReducers, createStore } from "redux";
 
-const initialState = {
+// ************************************ CUSTOMER REDUCER ************************************
+const customerInitialState = {
+  fullName: "",
+  nationalId: "",
+  createdAt: "",
+};
+const customerReducer = function (state = customerInitialState, action) {
+  const { type, payload } = action;
+
+  switch (type) {
+    case "customer/createCustomer":
+      return {
+        ...state,
+        fullName: payload.fullName,
+        nationalId: payload.nationalId,
+        createdAt: payload.createdAt,
+      };
+    case "customer/updateName":
+      return { ...state, fullName: payload };
+    default:
+      return state;
+  }
+};
+
+function createCustomer(fullName, nationalId) {
+  // * we can also  create createdAt in the reducer function but it might create side effect and we shouldn't do it in reducer function because it's pure function
+  // * we should take all business logic in the reducer function but in this case it creates side effect so we don't do that right
+
+  return {
+    type: "customer/createCustomer",
+    payload: {
+      fullName,
+      nationalId,
+      createdAt: new Date().toLocaleDateString(),
+    },
+  };
+}
+
+function updateName(fullName) {
+  return { type: "customer/updateName", payload: fullName };
+}
+
+// const customerStore = createStore(customerReducer); //! so we don't do it like this
+// customerStore.dispatch(createCustomer("John Na", "US"));
+// customerStore.dispatch(updateName("Na John"));
+// console.log(customerStore.getState());
+// * remember that the store contains many reducer functions right, so we don't create many stores right
+
+// * and to add many reducer functions to store we basically combine them to a rootReducer function and then pass in it to the createStore()
+// * so to combine many reducer functions to the rootReducer we can use combineReducers function from redux
+// * in the combineReducers we pass in an object with the key pair value so key is the name describe for that reducer and value is that reducer
+
+const accountInitialState = {
   balance: 0,
   loan: 0,
   loadPurpose: "",
 };
 
-const reducer = function (state = initialState, action) {
+const accountReducer = function (state = accountInitialState, action) {
   const { type, payload } = action;
   const { balance, loan } = state;
 
@@ -38,9 +90,60 @@ const reducer = function (state = initialState, action) {
   }
 };
 
+const rootReducer = combineReducers({
+  account: accountReducer,
+  customer: customerReducer,
+});
+
+// * so basically with createStore, it always default that the reducer it gets always considered to be the root reducer
+const store = createStore(rootReducer);
+
+store.dispatch(createCustomer("John Na", "US"));
+store.dispatch(updateName("Na John"));
+console.log(store.getState());
+
+// ************************************ ACCOUNT REDUCER ************************************
+// const accountInitialState = {
+//   balance: 0,
+//   loan: 0,
+//   loadPurpose: "",
+// };
+
+// const accountReducer = function (state = accountInitialState, action) {
+//   const { type, payload } = action;
+//   const { balance, loan } = state;
+
+//   switch (type) {
+//     // case ACCOUNT_DEPOSIT: //* we also use this event name string variable in the reducer check type action like this
+//     case "account/deposit":
+//       return { ...state, balance: balance + payload };
+//     case "account/withdraw":
+//       return { ...state, balance: balance - payload };
+//     case "account/requestLoan":
+//       // const { amount, purpose } = payload;
+
+//       if (loan !== 0) return state;
+//       if (!payload.purpose) return state;
+
+//       return {
+//         ...state,
+//         loan: payload.amount,
+//         loadPurpose: payload.purpose,
+//         balance: balance + payload.amount,
+//       };
+//     case "account/payLoan":
+//       if (loan > balance) return state;
+
+//       return { ...state, loan: 0, loadPurpose: "", balance: balance - loan };
+
+//     default:
+//       return state;
+//   }
+// };
+
 // * create redux store from createStore method
 // * this method has deprecated and nowadays we use another modern way to do it, but we can use it for exploring or learning purpose
-const store = createStore(reducer);
+// const store = createStore(accountReducer);
 
 // * we can use dispatch method from store to dispatch action so this works like exactly in the dispatch function we use with useReducer hook
 store.dispatch({ type: "account/deposit", payload: 600 });
