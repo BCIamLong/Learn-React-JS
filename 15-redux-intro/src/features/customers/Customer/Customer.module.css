@@ -1,0 +1,28 @@
+.customer {
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+.customer h2 {
+  font-size: 2rem;
+  margin-bottom: 1.6rem;
+}
+
+/* .customer form {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  gap: 1.2rem;
+  background-color: #e9ecef;
+  align-items: start;
+}
+
+.customer div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.customer button {
+  font-size: 1.4rem;
+} */

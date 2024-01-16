@@ -1,0 +1,34 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 1.2rem;
+  gap: 1.2rem;
+  background-color: #e9ecef;
+  align-items: start;
+  justify-content: stretch;
+}
+
+.form div {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  height: 1.6rem;
+}
+
+.form input {
+  /* height: 2.4rem; */
+  height: 100%;
+  padding: 0 0.3rem;
+}
+
+.form select {
+  height: 100%;
+  padding: 0 0.8rem;
+  font-weight: 500;
+  font-size: 1.4rem;
+}
+
+.form button {
+  font-size: 1.4rem;
+  text-transform: uppercase;
+}
