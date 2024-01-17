@@ -1,7 +1,7 @@
 // import { useState } from "react";
 // import reactLogo from "./assets/react.svg";
 import "./App.css";
-import ReduxBank from "./components/ReduxBank";
+import ReduxBank from "./pages/ReduxBank";
 
 function App() {
   return (

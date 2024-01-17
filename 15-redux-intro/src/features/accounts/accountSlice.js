@@ -13,6 +13,8 @@ export default function accountReducer(state = accountInitialState, action) {
     case "account/deposit":
       return { ...state, balance: balance + payload };
     case "account/withdraw":
+      if (payload > balance) return;
+
       return { ...state, balance: balance - payload };
     case "account/requestLoan":
       // const { amount, purpose } = payload;

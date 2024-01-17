@@ -1,23 +1,30 @@
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import styles from "./Customer.module.css";
 import Form from "../../../components/Form";
+import { useState } from "react";
+import { createCustomer } from "../customerSlice";
 
 // * and in here to access to the store we use the useSelect hook from react-redux
 
+// const customers = [];
+
 function Customer() {
+  const [fullName, setFullName] = useState("");
+  const [nationalId, setNationalId] = useState("");
+
   // * one thing notice that the name we use store.customer, so customer is the name of we give it when we combine the reducer functions remember that
   // * and so whatever name we give for the reducer when we create store will use to access like this so store.customer, if we named it a => store.a
 
-  const customer = useSelector((store) => {
-    // * in here we can do more computations
-    // * so we do all manipulation as possible with the store in this callback function
+  // const customer = useSelector((store) => {
+  // * in here we can do more computations
+  // * so we do all manipulation as possible with the store in this callback function
 
-    // * so we can do computations to get the data to format the data we want and then use it as we want and so on
-    // return store.customer;
+  // * so we can do computations to get the data to format the data we want and then use it as we want and so on
+  // return store.customer;
 
-    // * so for example: we might only need some field from the customer like the full name and then in this case we can return only the full name
-    return store.customer.fullName;
-  });
+  // * so for example: we might only need some field from the customer like the full name and then in this case we can return only the full name
+  //   return store.customer.fullName;
+  // });
 
   // * the thing we can do here now is like create the subscribed to the store so to the customer reducer
   // * and then all the components consume or subscribe this data state from that reducer will be re-render so it works like the Context API
@@ -26,7 +33,18 @@ function Customer() {
 
   // * and one thing we can see it's similar with us that the state change in store and all the components subscribe to that state will be re-render right
 
-  console.log(customer);
+  // console.log(customer);
+  // * to use dispatch function in react we use the useDispatch custom hook from the react redux
+  // * and this function work exactly the same with the dispatch function we use like in core redux with store.dispatch() or in the useReducer hook
+  const dispatch = useDispatch();
+
+  function handleClick(e) {
+    e.preventDefault();
+    if (!fullName || !nationalId) return; //* use guard clause to check it already exists
+
+    // * now we can import the action creators of customer to this component to auto create the event dispatch
+    dispatch(createCustomer(fullName, nationalId));
+  }
 
   return (
     <div className={styles.customer}>
@@ -34,18 +52,28 @@ function Customer() {
       <Form>
         <div>
           <label htmlFor="fullName">Customer full name</label>
-          <input id="fullName" type="text" />
+          <input
+            id="fullName"
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
         </div>
         <div>
           <label htmlFor="nationalId">National ID</label>
-          <input id="nationalId" type="text" />
+          <input
+            id="nationalId"
+            type="text"
+            value={nationalId}
+            onChange={(e) => setNationalId(e.target.value)}
+          />
         </div>
-        <button>Create new customer</button>
+        <button onClick={handleClick}>Create new customer</button>
       </Form>
-      <ul>
-        {/* now we can use it here to display the customer info right */}
-        <li>{customer}</li>
-      </ul>
+      {/* <ul> */}
+      {/* now we can use it here to display the customer info right */}
+      {/* <li>{customer}</li>
+      </ul> */}
     </div>
   );
 }
