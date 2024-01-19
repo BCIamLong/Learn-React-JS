@@ -12,7 +12,11 @@ function Account() {
   const [loanPurpose, setLoanPurpose] = useState("");
 
   // const account = useSelector((store) => store.account);
-  const { loan, loadPurpose: purpose } = useSelector((store) => store.account);
+  const {
+    loan,
+    loadPurpose: purpose,
+    isLoading,
+  } = useSelector((store) => store.account);
   // * we can also use the state instead store: (state) => state.account because in the end it's entire state right
   // * but the store name is the convention and we can follow that as well but do it with state also no problem
 
@@ -21,14 +25,16 @@ function Account() {
   function handleDepositAmount(e) {
     e.preventDefault();
     if (!depositAmount) return;
+    //* so usually the calculate to return the event object should be in the action creator function, because as the name said it return event object and it should do all the computation for return event object right
+    // * if possible let's do it so computations in the action creator function
+    // let amount = depositAmount;
+    // if (currency === "EUR") amount = depositAmount * 1.09;
+    // if (currency === "VND") amount = depositAmount * 0.000041;
 
-    let amount = depositAmount;
-    if (currency === "EUR") amount = depositAmount * 1.09;
-    if (currency === "VND") amount = depositAmount * 0.000041;
-
-    dispatch(deposit(amount));
+    dispatch(deposit(depositAmount, currency));
 
     setDepositAmount("");
+    setCurrency("USD");
   }
 
   function handleWithdraw(e) {
@@ -79,7 +85,9 @@ function Account() {
             <option value="EUR">Euro</option>
             <option value="VND">VietNam Dong</option>
           </select>
-          <button onClick={handleDepositAmount}>Deposit {depositAmount}</button>
+          <button onClick={handleDepositAmount} disabled={isLoading}>
+            {isLoading ? "Depositing..." : `Deposit ${depositAmount}`}
+          </button>
         </div>
         <div>
           <label htmlFor="withdraw">Withdraw</label>

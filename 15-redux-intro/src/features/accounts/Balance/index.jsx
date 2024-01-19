@@ -4,7 +4,7 @@ import styles from "./Balance.module.css";
 import { connect } from "react-redux";
 
 Balance.propTypes = {
-  balance: PropTypes.number | PropTypes.string,
+  balance: PropTypes.any,
 };
 
 // * now instead use useSelector to access to the store we can use the old way to do that which is use the connect function from Redux
