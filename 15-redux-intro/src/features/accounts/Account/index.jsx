@@ -31,8 +31,8 @@ function Account() {
     // if (currency === "EUR") amount = depositAmount * 1.09;
     // if (currency === "VND") amount = depositAmount * 0.000041;
 
-    // dispatch(deposit(depositAmount, currency));
-    dispatch(deposit(depositAmount));
+    dispatch(deposit(depositAmount, currency));
+    // dispatch(deposit(depositAmount));
 
     setDepositAmount("");
     setCurrency("USD");

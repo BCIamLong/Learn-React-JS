@@ -14,6 +14,7 @@ const accountSlice = createSlice({
   reducers: {
     deposit(state, action) {
       state.balance += action.payload;
+      state.isLoading = false;
     },
 
     withdraw(state, action) {
@@ -66,16 +67,51 @@ const accountSlice = createSlice({
     //   state.loadPurpose = purpose;
     // },
 
-    payLoan(state, action) {
+    payLoan(state) {
       if (state.loan > state.balance) return;
 
       state.balance -= state.loan;
       state.loadPurpose = "";
       state.loan = 0;
     },
+
+    // * we also need to create new action creator loading or convertingCurrency
+    // loading(state, action) {
+    // * if we don't need to access to the action or we don't have a payload we can don't write it
+    loading(state) {
+      state.isLoading = true;
+    },
   },
 });
 
-export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
+export const { withdraw, requestLoan, payLoan } = accountSlice.actions;
+
+// * so now we implementing thunk in the deposit with the classic Redux way, because implement thunk with Redux toolkit need some step and we will do it later in the next project
+
+// * but for now just use the classic way and of course it works just fine but remember that keep the account/deposit event action string here must be the shape right here
+// * because only that the Redux toolkit can know this is action creator
+// * and the name function deposit must also like account/ after right here so deposit
+
+export function deposit(amount, currency) {
+  if (currency === "USD") return { type: "account/deposit", payload: amount };
+  // * this function middleware here can access to dispatch function and getState method to show state info
+
+  return async function (dispatch, getState) {
+    dispatch({ type: "account/loading" });
+
+    //* this is where we do the API call so asynchronous task
+    // * when we return a function Redux will know this is the middleware so the thunk to do the asynchronous task
+    // * we can use API call to convert amount from this current to USD
+    // *https://www.frankfurter.app/docs/#conversion
+    const res = await fetch(
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
+    );
+    const data = await res.json();
+    const convertedAmount = data?.rates?.USD;
+
+    // return { type: "account/deposit", payload: convertedAmount }; //* actually we don't return
+    dispatch({ type: "account/deposit", payload: convertedAmount }); //* but we use dispatch function
+  };
+}
 
 export default accountSlice.reducer;
