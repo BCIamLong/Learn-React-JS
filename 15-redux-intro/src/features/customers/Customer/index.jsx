@@ -44,6 +44,15 @@ function Customer() {
 
     // * now we can import the action creators of customer to this component to auto create the event dispatch
     dispatch(createCustomer(fullName, nationalId));
+
+    // dispatch(//* this is the second way when we don't use the Redux toolkit to dispatch many arguments instead we pass all arguments to the fields of object
+    // * and dispatch it with the one argument only that object then destructure this object and use
+    //   createCustomer({
+    //     fullName,
+    //     nationalId,
+    //     createdAt: new Date().toLocaleDateString(),
+    //   })
+    // );
   }
 
   return (
