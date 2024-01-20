@@ -1,3 +1,5 @@
+import { createSlice } from "@reduxjs/toolkit";
+
 const accountInitialState = {
   balance: 0,
   loan: 0,
@@ -6,72 +8,74 @@ const accountInitialState = {
   isLoading: false,
 };
 
-export default function accountReducer(state = accountInitialState, action) {
-  const { type, payload } = action;
-  const { balance, loan } = state;
+const accountSlice = createSlice({
+  name: "account",
+  initialState: accountInitialState,
+  reducers: {
+    deposit(state, action) {
+      state.balance += action.payload;
+    },
 
-  switch (type) {
-    // case ACCOUNT_DEPOSIT: //* we also use this event name string variable in the reducer check type action like this
-    case "account/loading":
-      return { ...state, isLoading: true };
-    case "account/deposit":
-      return { ...state, balance: balance + payload, isLoading: false };
-    case "account/withdraw":
-      if (payload > balance) return;
+    withdraw(state, action) {
+      const { payload } = action;
 
-      return { ...state, balance: balance - payload };
-    case "account/requestLoan":
-      // const { amount, purpose } = payload;
+      if (state.balance < payload) return;
 
-      if (loan !== 0) return state;
-      if (!payload.purpose) return state;
+      state.balance -= payload;
+    },
 
-      return {
-        ...state,
-        loan: payload.amount,
-        loadPurpose: payload.purpose,
-        balance: balance + payload.amount,
-      };
-    case "account/payLoan":
-      if (loan > balance) return state;
+    //* way 1: we need some configurations here to make it works by follow the rules of Redux toolkit
+    requestLoan: {
+      prepare(amount, purpose) {
+        // * so this function here prepare the payload based on the arguments we get then return to the reducer function bellow in the action
+        // * so basically we prepare the payload in action
 
-      return { ...state, loan: 0, loadPurpose: "", balance: balance - loan };
+        return {
+          payload: { amount, purpose },
+        };
+      },
 
-    default:
-      return state;
-  }
-}
+      reducer(state, action) {
+        // * like before in the reducer function we code logic to update state
+        // * we can think that it's reducer of one case in switch case we had before of reducer function in the classic old Redux and also useReducer hook
+        console.log(action);
+        if (state.loan > 0) return;
 
-export function deposit(amount, currency) {
-  if (currency === "USD") return { type: "account/deposit", payload: amount };
+        const {
+          payload: { amount, purpose },
+        } = action;
 
-  // * this function middleware here can access to dispatch function and getState method to show state info
-  return async function (dispatch, getState) {
-    dispatch({ type: "account/loading" });
+        // * notice this logic because now we are mutating state and state will be change notice we need to sort the order must be logical way
+        // * with logical way the state can update as we expected so notice the order it can create some errors or strange behaviors
+        state.loan = amount;
+        state.balance += amount;
+        state.loadPurpose = purpose;
+      },
+    },
 
-    //* this is where we do the API call so asynchronous task
-    // * when we return a function Redux will know this is the middleware so the thunk to do the asynchronous task
-    // * we can use API call to convert amount from this current to USD
-    // *https://www.frankfurter.app/docs/#conversion
-    const res = await fetch(
-      `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
-    );
-    const data = await res.json();
-    const convertedAmount = data.rates.USD;
+    // requestLoan(state, action) { //* way 2
+    //   console.log(action);
+    //   if (state.loan > 0) return;
 
-    // return { type: "account/deposit", payload: convertedAmount }; //* actually we don't return
-    dispatch({ type: "account/deposit", payload: convertedAmount }); //* but we use dispatch function
-  };
-}
-export function withdraw(amount) {
-  return { type: "account/withdraw", payload: amount };
-}
-export function requestLoan(amount, purpose) {
-  return {
-    type: "account/requestLoan",
-    payload: { amount, purpose },
-  };
-}
-export function payLoan() {
-  return { type: "account/payLoan" };
-}
+    //   const {
+    //     payload: { amount, purpose },
+    //   } = action;
+
+    //   state.loan = amount;
+    //   state.balance += amount;
+    //   state.loadPurpose = purpose;
+    // },
+
+    payLoan(state, action) {
+      if (state.loan > state.balance) return;
+
+      state.balance -= state.loan;
+      state.loadPurpose = "";
+      state.loan = 0;
+    },
+  },
+});
+
+export const { deposit, withdraw, requestLoan, payLoan } = accountSlice.actions;
+
+export default accountSlice.reducer;

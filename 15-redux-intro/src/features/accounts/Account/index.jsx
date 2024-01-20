@@ -31,7 +31,8 @@ function Account() {
     // if (currency === "EUR") amount = depositAmount * 1.09;
     // if (currency === "VND") amount = depositAmount * 0.000041;
 
-    dispatch(deposit(depositAmount, currency));
+    // dispatch(deposit(depositAmount, currency));
+    dispatch(deposit(depositAmount));
 
     setDepositAmount("");
     setCurrency("USD");
@@ -41,7 +42,7 @@ function Account() {
     e.preventDefault();
     if (!withdrawAmount) return;
 
-    dispatch(withdraw(withdrawAmount));
+    dispatch(withdraw(+withdrawAmount));
 
     setWithdrawAmount("");
   }
@@ -51,7 +52,15 @@ function Account() {
 
     if (!loanAmount || !loanPurpose) return;
 
-    dispatch(requestLoan(loanAmount, loanPurpose));
+    // ? way 1: we simply pass two arguments to the action creator but with action creator in Redux toolkit it's only accept one argument
+    // * we need to configure this action creator to get two arguments, and this is works just fine with more complex argument (nested object, array...) or more arguments number (4 or more)
+
+    //? way 2: we only pass the object and pass in arguments as the fields of that object and object is only one argument right so it accepted
+    // * and then in action creator we can destructure or use directly these arguments from fields of that object argument
+    // * this works fine with simply arguments and few arguments (1 to 3 ... some thing like that)
+
+    dispatch(requestLoan(loanAmount, loanPurpose)); //* this is a way 1
+    // dispatch(requestLoan({ amount: loanAmount, purpose: loanPurpose })); //* this a way 2
 
     setLoanAmount("");
     setLoanPurpose("");
