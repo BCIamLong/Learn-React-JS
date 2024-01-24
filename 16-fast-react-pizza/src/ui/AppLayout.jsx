@@ -6,7 +6,7 @@ import SearchOrder from "../features/order/SearchOrder";
 
 function AppLayout() {
   const navigation = useNavigation();
-  console.log(navigation);
+  // console.log(navigation);
   const isLoading = navigation.state === "loading";
 
   // * we have layout for all pages with header, CartOverview is fixed and the main content is the only thing will change across when the url change

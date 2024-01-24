@@ -3,7 +3,9 @@ import "./App.css";
 import Home from "./ui/Home";
 import Cart from "./features/cart/Cart";
 import Menu, { loader as menuLoader } from "./features/menu/Menu";
-import CreateOrder from "./features/order/CreateOrder";
+import CreateOrder, {
+  action as createOrderAction,
+} from "./features/order/CreateOrder";
 import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import Error from "./ui/Error";
@@ -55,6 +57,8 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
+        // * so we connect the action function to this route here, and then when we get the post request from the form of this route it will call this createOrderAction function
+        action: createOrderAction,
       },
       {
         path: "/order/:orderId",
