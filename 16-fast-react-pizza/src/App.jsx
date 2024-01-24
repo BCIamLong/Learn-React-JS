@@ -6,6 +6,7 @@ import Menu, { loader as menuLoader } from "./features/menu/Menu";
 import CreateOrder from "./features/order/CreateOrder";
 import Order from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
+import Error from "./ui/Error";
 
 //* https://reactrouter.com/en/main/routers/create-browser-router
 
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
     // * before in the world wise app we have AppLayout for change the cities and the county list right so it's only small range layout only for two components and outside of this layout we also have another route
     // * but here we do it for all our routes for our page right and in this layout it's layout for all routes and for all pages so therefore it doesn't have any route outside right
     // * and in traditional we have index route right and by default it's the route for the AppLayout but in this way of create router it might be a / so the homepage
+    errorElement: <Error />,
+    // * we can put the errorElement in the parent like global error and the error from child routes in loader when the error throw it can be bubble up to parent
+    // * and we will catch it here in the parent and then handle that so like global error right
+    // ! also notice that the errors might happen in the loader so if the route doesn't have loader and doesn't duel with any data fetching API there is no error at all right
     children: [
       {
         path: "/",
@@ -37,6 +42,11 @@ const router = createBrowserRouter([
         element: <Menu />,
         // * in the step 2 we provide loader with the loader property on the route object
         loader: menuLoader,
+        errorElement: <Error />,
+        // * we can also put the error here to handle for only menu route
+        // * and in this case that make sense because now we only have the menu route has loader and fetching data from API right
+        // * also if we catch error here it will handle inside this menu route so it will not bubble up to parent because we catch it right here in the menu route so in the child route right
+        // ! notice that when we catch in the child route it will get the layout of this page but if it's error catch by parent maybe we need to create new layout for error right
       },
       {
         path: "/cart",
