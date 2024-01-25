@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, redirect } from "react-router-dom";
+import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
 import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
@@ -35,6 +35,13 @@ const fakeCart = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
+
+  // * we can use this useActionData custom hook to access the data return from action
+  // * in this case we access to the errors send from action function but it can be any other type not only for error
+  // * but the common use case is handle error like what we are doing
+  const formErrors = useActionData();
 
   return (
     <div>
@@ -57,6 +64,8 @@ function CreateOrder() {
           <div>
             <input type="tel" name="phone" required />
           </div>
+          {/* * so we can render the error right here when we have some error from phone number right */}
+          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
 
         <div>
@@ -79,7 +88,9 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button>Order now</button>
+          <button disabled={isSubmitting}>
+            {isSubmitting ? "Placing order" : "Order now"}
+          </button>
         </div>
       </Form>
       {/* </form> */}
@@ -105,6 +116,11 @@ export const action = async ({ request }) => {
     priority: data.priority === "on",
     cart: JSON.parse(data.cart),
   };
+
+  const errors = {};
+  if (!isValidPhone(order.phone)) errors.phone = `Your phone is invalid`;
+  console.log(errors);
+  if (Object.keys(errors).length > 0) return errors;
 
   // console.log(order);
   const newOrder = await createOrder(order);
