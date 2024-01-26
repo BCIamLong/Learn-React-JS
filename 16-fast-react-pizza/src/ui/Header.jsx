@@ -8,7 +8,7 @@ function Header() {
       <div className="bg-slate-400 p-3 pb-4 pt-4 text-center text-4xl">
         <Link to="/">Fast React Pizza Co</Link>
       </div>
-      <h2 className="text-3xl font-bold">John Nas</h2>
+      <h2 className=" bg-yellow-500 text-3xl font-bold">John Nas</h2>
     </header>
   );
 }
