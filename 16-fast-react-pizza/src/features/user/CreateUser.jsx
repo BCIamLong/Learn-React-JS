@@ -8,18 +8,23 @@ function CreateUser() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-2 text-[1rem] font-semibold text-stone-600 sm:space-y-4 sm:text-xl"
+    >
       <p>👋 Welcome! Please start by telling us your name:</p>
 
       <input
+        className="w-72 py-2 text-center  text-[1rem] sm:text-xl"
         type="text"
         placeholder="Your full name"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
+      <br />
 
       {username !== '' && (
-        <div>
+        <div className="inline-block rounded-sm border-2 border-stone-400 bg-yellow-50 px-3 py-2 text-yellow-700">
           <button>Start ordering</button>
         </div>
       )}
