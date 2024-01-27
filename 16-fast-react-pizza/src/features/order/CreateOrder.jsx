@@ -1,31 +1,31 @@
 // import { useState } from "react";
-import { Form, redirect, useActionData, useNavigation } from "react-router-dom";
-import { createOrder } from "../../services/apiRestaurant";
+import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
+import { createOrder } from '../../services/apiRestaurant';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
   /^\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/.test(
-    str
+    str,
   );
 
 const fakeCart = [
   {
     pizzaId: 12,
-    name: "Mediterranean",
+    name: 'Mediterranean',
     quantity: 2,
     unitPrice: 16,
     totalPrice: 32,
   },
   {
     pizzaId: 6,
-    name: "Vegetale",
+    name: 'Vegetale',
     quantity: 1,
     unitPrice: 13,
     totalPrice: 13,
   },
   {
     pizzaId: 11,
-    name: "Spinach and Mushroom",
+    name: 'Spinach and Mushroom',
     quantity: 1,
     unitPrice: 15,
     totalPrice: 15,
@@ -36,7 +36,7 @@ function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
   const navigation = useNavigation();
-  const isSubmitting = navigation.state === "submitting";
+  const isSubmitting = navigation.state === 'submitting';
 
   // * we can use this useActionData custom hook to access the data return from action
   // * in this case we access to the errors send from action function but it can be any other type not only for error
@@ -71,12 +71,18 @@ function CreateOrder() {
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input
+              className="w-full rounded-full border-2 border-white px-3 py-1 text-sm text-stone-700 focus:border-2 focus:border-yellow-400 focus:outline-none"
+              type="text"
+              name="address"
+              required
+            />
           </div>
         </div>
 
         <div>
           <input
+            className="h-4 w-4 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-1"
             type="checkbox"
             name="priority"
             id="priority"
@@ -89,7 +95,7 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
           <button disabled={isSubmitting}>
-            {isSubmitting ? "Placing order" : "Order now"}
+            {isSubmitting ? 'Placing order' : 'Order now'}
           </button>
         </div>
       </Form>
@@ -113,7 +119,7 @@ export const action = async ({ request }) => {
   // console.log(data);
   const order = {
     ...data,
-    priority: data.priority === "on",
+    priority: data.priority === 'on',
     cart: JSON.parse(data.cart),
   };
 
