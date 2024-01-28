@@ -4,7 +4,7 @@ import SearchOrder from '../features/order/SearchOrder';
 
 function Header() {
   return (
-    <header className="flex items-center justify-between self-start border-y-4 border-dashed border-yellow-600 bg-yellow-500  px-6 uppercase  sm:px-4">
+    <header className="text-productColor flex items-center justify-between self-start border-y-4 border-dashed border-yellow-600  bg-yellow-500 px-6  uppercase sm:px-4">
       {/* *so to make our class names here can have the good order we can install this https://github.com/tailwindlabs/prettier-plugin-tailwindcss package
        * so this package here will help us sort the order of the class names and help us easy to manage this long class name right */}
       {/* <div className="p-3 pb-4 pt-4 text-center text-4xl tracking-widest"> */}
