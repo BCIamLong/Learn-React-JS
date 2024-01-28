@@ -1,7 +1,8 @@
-import { useNavigate, useRouteError } from "react-router-dom";
+import { useRouteError } from 'react-router-dom';
+import LinkButton from './LinkButton';
 
 function Error() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // * so we use the useRouteError custom hook from react router dom to access to the error from our child routes right so from the loader in our route
   // * so like in the fetching data or some computation in our loader for some reason the error will throw in this case and react router will call the error element
@@ -16,7 +17,8 @@ function Error() {
     <div>
       <h1>Something went wrong 😢</h1>
       <p>{error.data || error.message}</p>
-      <button onClick={() => navigate(-1)}>&larr; Go back</button>
+      <LinkButton to="-1">&larr; Go back</LinkButton>
+      {/* <button onClick={() => navigate(-1)}>&larr; Go back</button> */}
     </div>
   );
 }
