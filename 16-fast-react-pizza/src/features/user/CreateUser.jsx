@@ -27,7 +27,7 @@ function CreateUser() {
       {username !== '' && (
         // <div className="inline-block rounded-sm border-2 border-stone-400 bg-yellow-50 px-3 py-2 text-yellow-700">
         <div>
-          <Button>Start ordering</Button>
+          <Button type="primary">Start ordering</Button>
           {/* <button>Start ordering</button> */}
         </div>
       )}

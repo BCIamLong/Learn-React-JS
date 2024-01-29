@@ -1,14 +1,15 @@
-import { useLoaderData } from "react-router-dom";
-import { getMenu } from "../../services/apiRestaurant";
-import MenuItem from "./MenuItem";
+import { useLoaderData } from 'react-router-dom';
+import { getMenu } from '../../services/apiRestaurant';
+import MenuItem from './MenuItem';
 
 function Menu() {
   const menu = useLoaderData();
   // console.log(menu);
   return (
-    <div>
-      <h1>Menu</h1>
-      <ul>
+    <div className="py-6">
+      <h1 className="mb-4 text-center text-4xl font-bold">Menu</h1>
+      {/* <ul className="grid grid-cols-3 gap-x-3 gap-y-4 divide-x-2 divide-y-2 divide-stone-400"> */}
+      <ul className="grid grid-cols-3 gap-x-6 gap-y-7 ">
         {menu.map((pizza) => (
           <MenuItem pizza={pizza} key={pizza.id} />
         ))}

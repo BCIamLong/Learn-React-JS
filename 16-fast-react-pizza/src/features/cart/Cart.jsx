@@ -45,7 +45,9 @@ function Cart() {
 
       <div className="flex items-center gap-x-3">
         {/* * https://tailwindcss.com/docs/ring-width */}
-        <Button to="/order/new">Order pizzas</Button>
+        <Button type="primary" to="/order/new">
+          Order pizzas
+        </Button>
         {/* <Link
           className="inline-block rounded-full bg-yellow-400 px-3 py-2 font-semibold text-stone-700 transition-colors duration-200 visited:bg-yellow-400 hover:bg-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2 active:bg-yellow-300"
           to="/order/new"

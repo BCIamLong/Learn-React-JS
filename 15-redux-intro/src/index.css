@@ -1,3 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input-box {
+    @apply flex items-center w-full justify-between;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;

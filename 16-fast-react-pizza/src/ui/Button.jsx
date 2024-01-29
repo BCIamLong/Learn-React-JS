@@ -5,20 +5,28 @@ Button.propTypes = {
   children: PropTypes.any,
   disabled: PropTypes.bool,
   to: PropTypes.string,
+  type: PropTypes.string,
 };
 
-function Button({ to, disabled, children }) {
-  const className =
-    'inline-block rounded-full border-2  border-yellow-300 bg-yellow-400 px-2 py-1 transition-colors duration-200 hover:bg-yellow-300 sm:px-3 sm:py-2';
+function Button({ to, type, disabled, children }) {
+  const base =
+    'inline-block rounded-full border-2  border-yellow-300 bg-yellow-400  transition-all duration-200 hover:bg-yellow-300 font-semibold ';
+  const styles = {
+    primary: base + 'sm:px-3 sm:py-2 px-2 py-1',
+    small:
+      base +
+      'sm:px-3 sm:py-2 px-2 py-1 text-sm hover:-translate-y-1 hover:shadow-lg',
+  };
+
   if (to)
     return (
-      <Link className={className} to={to}>
+      <Link className={styles[type]} to={to}>
         {children}
       </Link>
     );
 
   return (
-    <button className={className} disabled={disabled}>
+    <button className={styles[type]} disabled={disabled}>
       {children}
     </button>
   );

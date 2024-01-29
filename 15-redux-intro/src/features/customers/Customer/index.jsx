@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import styles from "./Customer.module.css";
+// import styles from "./Customer.module.css";
 import Form from "../../../components/Form";
 import { useState } from "react";
 import { createCustomer } from "../customerSlice";
@@ -56,10 +56,13 @@ function Customer() {
   }
 
   return (
-    <div className={styles.customer}>
-      <h2>Creating new customer</h2>
+    // <div className={styles.customer}>
+    <div className="text-3xl bg-yellow-200 p-6 px-96 rounded-lg h-96">
+      <h2 className="text-center text-5xl mb-9 font-semibold">
+        Creating new customer
+      </h2>
       <Form>
-        <div>
+        <div className="flex items-center w-full justify-between ">
           <label htmlFor="fullName">Customer full name</label>
           <input
             id="fullName"
@@ -68,7 +71,7 @@ function Customer() {
             onChange={(e) => setFullName(e.target.value)}
           />
         </div>
-        <div>
+        <div className="input-box">
           <label htmlFor="nationalId">National ID</label>
           <input
             id="nationalId"
@@ -77,7 +80,12 @@ function Customer() {
             onChange={(e) => setNationalId(e.target.value)}
           />
         </div>
-        <button onClick={handleClick}>Create new customer</button>
+        <button
+          className="mx-auto py-2 px-4 bg-green-400 rounded-full hover:bg-green-300 transition-all duration-150 font-semibold hover:-translate-y-1 hover:shadow-lg"
+          onClick={handleClick}
+        >
+          Create new customer
+        </button>
       </Form>
       {/* <ul> */}
       {/* now we can use it here to display the customer info right */}
