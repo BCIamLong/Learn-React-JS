@@ -45,8 +45,10 @@ function CreateOrder() {
   const formErrors = useActionData();
 
   return (
-    <div>
-      <h2>Ready to order? Lets go!</h2>
+    <div className="px-3 py-4 sm:py-8">
+      <h2 className="pb-8 text-2xl font-semibold sm:mb-6">
+        Ready to order? Lets go!
+      </h2>
 
       {/* <form> */}
       {/* * to deal with form in react router to submit an action we need to use Form component from react router DOM
@@ -55,24 +57,48 @@ function CreateOrder() {
        * so because we're dealing with react router with form and we need to use the Form component come from react router to the form can work as well in react router*/}
       {/* <Form method="POST" action="/order/new"> */}
       <Form method="POST">
-        <div>
-          <label>First Name</label>
-          <input className="input" type="text" name="customer" required />
+        <div className="mb-3 flex flex-col sm:mb-6 sm:flex-row sm:gap-3">
+          <label className="mb-2 text-sm text-stone-600 sm:basis-40 sm:text-xl">
+            First Name
+          </label>
+          <div className="grow">
+            <input className="input" type="text" name="customer" required />
+          </div>
         </div>
-
-        <div>
-          <label>Phone number</label>
-          <div>
-            <input className="input" type="tel" name="phone" required />
+        {/* *https://tailwindcss.com/docs/flex-basis */}
+        <div
+          className={`mb-3 flex flex-col sm:mb-6 sm:flex-row sm:items-center sm:gap-3`}
+        >
+          <label className="relative mb-2 text-sm text-stone-600 sm:basis-40 sm:text-xl">
+            Phone number
+            {formErrors?.phone && (
+              <span className="left-0 ml-3 text-xs font-semibold text-red-600 sm:absolute sm:-bottom-5 sm:ml-0">
+                {formErrors.phone}
+              </span>
+            )}
+          </label>
+          <div className={`grow`}>
+            <input
+              className={`input w-full  ${formErrors?.phone ? 'border-2 border-red-500 bg-red-100' : ''}`}
+              type="tel"
+              name="phone"
+              required
+            />
           </div>
           {/* * so we can render the error right here when we have some error from phone number right */}
-          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
 
-        <div>
-          <label>Address</label>
-          <div>
-            <input className="input" type="text" name="address" required />
+        <div className="mb-4 flex flex-col sm:mb-8 sm:flex-row sm:items-center sm:gap-3">
+          <label className="mb-2 text-sm text-stone-600 sm:basis-40 sm:text-xl">
+            Address
+          </label>
+          <div className="grow">
+            <input
+              className="input w-full"
+              type="text"
+              name="address"
+              required
+            />
             {/* <input
               className="w-full rounded-full border-2 border-white px-3 py-1 text-sm text-stone-700 focus:border-2 focus:border-yellow-400 focus:outline-none"
               type="text"
@@ -82,7 +108,7 @@ function CreateOrder() {
           </div>
         </div>
 
-        <div>
+        <div className="mb-6 flex items-center gap-2 sm:mb-9">
           <input
             className="h-4 w-4 accent-yellow-400 focus:outline-none focus:ring focus:ring-yellow-400 focus:ring-offset-1"
             type="checkbox"
@@ -91,7 +117,12 @@ function CreateOrder() {
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
           />
-          <label htmlFor="priority">Want to yo give your order priority?</label>
+          <label
+            className="italic text-stone-700 sm:text-xl"
+            htmlFor="priority"
+          >
+            Want to yo give your order priority?
+          </label>
         </div>
 
         <div>
@@ -138,7 +169,8 @@ export const action = async ({ request }) => {
   // console.log(order);
   const newOrder = await createOrder(order);
 
-  return redirect(`/order/${newOrder.id}`);
+  //! return redirect(`/order/${newOrder.id}`);
+  return null;
   // return newOrder;
 };
 
