@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
+import CartItem from './CartItem';
 
 const fakeCart = [
   {
@@ -28,9 +29,10 @@ const fakeCart = [
 
 function Cart() {
   const cart = fakeCart;
+  const amount = cart.reduce((sum, item) => sum + item.totalPrice, 0);
 
   return (
-    <div>
+    <div className="px-4 py-3">
       <LinkButton to="/menu">&larr; Back to menu</LinkButton>
       {/* <Link
         // * https://tailwindcss.com/docs/transition-property
@@ -41,7 +43,18 @@ function Cart() {
         &larr; Back to menu
       </Link> */}
 
-      <h2>Your cart, %NAME%</h2>
+      <h2 className="mb-3 mt-6 text-2xl font-semibold">
+        Your cart, <span className="font-bold">%NAME%</span>
+      </h2>
+
+      <ul className="mb-6 flex flex-col gap-3 border-t border-stone-300 p-3">
+        {cart.map((item) => (
+          <CartItem key={item.pizzaId} item={item} />
+        ))}
+        <li className="border-y border-stone-300 py-3 font-semibold">
+          Total amount: €{amount}
+        </li>
+      </ul>
 
       <div className="flex items-center gap-x-3">
         {/* * https://tailwindcss.com/docs/ring-width */}
@@ -54,9 +67,10 @@ function Cart() {
         >
           Order pizzas
         </Link> */}
-        <button className="inline-block rounded-full border-2  border-yellow-200 bg-yellow-100 px-3 py-2 transition-colors duration-200 hover:bg-white">
+        <Button type="secondary">Clear cart</Button>
+        {/* <button className="inline-block rounded-full border-2  border-yellow-200 bg-yellow-100 px-3 py-2 transition-colors duration-200 hover:bg-white">
           Clear cart
-        </button>
+        </button> */}
       </div>
     </div>
   );
