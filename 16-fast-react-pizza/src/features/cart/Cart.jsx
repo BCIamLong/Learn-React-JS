@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
 import CartItem from './CartItem';
+import { useSelector } from 'react-redux';
 
 const fakeCart = [
   {
@@ -30,6 +31,7 @@ const fakeCart = [
 function Cart() {
   const cart = fakeCart;
   const amount = cart.reduce((sum, item) => sum + item.totalPrice, 0);
+  const user = useSelector((store) => store.user);
 
   return (
     <div className="px-4 py-3">
@@ -44,7 +46,7 @@ function Cart() {
       </Link> */}
 
       <h2 className="mb-3 mt-6 text-2xl font-semibold">
-        Your cart, <span className="font-bold">%NAME%</span>
+        Your cart, <span className="font-bold">{user.username}</span>
       </h2>
 
       <ul className="mb-6 flex flex-col gap-3 border-t border-stone-300 p-3">
