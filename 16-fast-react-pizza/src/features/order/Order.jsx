@@ -1,12 +1,13 @@
 // Test ID:
 
-import { useLoaderData } from "react-router-dom";
-import { getOrder } from "../../services/apiRestaurant";
+import { useLoaderData } from 'react-router-dom';
+import { getOrder } from '../../services/apiRestaurant';
 import {
   calcMinutesLeft,
   formatCurrency,
   formatDate,
-} from "../../utils/helpers";
+} from '../../utils/helpers';
+import OrderItem from './OrderItem';
 
 // const order = {
 //   id: "ABCDEF",
@@ -58,29 +59,59 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div>
-      <div>
-        <h2>Status</h2>
+    <div className="px-7 py-6">
+      <div className="pb-4">
+        <h2 className="mb-6 text-2xl font-semibold">Order ID: {id}</h2>
 
-        <div>
-          {priority && <span>Priority</span>}
-          <span>{status} order</span>
+        <div className="flex items-center justify-start gap-3">
+          <h2 className="text-xl">Status</h2>
+          {priority && (
+            <span className="rounded-full bg-red-500 px-2 py-1 text-xs font-semibold text-red-50">
+              Priority
+            </span>
+          )}
+          <span className="rounded-full bg-green-500 px-2 py-1 text-xs font-semibold capitalize text-green-50">
+            {status} order
+          </span>
         </div>
       </div>
 
-      <div>
+      <div className="mb-3 flex items-center justify-start gap-3 text-stone-600">
         <p>
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
-            : "Order should have arrived"}
+            : 'Order should have arrived'}
         </p>
-        <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+        <p className="text-xs uppercase italic">
+          (Estimated delivery: {formatDate(estimatedDelivery)})
+        </p>
       </div>
+      {/* https://tailwindcss.com/docs/flex-wrap */}
+      <ul className="divide-y divide-stone-300 border-t border-stone-300">
+        {cart.map((item) => (
+          <OrderItem item={item} key={item.pizzaId} />
+        ))}
+      </ul>
 
-      <div>
-        <p>Price pizza: {formatCurrency(orderPrice)}</p>
-        {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-        <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
+      <div className="flex flex-col gap-2  border-t border-stone-300 py-3 text-stone-600">
+        <p>
+          Price pizza:{' '}
+          <span className="font-semibold">{formatCurrency(orderPrice)}</span>
+        </p>
+        {priority && (
+          <p>
+            Price priority:{' '}
+            <span className="font-semibold">
+              {formatCurrency(priorityPrice)}
+            </span>
+          </p>
+        )}
+        <p>
+          To pay on delivery:{' '}
+          <span className="font-semibold">
+            {formatCurrency(orderPrice + priorityPrice)}
+          </span>
+        </p>
       </div>
     </div>
   );

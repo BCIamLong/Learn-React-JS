@@ -17,7 +17,7 @@ function SearchOrder() {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        className="rounded-full border-2 border-yellow-100  bg-yellow-100 px-3 py-2 text-stone-700 transition-all duration-500 placeholder:text-sm  placeholder:text-stone-400 focus:border-2 focus:border-yellow-400  focus:outline-none active:border-2 active:border-yellow-400 active:outline-none sm:focus:w-72"
+        className="rounded-full border-2 border-yellow-100  bg-yellow-100 px-3 py-1 text-stone-700 transition-all duration-500 placeholder:text-sm placeholder:text-stone-400  focus:border-2 focus:border-yellow-400 focus:outline-none  active:border-2 active:border-yellow-400 active:outline-none sm:py-2 sm:focus:w-72"
         type="text"
         placeholder="Search order to #"
         value={query}
