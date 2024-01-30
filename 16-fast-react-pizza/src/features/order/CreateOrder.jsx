@@ -68,7 +68,10 @@ function CreateOrder() {
               className="input"
               type="text"
               name="customer"
-              value={user.username}
+              // defaultValue={user.username} //* to set default value for the input and then we can still update the value of this input
+              // ! if we use value value={user.username} then this is always this value even we type something in the input it is still this value
+              // * but in this case the name of user need to be consistent and i think that we should disabled this input field and alway the user name so in this case we take the first name
+              value={user.username.split(' ')[0]}
               disabled
               required
             />
