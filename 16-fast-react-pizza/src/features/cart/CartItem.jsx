@@ -42,13 +42,13 @@ function CartItem({ item }) {
   }
 
   return (
-    <li className="grid grid-cols-[1fr_1.5fr_1fr_1fr] items-center ">
+    <li className="grid grid-cols-[1fr_1.5fr_1fr_1fr] items-center gap-3">
       <div className="flex items-center gap-3">
-        <Button type="primary" onClick={handleDecQuantity}>
+        <Button type="round" onClick={handleDecQuantity}>
           -
         </Button>
         <p>{quantity}&times;</p>
-        <Button type="primary" onClick={handleIncQuantity}>
+        <Button type="round" onClick={handleIncQuantity}>
           +
         </Button>
       </div>

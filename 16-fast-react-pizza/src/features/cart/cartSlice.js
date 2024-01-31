@@ -54,6 +54,14 @@ const cartSlice = createSlice({
 
       item.quantity--;
       item.totalPrice = item.unitPrice * item.quantity;
+
+      // * and so when we decrease the item quantity to 0 we will delete this so this is very common feature in the shopping cart allow user also delete the item instead use click the delete button right
+      // * and so we can use the same logic of the deleteItem reducer so we can copy the logic and paste right here but we can reuse this reducer function by use a nice trick
+      // *cartSlice.caseReducers.deleteItem(state, action);
+      // * so we can use cartSlice.caseReducers to access to our reducers and pass in it with the same state and action we get right here and it will work just fine
+      // ! notice because this decQuantity reducer function also take the payload is an id and therefore it can work in this way right because deleteItem reducer function also require payload is an item id right
+      // ! and therefore if we use deleteItem reducer like in the clearCart it will not work anymore
+      if (item.quantity === 0) cartSlice.caseReducers.deleteItem(state, action);
     },
     clearCart(state) {
       state.cart = [];
