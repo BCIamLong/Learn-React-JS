@@ -3,7 +3,7 @@ import LinkButton from '../../ui/LinkButton';
 import Button from '../../ui/Button';
 import CartItem from './CartItem';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearCart } from './cartSlice';
+import { clearCart, getCart } from './cartSlice';
 
 // const fakeCart = [
 //   {
@@ -31,7 +31,8 @@ import { clearCart } from './cartSlice';
 
 function Cart() {
   // const cart = fakeCart;
-  const cart = useSelector((store) => store.cart.cart);
+  // const cart = useSelector((store) => store.cart.cart);
+  const cart = useSelector(getCart);
   const dispatch = useDispatch();
 
   const amount = cart.reduce((sum, item) => sum + item.totalPrice, 0);

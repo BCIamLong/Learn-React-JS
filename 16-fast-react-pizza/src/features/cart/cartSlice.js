@@ -66,5 +66,10 @@ export const { addItem, updateItem, deleteItem, clearCart } = cartSlice.actions;
 export default cartSlice.reducer;
 
 // * and the convention and also the way Redux recommended that we should give the name of these selector callback functions with start with the get keyword
-export const getTotalCartQuantity = (sum, item) => sum + item.quantity;
-export const getTotalCartPrice = (sum, item) => sum + item.totalPrice;
+export const getTotalCartQuantity = (store) =>
+  store.cart.cart.reduce((sum, item) => sum + item.quantity, 0);
+
+export const getTotalCartPrice = (store) =>
+  store.cart.cart.reduce((sum, item) => sum + item.totalPrice, 0);
+
+export const getCart = (store) => store.cart.cart;

@@ -38,14 +38,16 @@ function CartOverview() {
     // *way 1
     // return { totalQuantity, totalAmount };
   });
-  console.log(stats);
+  // console.log(stats);
 
   // * and we can put two selector callback functions here in the cartSlice so in the central place
   // const totalQuantity = cart.reduce((sum, item) => sum + item.quantity, 0);
   // const totalAmount = cart.reduce((sum, item) => sum + item.totalPrice, 0);
   // * and the convention and also the way Redux recommended that we should give the name of these selector callback functions with start with the get keyword
-  const totalQuantity = cart.reduce(getTotalCartQuantity, 0);
-  const totalAmount = cart.reduce(getTotalCartPrice, 0);
+  // const totalQuantity = cart.reduce(getTotalCartQuantity, 0);
+  // const totalAmount = cart.reduce(getTotalCartPrice, 0);
+  const totalQuantity = useSelector(getTotalCartQuantity);
+  const totalAmount = useSelector(getTotalCartPrice);
 
   return (
     <div className="flex items-center justify-center gap-x-3 self-end border-b-4 border-stone-800 bg-stone-700 py-3 text-center text-sm uppercase text-stone-200 sm:py-4 sm:text-base">
