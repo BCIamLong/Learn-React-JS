@@ -6,9 +6,10 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   to: PropTypes.string,
   type: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
-function Button({ to, type, disabled, children }) {
+function Button({ to, type, onClick, disabled, children }) {
   const base =
     'inline-block rounded-full border-2  border-yellow-300 bg-yellow-400  transition-all duration-200 hover:bg-yellow-300 font-semibold ';
   const styles = {
@@ -28,7 +29,7 @@ function Button({ to, type, disabled, children }) {
     );
 
   return (
-    <button className={styles[type]} disabled={disabled}>
+    <button className={styles[type]} disabled={disabled} onClick={onClick}>
       {children}
     </button>
   );

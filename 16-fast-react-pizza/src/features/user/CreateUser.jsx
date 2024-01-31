@@ -10,7 +10,7 @@ function CreateUser() {
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
 
-  console.log(user);
+  // console.log(user);
   function handleSubmit(e) {
     e.preventDefault();
     if (!username) return;

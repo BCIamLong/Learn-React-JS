@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { formatCurrency } from '../../utils/helpers';
 import Button from '../../ui/Button';
+import { addItem, updateItem } from '../cart/cartSlice';
 
 MenuItem.propTypes = {
   pizza: PropTypes.any,
@@ -8,6 +10,24 @@ MenuItem.propTypes = {
 
 function MenuItem({ pizza }) {
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  const dispatch = useDispatch();
+  const cart = useSelector((store) => store.cart.cart);
+
+  function handleAddToCart(e) {
+    e.preventDefault();
+    if (!pizza) return;
+    const item = cart.find((item) => item.id === id);
+    if (item)
+      return dispatch(
+        updateItem({
+          ...pizza,
+          quantity: item.quantity + 1,
+          totalPrice: unitPrice * (item.quantity + 1),
+        }),
+      );
+
+    dispatch(addItem({ ...pizza, quantity: 1, totalPrice: pizza.unitPrice }));
+  }
 
   return (
     <li
@@ -27,7 +47,7 @@ function MenuItem({ pizza }) {
           {!soldOut ? (
             <>
               <p>{formatCurrency(unitPrice)}</p>
-              <Button to="/cart" type="small">
+              <Button type="small" onClick={handleAddToCart}>
                 Add to cart
               </Button>
             </>
