@@ -7,7 +7,7 @@ import store from '../../store';
 import { clearCart, getTotalCartPrice } from '../cart/cartSlice';
 import { formatCurrency } from '../../utils/helpers';
 import { useState } from 'react';
-import { fetchAddress } from '../user/userSlice';
+import { fetchAddress, getUser } from '../user/userSlice';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -47,11 +47,19 @@ function CreateOrder() {
   const totalPrice = withPriority
     ? totalCartPrice + totalCartPrice * 0.2
     : totalCartPrice;
-  const user = useSelector((store) => store.user);
+  // const user = useSelector((store) => store.user);
+  const {
+    username,
+    address: userAddress,
+    position: userPosition,
+    error: geoError,
+    status: addressStatus,
+  } = useSelector(getUser);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
   const dispatch = useDispatch();
-  // const userAddress = useSelector();
+  const isLoading = addressStatus === 'loading';
+  // const userAddress = useSelector(getUserAddress);
 
   // * we can use this useActionData custom hook to access the data return from action
   // * in this case we access to the errors send from action function but it can be any other type not only for error
@@ -87,7 +95,8 @@ function CreateOrder() {
               // defaultValue={user.username} //* to set default value for the input and then we can still update the value of this input
               // ! if we use value value={user.username} then this is always this value even we type something in the input it is still this value
               // * but in this case the name of user need to be consistent and i think that we should disabled this input field and alway the user name so in this case we take the first name
-              value={user.username.split(' ')[0]}
+              value={username.split(' ')[0]}
+              // value={user.username.split(' ')[0]}
               disabled
               required
             />
@@ -118,15 +127,24 @@ function CreateOrder() {
           {/* * so we can render the error right here when we have some error from phone number right */}
         </div>
 
-        <div className="mb-4 flex flex-col sm:mb-8 sm:flex-row sm:items-center sm:gap-3">
+        <div
+          className={`${isLoading ? 'pointer-events-none opacity-70 ' : ''} relative mb-4 flex flex-col sm:mb-8 sm:flex-row sm:items-center sm:gap-3`}
+        >
           <label className="mb-2 text-sm text-stone-600 sm:basis-40 sm:text-xl">
             Address
+            {/* * we can also use this geoError to check it instead use addressStatus === 'error' both of ways are good to go*/}
+            {addressStatus === 'error' && (
+              <span className="left-0 ml-3 text-xs font-semibold text-red-600 sm:absolute sm:-bottom-5 sm:ml-0">
+                {geoError}
+              </span>
+            )}
           </label>
           <div className="flex grow gap-2 sm:gap-4">
             <input
-              className="input w-full"
+              className={`input w-full ${geoError ? 'border-2 border-red-500 bg-red-100' : ''}`}
               type="text"
               name="address"
+              defaultValue={userAddress}
               required
             />
             {/* <input
@@ -135,7 +153,7 @@ function CreateOrder() {
               name="address"
               required
             /> */}
-            <Button
+            {/* <Button
               type="form"
               onClick={(e) => {
                 e.preventDefault();
@@ -143,8 +161,32 @@ function CreateOrder() {
               }}
             >
               Get position
-            </Button>
+            </Button> */}
           </div>
+          <span className="absolute right-0.5 top-0 disabled:opacity-40">
+            {!userAddress && (
+              <Button
+                type="form"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(fetchAddress());
+                }}
+              >
+                {isLoading ? 'Processing' : ' Get position'}
+              </Button>
+            )}
+          </span>
+          {/* * so we use trick like with the cart so we use input hidden right here and we add the GPS of the user when we have position, so if the user type the address manually we can return the position with empty string
+           * so we want to add this position behind right it's not thing for user can input right and this is nice trick when we deal with the Form component from React router */}
+          <input
+            type="hidden"
+            name="position"
+            value={
+              userPosition.latitude && userPosition.longitude
+                ? `${userPosition.latitude},${userPosition.longitude}`
+                : ''
+            }
+          />
         </div>
 
         <div className="mb-6 flex items-center gap-2 sm:mb-9">
@@ -167,7 +209,7 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
 
-          <Button type="primary" disabled={isSubmitting}>
+          <Button type="primary" disabled={isSubmitting || isLoading}>
             {isSubmitting
               ? 'Placing order'
               : `Order now from ${formatCurrency(totalPrice)}`}

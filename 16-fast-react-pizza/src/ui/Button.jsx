@@ -22,7 +22,8 @@ function Button({ to, type, onClick, disabled, children }) {
     round: base + 'rounded-full w-7 h-7 sm:w-9 sm:h-9',
     form:
       base +
-      'sm:px-3 sm:py-1.5 py-1 text-xs sm:text-sm hover:-translate-y-1 hover:shadow-lg w-[40%]',
+      'sm:px-3 px-2 sm:py-1.5 py-1 text-xs sm:text-sm hover:-translate-y-1 hover:shadow-lg',
+    // 'sm:px-3 sm:py-1.5 py-1 text-xs sm:text-sm hover:-translate-y-1 hover:shadow-lg w-[40%]',
   };
 
   if (to)

@@ -100,3 +100,7 @@ export const { updateName } = userSlice.actions;
 const userReducer = userSlice.reducer;
 
 export default userReducer;
+
+export const getUser = (store) => store.user;
+
+// export const getUserAddress = (store) => store.user.address;
