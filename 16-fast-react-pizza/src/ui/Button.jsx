@@ -20,6 +20,9 @@ function Button({ to, type, onClick, disabled, children }) {
     secondary:
       'inline-block rounded-full border-2  border-yellow-200 bg-yellow-100 px-2 py-1 transition-colors duration-200 hover:bg-white sm:px-3 sm:py-2',
     round: base + 'rounded-full w-7 h-7 sm:w-9 sm:h-9',
+    form:
+      base +
+      'sm:px-3 sm:py-1.5 py-1 text-xs sm:text-sm hover:-translate-y-1 hover:shadow-lg w-[40%]',
   };
 
   if (to)

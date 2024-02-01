@@ -2,11 +2,12 @@
 import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import Button from '../../ui/Button';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import store from '../../store';
 import { clearCart, getTotalCartPrice } from '../cart/cartSlice';
 import { formatCurrency } from '../../utils/helpers';
 import { useState } from 'react';
+import { fetchAddress } from '../user/userSlice';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -49,6 +50,8 @@ function CreateOrder() {
   const user = useSelector((store) => store.user);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
+  const dispatch = useDispatch();
+  // const userAddress = useSelector();
 
   // * we can use this useActionData custom hook to access the data return from action
   // * in this case we access to the errors send from action function but it can be any other type not only for error
@@ -62,7 +65,9 @@ function CreateOrder() {
       <h2 className="pb-8 text-2xl font-semibold sm:mb-6">
         Ready to order? Lets go!
       </h2>
-
+      {/* <button onClick={() => dispatch(fetchAddress())}>
+        Test get position
+      </button> */}
       {/* <form> */}
       {/* * to deal with form in react router to submit an action we need to use Form component from react router DOM
        * so it looks like a form of html we have the method and we also have an action so we can specify where the action come like action = "/order/new"
@@ -117,7 +122,7 @@ function CreateOrder() {
           <label className="mb-2 text-sm text-stone-600 sm:basis-40 sm:text-xl">
             Address
           </label>
-          <div className="grow">
+          <div className="flex grow gap-2 sm:gap-4">
             <input
               className="input w-full"
               type="text"
@@ -130,6 +135,15 @@ function CreateOrder() {
               name="address"
               required
             /> */}
+            <Button
+              type="form"
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(fetchAddress());
+              }}
+            >
+              Get position
+            </Button>
           </div>
         </div>
 
