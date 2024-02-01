@@ -3,6 +3,10 @@ import { Form, redirect, useActionData, useNavigation } from 'react-router-dom';
 import { createOrder } from '../../services/apiRestaurant';
 import Button from '../../ui/Button';
 import { useSelector } from 'react-redux';
+import store from '../../store';
+import { clearCart, getTotalCartPrice } from '../cart/cartSlice';
+import { formatCurrency } from '../../utils/helpers';
+import { useState } from 'react';
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -35,9 +39,13 @@ const isValidPhone = (str) =>
 // ];
 
 function CreateOrder() {
-  // const [withPriority, setWithPriority] = useState(false);
+  const [withPriority, setWithPriority] = useState(false);
   // const cart = fakeCart;
   const cart = useSelector((store) => store.cart.cart);
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const totalPrice = withPriority
+    ? totalCartPrice + totalCartPrice * 0.2
+    : totalCartPrice;
   const user = useSelector((store) => store.user);
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
@@ -46,6 +54,8 @@ function CreateOrder() {
   // * in this case we access to the errors send from action function but it can be any other type not only for error
   // * but the common use case is handle error like what we are doing
   const formErrors = useActionData();
+
+  if (!cart.length) return;
 
   return (
     <div className="px-3 py-4 sm:py-8">
@@ -78,7 +88,9 @@ function CreateOrder() {
             />
           </div>
         </div>
+
         {/* *https://tailwindcss.com/docs/flex-basis */}
+
         <div
           className={`mb-3 flex flex-col sm:mb-6 sm:flex-row sm:items-center sm:gap-3`}
         >
@@ -127,8 +139,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
           />
           <label
             className="italic text-stone-700 sm:text-xl"
@@ -142,7 +154,9 @@ function CreateOrder() {
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
 
           <Button type="primary" disabled={isSubmitting}>
-            {isSubmitting ? 'Placing order' : 'Order now'}
+            {isSubmitting
+              ? 'Placing order'
+              : `Order now from ${formatCurrency(totalPrice)}`}
           </Button>
 
           {/* <button disabled={isSubmitting}>
@@ -170,7 +184,9 @@ export const action = async ({ request }) => {
   // console.log(data);
   const order = {
     ...data,
-    priority: data.priority === 'on',
+    // priority: data.priority === 'on',
+    priority: data.priority === 'true', //* now this value come from the checkbox input then it will be 'true' or 'false' so it's boolean but since it's value of input so it will be convert to input right
+    // * and therefore we need to check it like this so with string not true and false with boolean type
     cart: JSON.parse(data.cart),
   };
 
@@ -179,8 +195,14 @@ export const action = async ({ request }) => {
   console.log(errors);
   if (Object.keys(errors).length > 0) return errors;
 
+  console.log(order);
+
   // console.log(order);
   const newOrder = await createOrder(order);
+  // console.log(newOrder);
+
+  // ! so with this trick or hack we can access tot he dispatch function but of course we shouldn't overuse this way because it will take away a couple of optimizations of Redux for this page so order/new page
+  store.dispatch(clearCart());
 
   return redirect(`/order/${newOrder.id}`);
   //! return null;
