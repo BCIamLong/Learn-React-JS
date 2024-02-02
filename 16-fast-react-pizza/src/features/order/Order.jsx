@@ -1,6 +1,6 @@
 // Test ID:
 
-import { useLoaderData } from 'react-router-dom';
+import { useFetcher, useLoaderData } from 'react-router-dom';
 import { getOrder } from '../../services/apiRestaurant';
 import {
   calcMinutesLeft,
@@ -8,6 +8,7 @@ import {
   formatDate,
 } from '../../utils/helpers';
 import OrderItem from './OrderItem';
+import { useEffect } from 'react';
 
 // const order = {
 //   id: "ABCDEF",
@@ -57,7 +58,15 @@ function Order() {
     cart,
   } = order;
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
+  const fetcher = useFetcher();
 
+  useEffect(() => {
+    if (fetcher.data && fetcher.state !== 'idle') return;
+
+    fetcher.load('/menu');
+  }, []);
+
+  // console.log(fetcher?.data?.at(0)?.ingredients);
   return (
     <div className="px-7 py-6">
       <div className="pb-4">
@@ -89,7 +98,15 @@ function Order() {
       {/* https://tailwindcss.com/docs/flex-wrap */}
       <ul className="divide-y divide-stone-300 border-t border-stone-300">
         {cart.map((item) => (
-          <OrderItem item={item} key={item.pizzaId} />
+          <OrderItem
+            item={item}
+            key={item.pizzaId}
+            isLoadingIngredients={fetcher.state === 'loading'}
+            ingredients={
+              fetcher.data?.find((pizza) => item.pizzaId === pizza.id)
+                ?.ingredients ?? []
+            }
+          />
         ))}
       </ul>
 
@@ -108,7 +125,7 @@ function Order() {
         )}
         <p>
           To pay on delivery:{' '}
-          <span className="font-semibold">
+          <span className="font-bold text-stone-700">
             {formatCurrency(orderPrice + priorityPrice)}
           </span>
         </p>
