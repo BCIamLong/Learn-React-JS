@@ -9,6 +9,8 @@ import {
 } from '../../utils/helpers';
 import OrderItem from './OrderItem';
 import { useEffect } from 'react';
+// import Button from '../../ui/Button';
+import UpdateOrder from './UpdateOrder';
 
 // const order = {
 //   id: "ABCDEF",
@@ -110,7 +112,10 @@ function Order() {
         ))}
       </ul>
 
-      <div className="flex flex-col gap-2  border-t border-stone-300 py-3 text-stone-600">
+      <div className="relative flex flex-col gap-2  border-t border-stone-300 py-3 text-stone-600">
+        <span className="absolute right-0 top-6">
+          {priority && <UpdateOrder order={order} />}
+        </span>
         <p>
           Price pizza:{' '}
           <span className="font-semibold">{formatCurrency(orderPrice)}</span>

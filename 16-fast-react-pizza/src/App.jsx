@@ -1,14 +1,15 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import "./App.css";
-import Home from "./ui/Home";
-import Cart from "./features/cart/Cart";
-import Menu, { loader as menuLoader } from "./features/menu/Menu";
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import './App.css';
+import Home from './ui/Home';
+import Cart from './features/cart/Cart';
+import Menu, { loader as menuLoader } from './features/menu/Menu';
 import CreateOrder, {
   action as createOrderAction,
-} from "./features/order/CreateOrder";
-import Order, { loader as orderLoader } from "./features/order/Order";
-import AppLayout from "./ui/AppLayout";
-import Error from "./ui/Error";
+} from './features/order/CreateOrder';
+import Order, { loader as orderLoader } from './features/order/Order';
+import AppLayout from './ui/AppLayout';
+import Error from './ui/Error';
+import { action as updateOrderAction } from './features/order/UpdateOrder';
 
 //* https://reactrouter.com/en/main/routers/create-browser-router
 
@@ -36,11 +37,11 @@ const router = createBrowserRouter([
     // ! also notice that the errors might happen in the loader so if the route doesn't have loader and doesn't duel with any data fetching API there is no error at all right
     children: [
       {
-        path: "/",
+        path: '/',
         element: <Home />,
       },
       {
-        path: "/menu",
+        path: '/menu',
         element: <Menu />,
         // * in the step 2 we provide loader with the loader property on the route object
         loader: menuLoader,
@@ -51,20 +52,21 @@ const router = createBrowserRouter([
         // ! notice that when we catch in the child route it will get the layout of this page but if it's error catch by parent maybe we need to create new layout for error right
       },
       {
-        path: "/cart",
+        path: '/cart',
         element: <Cart />,
       },
       {
-        path: "/order/new",
+        path: '/order/new',
         element: <CreateOrder />,
         // * so we connect the action function to this route here, and then when we get the post request from the form of this route it will call this createOrderAction function
         action: createOrderAction,
       },
       {
-        path: "/order/:orderId",
+        path: '/order/:orderId',
         element: <Order />,
         loader: orderLoader,
         errorElement: <Error />,
+        action: updateOrderAction,
       },
     ],
   },
