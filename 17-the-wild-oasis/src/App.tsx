@@ -1,4 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import Button from './components/Button';
+import Input from './components/Input';
+import GlobalStyles from './styles/GlobalStyles';
 
 const H1 = styled.h1`
   font-size: 60px;
@@ -16,9 +19,17 @@ const StyledApp = styled.div`
 
 function App() {
   return (
-    <StyledApp>
-      <H1>Hello world</H1>
-    </StyledApp>
+    <>
+      {/* This is how we can apply the global style, so because this GlobalStyles cannot accept the child components so therefore we need to use like this so sibling with App component like this */}
+      <GlobalStyles />
+      <StyledApp>
+        <H1>Hello world</H1>
+        <Button>Check in</Button>
+        <Button>Check out</Button>
+        <Input type="text" placeholder="Your name" />
+        <Input type="text" placeholder="Your address" />
+      </StyledApp>
+    </>
   );
 }
 
