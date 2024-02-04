@@ -7,17 +7,21 @@ import Users from "./pages/Users";
 import Cabins from "./pages/Cabins";
 import Settings from "./pages/Settings";
 import PageNotFound from "./pages/PageNotFound";
+import AppLayout from "./layouts/AppLayout";
+import GlobalStyles from "./styles/GlobalStyles";
 
 // interface AppProps {}
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* <Route index element={<Login />} /> */}
-        {/* so build index route with redirect to the certain page is cleaner right instead / we have /login
-         * so if the url is / and page is login it might not clean and might cause some confusing right
-         */}
-        {/* <Route index element={<Navigate replace to="/login" />} />
+    <>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Routes>
+          {/* <Route index element={<Login />} /> */}
+          {/* so build index route with redirect to the certain page is cleaner right instead / we have /login
+           * so if the url is / and page is login it might not clean and might cause some confusing right
+           */}
+          {/* <Route index element={<Navigate replace to="/login" />} />
         <Route path="/login" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/account" element={<Account />} />
@@ -26,17 +30,21 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<PageNotFound />} /> */}
 
-        {/* we can also don't need to use / notation because by default Vite did all of that */}
-        <Route index element={<Navigate replace to="/login" />} />
-        <Route path="login" element={<Login />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="account" element={<Account />} />
-        <Route path="users" element={<Users />} />
-        <Route path="cabins" element={<Cabins />} />
-        <Route path="settings" element={<Settings />} />
-        <Route path="*" element={<PageNotFound />} />
-      </Routes>
-    </BrowserRouter>
+          {/* we can also don't need to use / notation because by default Vite did all of that */}
+
+          <Route index element={<Navigate replace to="/login" />} />
+          <Route path="login" element={<Login />} />
+          <Route element={<AppLayout />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="account" element={<Account />} />
+            <Route path="users" element={<Users />} />
+            <Route path="cabins" element={<Cabins />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
+          <Route path="*" element={<PageNotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
