@@ -9,6 +9,7 @@ import Settings from "./pages/Settings";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./layouts/AppLayout";
 import GlobalStyles from "./styles/GlobalStyles";
+import Bookings from "./pages/Bookings";
 
 // interface AppProps {}
 function App() {
@@ -38,6 +39,7 @@ function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="account" element={<Account />} />
             <Route path="users" element={<Users />} />
+            <Route path="bookings" element={<Bookings />} />
             <Route path="cabins" element={<Cabins />} />
             <Route path="settings" element={<Settings />} />
           </Route>
