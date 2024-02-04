@@ -30,6 +30,7 @@ interface HeadingProps {
   // * for example we have code like this we pass in draggable for our component prop and $draggable for styled components because in this styled components we also need this prop to do some styling right
   //  * and therefore if we use draggable so this name it will create conflict between react props component and the styled components props right
   // * so the convention is use $ for styled components props of course we can use normal name prop but in the case we don't have the component pass in the same prp like that ok
+  // ? https://chat.openai.com/c/776b85de-2461-4fbd-837a-31d25ed08076
 
   $responsive?: boolean;
 }
