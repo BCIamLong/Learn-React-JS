@@ -11,7 +11,7 @@ Button.propTypes = {
 
 function Button({ to, type, onClick, disabled, children }) {
   const base =
-    'inline-block rounded-full border-2  border-yellow-300 bg-yellow-400  transition-all duration-200 hover:bg-yellow-300 font-semibold ';
+    'inline-block rounded-full border-2  border-yellow-300 bg-yellow-400  transition-all duration-200 hover:bg-yellow-300 font-semibold focus:outline-4  focus:outline-offset-4 focus:outline-yellow-400 ';
   const styles = {
     primary: base + 'sm:px-3 sm:py-2 px-2 py-1',
     small:

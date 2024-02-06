@@ -16,7 +16,10 @@ import Bookings from "./pages/Bookings";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      // staleTime: 60 * 1000,
+      staleTime: 0,
+      // *https://stackoverflow.com/questions/72828361/what-are-staletime-and-cachetime-in-react-query
+      // *https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults
     },
   },
 });

@@ -5,6 +5,9 @@ interface Options {
 }
 
 const sizes: Options = {
+  tiny: css`
+    padding: 0.5rem 0.4rem;
+  `,
   small: css`
     padding: 0.6rem 0.8rem;
   `,
@@ -36,6 +39,13 @@ const variations: Options = {
     color: var(--color-red-100);
     &:hover {
       background-color: var(--color-red-800);
+    }
+  `,
+  option: css`
+    background-color: var(--color-grey-0);
+    color: var(--color-grey-700);
+    &:hover {
+      background-color: var(--color-grey-100);
     }
   `,
 };
