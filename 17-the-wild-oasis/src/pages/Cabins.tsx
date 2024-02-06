@@ -9,7 +9,15 @@ function Cabins() {
     }
     fetchCabins();
   }, []);
-  return <div>Cabins</div>;
+  return (
+    <div>
+      Cabins
+      <img
+        src="https://xyinqkbbdbmknpwnrucc.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg"
+        alt=""
+      />
+    </div>
+  );
 }
 
 export default Cabins;
