@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Button from "./components/Button";
-import Input from "./components/Input";
+import Input from "./components/form/Input";
 import GlobalStyles from "./styles/GlobalStyles";
 import Heading from "./components/Heading";
 import Row from "./components/Row";

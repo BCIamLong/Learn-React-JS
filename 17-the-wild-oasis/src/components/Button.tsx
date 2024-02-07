@@ -21,6 +21,8 @@ const sizes: Options = {
 
 const variations: Options = {
   primary: css`
+    font-size: 1.4rem;
+    font-weight: 500;
     background-color: var(--color-brand-600);
     color: var(--color-brand-50);
     &:hover {
