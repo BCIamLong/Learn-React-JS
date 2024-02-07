@@ -13,6 +13,8 @@ const StyledAppLayout = styled.div`
 const Main = styled.main`
   padding: 4.8rem 6rem;
   background-color: var(--color-grey-50);
+  /* position: relative; */
+  overflow: auto;
 `;
 
 function AppLayout() {

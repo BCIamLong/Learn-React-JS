@@ -42,7 +42,7 @@ export async function patchCabin(id: number, data: Partial<Cabins>) {
 }
 
 export async function deleteCabin(id: number) {
-  const { error } = await supabase.from("countries").delete().eq("id", id);
+  const { error } = await supabase.from("cabins").delete().eq("id", id);
 
-  if (error) return;
+  if (error) throw new Error("Cabin delete not success!");
 }

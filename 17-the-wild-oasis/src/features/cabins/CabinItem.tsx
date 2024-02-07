@@ -1,9 +1,18 @@
 // import { ReactNode } from "react";
 import styled, { css } from "styled-components";
-import { HiEllipsisVertical } from "react-icons/hi2";
+import {
+  HiEllipsisVertical,
+  HiPencil,
+  HiMiniTrash,
+  HiMiniSquare2Stack,
+} from "react-icons/hi2";
 import Cabin from "../../types/cabin.type";
 import formatCurrency from "../../utils/formatCurrency";
 import Button from "../../components/Button";
+// import { useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteCabin } from "../../services/apiCabins";
+import { useState } from "react";
 
 const TableItem = styled.div`
   display: grid;
@@ -14,6 +23,7 @@ const TableItem = styled.div`
   font-size: 1.4rem;
   align-items: center;
   background-color: var(--color-grey-0);
+  position: relative;
 
   & div:last-child {
     justify-self: end;
@@ -21,6 +31,8 @@ const TableItem = styled.div`
 
   &:last-child {
     border-bottom: none;
+    border-bottom-left-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
   }
 `;
 
@@ -62,6 +74,52 @@ const Discount = styled.p<Discount>`
 const StyledHiEllipsisVertical = styled(HiEllipsisVertical)`
   font-size: 2.4rem;
   font-weight: 700;
+
+  &:active.div {
+    display: block;
+  }
+`;
+
+const OptionsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 90%;
+  right: 1.5%;
+  z-index: 100;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+
+  & button:first-child {
+    border-top-right-radius: var(--border-radius-md);
+    border-top-left-radius: var(--border-radius-md);
+  }
+  & button:last-child {
+    border-bottom-right-radius: var(--border-radius-md);
+    border-bottom-left-radius: var(--border-radius-md);
+  }
+
+  & button {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.6rem 2rem;
+    background-color: var(--color-grey-0);
+    border: none;
+  }
+
+  & button:hover {
+    background-color: var(--color-grey-100);
+  }
+
+  & button:focus {
+    border: none;
+    /* outline: none; */
+    outline: 1px solid var(--color-brand-900);
+    background-color: var(--color-grey-100);
+    /* border-collapse: collapse; */
+  }
 `;
 
 // const Options = styled.button``;
@@ -71,6 +129,19 @@ interface CabinItemProps {
 }
 
 function CabinItem({ cabin }: CabinItemProps) {
+  const [isSelected, setIsSelected] = useState(false);
+  const queryClient = useQueryClient();
+  const { isPending: isDeleting, mutate } = useMutation({
+    mutationFn: (id: number) => deleteCabin(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      // setIsSelected(false);
+    },
+    onError: (err) => alert(err.message),
+  });
+
   return (
     <TableItem role="row">
       <div>
@@ -93,9 +164,29 @@ function CabinItem({ cabin }: CabinItemProps) {
         )}
       </div>
       <div>
-        <Button $size="tiny" $variation="option">
+        <Button
+          $size="tiny"
+          $variation="option"
+          onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}
+        >
           <StyledHiEllipsisVertical />
         </Button>
+        {isSelected && (
+          <OptionsBox>
+            <button>
+              <HiMiniSquare2Stack />
+              <span>Duplicate</span>
+            </button>
+            <button>
+              <HiPencil />
+              <span>Edit</span>
+            </button>
+            <button onClick={() => mutate(cabin.id)} disabled={isDeleting}>
+              <HiMiniTrash />
+              <span>{isDeleting ? "Deleting" : "Delete"}</span>
+            </button>
+          </OptionsBox>
+        )}
       </div>
     </TableItem>
   );

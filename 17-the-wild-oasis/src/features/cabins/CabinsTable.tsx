@@ -19,7 +19,7 @@ const Table = styled.div`
   border: 1px solid var(--color-grey-200);
   border-radius: var(--border-radius-md);
   width: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 `;
 
 function CabinsTable() {
@@ -28,7 +28,7 @@ function CabinsTable() {
     error,
     isLoading,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
