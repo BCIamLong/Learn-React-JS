@@ -17,6 +17,14 @@ const Main = styled.main`
   overflow: auto;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  max-width: 128rem;
+  margin: 0 auto;
+`;
+
 function AppLayout() {
   return (
     <StyledAppLayout>
@@ -24,7 +32,9 @@ function AppLayout() {
       <Header />
       <Sidebar />
       <Main>
-        <Outlet />
+        <Container>
+          <Outlet />
+        </Container>
       </Main>
     </StyledAppLayout>
   );

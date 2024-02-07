@@ -13,6 +13,7 @@ import Button from "../../components/Button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteCabin } from "../../services/apiCabins";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const TableItem = styled.div`
   display: grid;
@@ -129,6 +130,9 @@ interface CabinItemProps {
 }
 
 function CabinItem({ cabin }: CabinItemProps) {
+  // const { handlers } = useToaster();
+  // const { startPause, endPause } = handlers;
+
   const [isSelected, setIsSelected] = useState(false);
   const queryClient = useQueryClient();
   const { isPending: isDeleting, mutate } = useMutation({
@@ -138,8 +142,15 @@ function CabinItem({ cabin }: CabinItemProps) {
         queryKey: ["cabins"],
       });
       // setIsSelected(false);
+      toast.success("Delete cabin successfully");
     },
-    onError: (err) => alert(err.message),
+    onError: (err) => toast.error(err.message),
+    // onError: (err) =>
+    //   toast.custom(
+    //     <div>
+    //       {err.message} <button onClick={endPause}>Close</button>
+    //     </div>
+    //   ),
   });
 
   return (
