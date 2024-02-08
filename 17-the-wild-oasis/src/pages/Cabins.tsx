@@ -21,7 +21,7 @@ function Cabins() {
         </Button>
         {showForm && (
           <Popup onShow={() => setShowForm((show) => !show)}>
-            <CreateCabinForm />
+            <CreateCabinForm setShowForm={setShowForm} />
           </Popup>
         )}
         {/* {showForm && <CreateCabinForm />} */}

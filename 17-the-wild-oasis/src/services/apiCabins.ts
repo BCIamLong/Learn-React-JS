@@ -29,10 +29,12 @@ export async function getCabin(id: number) {
   return cabin;
 }
 
-export async function postCabin(data: Cabins) {
-  const { error } = await supabase.from("cabins").insert(data);
+export async function postCabin(newCabin: Cabins) {
+  const { data, error } = await supabase.from("cabins").insert(newCabin);
 
-  if (error) return;
+  if (error) throw new Error("Cabin can't be created");
+
+  return data;
 }
 
 export async function patchCabin(id: number, data: Partial<Cabins>) {

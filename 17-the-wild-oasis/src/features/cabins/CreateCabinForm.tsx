@@ -2,6 +2,10 @@ import styled from "styled-components";
 import Button from "../../components/Button";
 import { Form, FormRow, Label, Input } from "../../components/form";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { postCabin } from "../../services/apiCabins";
+// import Cabin from "../../types/cabin.type";
+import toast from "react-hot-toast";
 
 const Buttons = styled.div`
   display: flex;
@@ -26,18 +30,39 @@ const Textarea = styled.textarea`
 
 interface Inputs {
   name: string;
-  maxCapacity: string;
+  maxCapacity: number;
   regularPrice: number;
   discount: number;
   description: string;
   image: string;
 }
 
-function CreateCabinForm() {
+interface CreateCabinFormProps {
+  setShowForm: (show: boolean) => void;
+}
+
+function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
   const { register, handleSubmit } = useForm<Inputs>();
 
+  const queryClient = useQueryClient();
+  const { isPending: isCreating, mutate } = useMutation({
+    mutationFn: (newCabin: Inputs) => postCabin(newCabin),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      toast.success("Create new cabin successful");
+
+      setTimeout(() => {
+        setShowForm(false);
+      }, 1000);
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
   const onSubmit: SubmitHandler<Inputs> = function (data) {
-    console.log(data);
+    // console.log(data);
+    mutate(data);
   };
 
   return (
@@ -75,7 +100,9 @@ function CreateCabinForm() {
         <Button $size="medium" $variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button>Create new cabin</Button>
+        <Button disabled={isCreating}>
+          {isCreating ? "Processing" : "Create new cabin"}
+        </Button>
       </Buttons>
     </Form>
   );
