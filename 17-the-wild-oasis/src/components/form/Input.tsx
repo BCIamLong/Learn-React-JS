@@ -10,6 +10,10 @@ const Input = styled.input`
   &:focus {
     /* border: none; */
   }
+
+  /* &:aria-invalid {
+    border: 2px solid red;
+  } */
 `;
 
 export default Input;

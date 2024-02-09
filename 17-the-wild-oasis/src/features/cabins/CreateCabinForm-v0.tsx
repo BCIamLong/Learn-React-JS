@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { SubmitHandler, useForm, FieldErrors } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "~/components/Button";
-import { Form, FormRow, Input } from "~/components/form";
+import { Form, FormRow, Label, Input } from "~/components/form";
 import { postCabin } from "~/services/apiCabins";
 // import Cabin from "../../types/cabin.type";
 
@@ -26,6 +26,10 @@ const Textarea = styled.textarea`
   &:focus {
     /* border: none; */
   }
+`;
+
+const Error = styled.p`
+  color: var(--color-red-700);
 `;
 
 interface Inputs {
@@ -71,47 +75,30 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
     console.log(errors);
   };
 
-  /*
+  return (
+    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+      <FormRow>
+        <Label htmlFor="name">Cabin name</Label>
+        {/* <Input type="text" id="name" {...register("name", { required: true })} /> 
+        instead use it with required true we can custom it with the message text to show the message on UI for users right*/}
+        <Input type="text" id="name" {...register("name", { required: "This field is required" })} />
+        {errors.name && <Error>{errors.name.message}</Error>}
+      </FormRow>
+
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
         <Input type="number" id="maxCapacity" {...register("maxCapacity", { required: "This field is required" })} />
         {errors.maxCapacity && <Error>{errors.maxCapacity.message}</Error>}
-      </FormRow> 
-      * we can refactor this code here to the the FormRow component because in there we have things repeat many times right like Label and Error
-  */
-
-  return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow label="name" errorMsg={errors.name?.message || ""}>
-        {/* <Input type="text" id="name" {...register("name", { required: true })} /> 
-        instead use it with required true we can custom it with the message text to show the message on UI for users right*/}
-        <Input
-          type="text"
-          id="name"
-          {...register("name", { required: "This field is required" })}
-          disabled={isCreating}
-        />
       </FormRow>
 
-      <FormRow label="maxCapacity" errorMsg={errors.maxCapacity?.message || ""}>
-        <Input
-          type="number"
-          id="maxCapacity"
-          {...register("maxCapacity", { required: "This field is required" })}
-          disabled={isCreating}
-        />
+      <FormRow>
+        <Label htmlFor="regularPrice">Regular price</Label>
+        <Input type="number" id="regularPrice" {...register("regularPrice", { required: "This field is required" })} />
+        {errors.regularPrice && <Error>{errors.regularPrice.message}</Error>}
       </FormRow>
 
-      <FormRow label="regularPrice" errorMsg={errors.regularPrice?.message || ""}>
-        <Input
-          type="number"
-          id="regularPrice"
-          {...register("regularPrice", { required: "This field is required" })}
-          disabled={isCreating}
-        />
-      </FormRow>
-
-      <FormRow label="discount" errorMsg={errors.discount?.message || ""}>
+      <FormRow>
+        <Label htmlFor="discount">Discount</Label>
         <Input
           type="number"
           id="discount"
@@ -119,12 +106,13 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
             required: "This field is required",
             validate: (val: number) => val <= +getValues().regularPrice || "Discount must less than price",
           })}
-          disabled={isCreating}
           defaultValue={0}
         />
+        {errors.discount && <Error>{errors.discount.message}</Error>}
       </FormRow>
 
-      <FormRow label="description" errorMsg={errors.description?.message || ""}>
+      <FormRow>
+        <Label htmlFor="description">Description for website</Label>
         <Textarea
           id="description"
           {...register("description", {
@@ -133,21 +121,18 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
               return text.split(" ").length > 2 || "This string must be more 3 words";
             },
           })}
-          disabled={isCreating}
         ></Textarea>
+        {errors.description && <Error>{errors.description.message}</Error>}
       </FormRow>
 
-      <FormRow label="image" errorMsg={errors.image?.message || ""}>
-        <Input
-          type="text"
-          id="image"
-          {...register("image", { required: "This field is required" })}
-          disabled={isCreating}
-        />
+      <FormRow>
+        <Label htmlFor="image">Cabin photo</Label>
+        <Input type="text" id="image" {...register("image", { required: "This field is required" })} />
+        {errors.image && <Error>{errors.image.message}</Error>}
       </FormRow>
 
       <Buttons>
-        <Button $size="medium" $variation="secondary" type="reset" onClick={() => setShowForm(false)}>
+        <Button $size="medium" $variation="secondary" type="reset">
           Cancel
         </Button>
         <Button disabled={isCreating}>{isCreating ? "Processing" : "Create new cabin"}</Button>

@@ -1,19 +1,13 @@
 // import { ReactNode } from "react";
-import styled, { css } from "styled-components";
-import {
-  HiEllipsisVertical,
-  HiPencil,
-  HiMiniTrash,
-  HiMiniSquare2Stack,
-} from "react-icons/hi2";
-import Cabin from "../../types/cabin.type";
-import formatCurrency from "../../utils/formatCurrency";
-import Button from "../../components/Button";
-// import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import styled, { css } from "styled-components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { HiEllipsisVertical, HiPencil, HiMiniTrash, HiMiniSquare2Stack } from "react-icons/hi2";
+import Cabin from "~/types/cabin.type";
+import formatCurrency from "~/utils/formatCurrency";
+import Button from "~/components/Button";
+import { deleteCabin } from "~/services/apiCabins";
 
 const TableItem = styled.div`
   display: grid;
@@ -175,11 +169,7 @@ function CabinItem({ cabin }: CabinItemProps) {
         )}
       </div>
       <div>
-        <Button
-          $size="tiny"
-          $variation="option"
-          onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}
-        >
+        <Button $size="tiny" $variation="option" onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}>
           <StyledHiEllipsisVertical />
         </Button>
         {isSelected && (

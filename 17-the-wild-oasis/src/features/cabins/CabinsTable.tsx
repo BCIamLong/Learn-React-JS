@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import CabinItem from "./CabinItem";
 import { useQuery } from "@tanstack/react-query";
-import { getCabins } from "../../services/apiCabins";
-import Spinner from "../../components/Spinner";
+import CabinItem from "./CabinItem";
+import { getCabins } from "~/services/apiCabins";
+import Spinner from "~/components/Spinner";
 
 const TableHeader = styled.header`
   display: grid;
