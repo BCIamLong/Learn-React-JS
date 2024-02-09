@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { SubmitHandler, useForm, FieldErrors } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "~/components/Button";
-import { Form, FormRow, Input } from "~/components/form";
+import { FileInput, Form, FormRow, Input } from "~/components/form";
 import { postCabin } from "~/services/apiCabins";
 // import Cabin from "../../types/cabin.type";
 
@@ -34,7 +34,7 @@ interface Inputs {
   regularPrice: number;
   discount: number;
   description: string;
-  image: string;
+  image: FileList;
 }
 
 interface CreateCabinFormProps {
@@ -64,7 +64,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
 
   const onSubmit: SubmitHandler<Inputs> = function (data) {
     // console.log(data);
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   };
 
   const onError = function (errors: FieldErrors) {
@@ -138,12 +138,13 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
       </FormRow>
 
       <FormRow label="image" errorMsg={errors.image?.message || ""}>
-        <Input
+        {/* <Input
           type="text"
           id="image"
           {...register("image", { required: "This field is required" })}
           disabled={isCreating}
-        />
+        /> */}
+        <FileInput id="image" {...register("image", { required: "This field is required" })} disabled={isCreating} />
       </FormRow>
 
       <Buttons>

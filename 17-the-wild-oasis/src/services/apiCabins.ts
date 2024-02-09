@@ -1,4 +1,6 @@
+import { SUPABASE_URL } from "~/configs/supabase";
 import supabase from "./supabase";
+import Cabin from "~/types/cabin.type";
 
 interface Cabins {
   id: number;
@@ -6,7 +8,7 @@ interface Cabins {
   maxCapacity: string;
   regularPrice: number;
   discount: number;
-  image: string;
+  image: File;
   createdAt?: Date;
 }
 
@@ -19,10 +21,7 @@ export async function getCabins() {
 }
 
 export async function getCabin(id: number) {
-  const { data: cabin, error } = await supabase
-    .from("cabins")
-    .select("*")
-    .eq("id", id);
+  const { data: cabin, error } = await supabase.from("cabins").select("*").eq("id", id);
 
   if (error) return;
 
@@ -30,11 +29,24 @@ export async function getCabin(id: number) {
 }
 
 export async function postCabin(newCabin: Cabins) {
-  const { data, error } = await supabase.from("cabins").insert(newCabin);
+  const fileName = `${Math.random()}-${newCabin.image.name}`;
+  // https://xyinqkbbdbmknpwnrucc.supabase.co/storage/v1/object/public/cabin-images/cabin-006.jpg
+  const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
 
+  const { data, error } = await supabase.from("cabins").insert({ ...newCabin, image: filePath });
+  console.log(error);
   if (error) throw new Error("Cabin can't be created");
 
-  return data;
+  const { error: storageError } = await supabase.storage.from("cabin-images").upload(fileName, newCabin.image, {
+    cacheControl: "3600",
+    upsert: false,
+  });
+
+  if (!storageError) return data;
+
+  await supabase.from("cabins").delete().eq("id", data?.id);
+
+  throw new Error("Image upload is not success and the cabin is not created");
 }
 
 export async function patchCabin(id: number, data: Partial<Cabins>) {

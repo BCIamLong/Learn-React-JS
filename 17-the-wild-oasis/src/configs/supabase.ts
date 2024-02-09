@@ -1,2 +1,4 @@
 export const SUPABASE_KEY =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh5aW5xa2JiZGJta25wd25ydWNjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDcwNTM1NTIsImV4cCI6MjAyMjYyOTU1Mn0.docs_0Y3bSDAbtyIjjDVBaJ1Pvh2yUj2ET3psxsOfgE";
+
+export const SUPABASE_URL = "https://xyinqkbbdbmknpwnrucc.supabase.co";
