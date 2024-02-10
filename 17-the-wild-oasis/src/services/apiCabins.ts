@@ -1,14 +1,14 @@
 import { SUPABASE_URL } from "~/configs/supabase";
 import supabase from "./supabase";
-import Cabin from "~/types/cabin.type";
+// import Cabin from "~/types/cabin.type";
 
 interface Cabins {
-  id: number;
+  id?: number;
   name: string;
-  maxCapacity: string;
+  maxCapacity: number;
   regularPrice: number;
   discount: number;
-  image: File;
+  image: FileList;
   createdAt?: Date;
 }
 
@@ -29,22 +29,34 @@ export async function getCabin(id: number) {
 }
 
 export async function postCabin(newCabin: Cabins) {
-  const fileName = `${Math.random()}-${newCabin.image.name}`;
+  // ! notice that the file name should not have this / slash because if we have that then we will create new folder in the supabase
+  // * so if we have this name: 123-cabin/123.jpg => now in supabase it will create folder 123-cabin and then in here we have 123.jpg file which is not what we want right
+
+  const fileName = `${Math.random()}-${newCabin.image[0].name}`.replace("/", ""); //* so to make sure we don't have this / we can do it like this
+
   // https://xyinqkbbdbmknpwnrucc.supabase.co/storage/v1/object/public/cabin-images/cabin-006.jpg
   const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
 
-  const { data, error } = await supabase.from("cabins").insert({ ...newCabin, image: filePath });
+  const { data, error } = await supabase
+    .from("cabins")
+    .insert({ ...newCabin, image: filePath })
+    .select()
+    .single();
+  // * so this data here is not really return immediately right so it's async task deal with supabase right and to make sure it really be here we can .select().single(); to make sure this data is already have here
+  // * and we should do it like this because it's not easy to catch the type Promise from supabase because it's from postgresql Promise so supabase use this postgresql DB right
+  // * but this is not deal so it's how we can do TS can infer this type but it's not error in runtime just for TS infer exact the type of data
+
   console.log(error);
   if (error) throw new Error("Cabin can't be created");
 
-  const { error: storageError } = await supabase.storage.from("cabin-images").upload(fileName, newCabin.image, {
+  const { error: storageError } = await supabase.storage.from("cabin-images").upload(fileName, newCabin.image[0], {
     cacheControl: "3600",
     upsert: false,
   });
 
   if (!storageError) return data;
 
-  await supabase.from("cabins").delete().eq("id", data?.id);
+  await supabase.from("cabins").delete().eq("id", data.id);
 
   throw new Error("Image upload is not success and the cabin is not created");
 }

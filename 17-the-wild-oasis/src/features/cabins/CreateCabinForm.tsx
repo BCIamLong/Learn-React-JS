@@ -64,7 +64,8 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
 
   const onSubmit: SubmitHandler<Inputs> = function (data) {
     // console.log(data);
-    mutate({ ...data, image: data.image[0] });
+    // mutate({ ...data, image: data.image[0] });
+    mutate(data);
   };
 
   const onError = function (errors: FieldErrors) {
