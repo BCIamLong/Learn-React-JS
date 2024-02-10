@@ -46,7 +46,7 @@ interface CabinFormProps {
 function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
   const { id: editId, ...editData } = cabinToEdit!;
   const { register, handleSubmit, formState, getValues } = useForm<Inputs>({
-    defaultValues: editId ? editData : {},
+    defaultValues: editId ? (editData as FieldValues) : {},
   });
 
   const { errors } = formState;
