@@ -62,9 +62,31 @@ export async function postCabin(newCabin: Cabins) {
 }
 
 export async function patchCabin(id: number, data: Partial<Cabins>) {
-  const { error } = await supabase.from("cabins").update(data).eq("id", id);
+  if (!data.image) return;
+  const fileName = `${Math.random()}-${data.image?.[0].name}`.replace("/", "");
+  const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
+  const hasNewImage = typeof data.image !== "string";
 
-  if (error) return;
+  const { error, data: updatedCabin } = await supabase
+    .from("cabins")
+    .update(!hasNewImage ? data : { ...data, image: filePath })
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error("Edit cabin is not successful");
+  if (!hasNewImage) return updatedCabin;
+
+  const { error: storageError } = await supabase.storage.from("cabin-images").upload(fileName, data.image?.[0] || "", {
+    cacheControl: "3600",
+    upsert: false,
+  });
+
+  if (!storageError) return updatedCabin;
+
+  await supabase.from("cabins").delete().eq("id", id);
+
+  throw new Error("Image upload is not success and the cabin is not edited");
 }
 
 export async function deleteCabin(id: number) {

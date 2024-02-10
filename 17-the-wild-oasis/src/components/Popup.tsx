@@ -14,14 +14,14 @@ const StyledPopup = styled.div`
   left: 0;
   height: 100vh;
   /* background-color: var(--color-grey-400); */
-  /* z-index: 100; */
+  z-index: 100;
   /* filter: blur(0.1rem); */
   backdrop-filter: blur(3px);
 `;
 
 const PopupBox = styled.div`
   width: 60%;
-  /* z-index: 300; */
+  z-index: 300;
   position: relative;
   box-shadow: var(--shadow-lg);
 `;

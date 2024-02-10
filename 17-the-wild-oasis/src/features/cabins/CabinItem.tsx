@@ -8,6 +8,8 @@ import Cabin from "~/types/cabin.type";
 import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
 import { deleteCabin } from "~/services/apiCabins";
+import Popup from "~/components/Popup";
+import CabinForm from "./CabinForm";
 
 const TableItem = styled.div`
   display: grid;
@@ -128,6 +130,7 @@ function CabinItem({ cabin }: CabinItemProps) {
   // const { startPause, endPause } = handlers;
 
   const [isSelected, setIsSelected] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const queryClient = useQueryClient();
   const { isPending: isDeleting, mutate } = useMutation({
     mutationFn: (id: number) => deleteCabin(id),
@@ -148,48 +151,60 @@ function CabinItem({ cabin }: CabinItemProps) {
   });
 
   return (
-    <TableItem role="row">
-      <div>
-        <Image src={cabin.image} alt={`The Wild Oasis's Cabin ${cabin.name}`} />
-      </div>
-      <div>
-        <Name>{cabin.name}</Name>
-      </div>
-      <div>
-        <p>Fits up {cabin.maxCapacity} guests</p>
-      </div>
-      <div>
-        <RegularPrice>{formatCurrency(cabin.regularPrice)}</RegularPrice>
-      </div>
-      <div>
-        {cabin.discount ? (
-          <Discount $isExist={true}>{formatCurrency(cabin.discount)}</Discount>
-        ) : (
-          <Discount $isExist={false}>&mdash;</Discount>
-        )}
-      </div>
-      <div>
-        <Button $size="tiny" $variation="option" onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}>
-          <StyledHiEllipsisVertical />
-        </Button>
-        {isSelected && (
-          <OptionsBox>
-            <button>
-              <HiMiniSquare2Stack />
-              <span>Duplicate</span>
-            </button>
-            <button>
-              <HiPencil />
-              <span>Edit</span>
-            </button>
-            <button onClick={() => mutate(cabin.id)} disabled={isDeleting}>
-              <HiMiniTrash />
-              <span>{isDeleting ? "Deleting" : "Delete"}</span>
-            </button>
-          </OptionsBox>
-        )}
-      </div>
-    </TableItem>
+    <>
+      <TableItem role="row">
+        <div>
+          <Image src={cabin.image} alt={`The Wild Oasis's Cabin ${cabin.name}`} />
+        </div>
+        <div>
+          <Name>{cabin.name}</Name>
+        </div>
+        <div>
+          <p>Fits up {cabin.maxCapacity} guests</p>
+        </div>
+        <div>
+          <RegularPrice>{formatCurrency(cabin.regularPrice)}</RegularPrice>
+        </div>
+        <div>
+          {cabin.discount ? (
+            <Discount $isExist={true}>{formatCurrency(cabin.discount)}</Discount>
+          ) : (
+            <Discount $isExist={false}>&mdash;</Discount>
+          )}
+        </div>
+        <div>
+          <Button $size="tiny" $variation="option" onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}>
+            <StyledHiEllipsisVertical />
+          </Button>
+          {isSelected && (
+            <OptionsBox>
+              <button>
+                <HiMiniSquare2Stack />
+                <span>Duplicate</span>
+              </button>
+              <button
+                onClick={() => {
+                  setShowForm(true);
+                  setIsSelected(false);
+                }}
+              >
+                <HiPencil />
+                <span>Edit</span>
+              </button>
+              <button onClick={() => mutate(cabin.id)} disabled={isDeleting}>
+                <HiMiniTrash />
+                <span>{isDeleting ? "Deleting" : "Delete"}</span>
+              </button>
+            </OptionsBox>
+          )}
+        </div>
+      </TableItem>
+      {showForm && (
+        <Popup onShow={() => setShowForm((show) => !show)}>
+          <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
+        </Popup>
+      )}
+    </>
   );
 }
 
