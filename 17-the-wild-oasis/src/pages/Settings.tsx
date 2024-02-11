@@ -1,12 +1,12 @@
 import Row from "../components/Row";
-import SettingsTable from "../features/settings/SettingsTable";
+import SettingForm from "../features/settings/SettingsForm";
 
 function Settings() {
   return (
     <>
       <Row>Settings</Row>
       <Row>
-        <SettingsTable />
+        <SettingForm />
       </Row>
     </>
   );
