@@ -1,3 +1,4 @@
+import Setting from "~/types/setting.type";
 import supabase from "./supabase";
 
 export async function getSettings() {
@@ -8,4 +9,12 @@ export async function getSettings() {
   if (!settings) return;
 
   return settings;
+}
+
+export async function patchSetting(newSetting: Partial<Setting>) {
+  const { error, data: updatedSetting } = await supabase.from("settings").update(newSetting).eq("id", 1);
+
+  if (error) throw new Error("Can't update setting data");
+
+  return updatedSetting;
 }
