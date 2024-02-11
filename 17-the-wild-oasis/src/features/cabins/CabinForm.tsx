@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import toast from "react-hot-toast";
 import { SubmitHandler, useForm, FieldErrors, FieldValues } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+
+import useCreateCabin from "./useCreateCabin";
+import useEditCabin from "./useEditCabin";
 import Button from "~/components/Button";
 import { FileInput, Form, FormRow, Input } from "~/components/form";
-import { patchCabin, postCabin } from "~/services/apiCabins";
 import Cabin from "~/types/cabin.type";
 // import Cabin from "../../types/cabin.type";
 
@@ -44,43 +44,15 @@ interface CabinFormProps {
 }
 
 function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
-  const { id: editId, ...editData } = cabinToEdit!;
-  const { register, handleSubmit, formState, getValues } = useForm<Inputs>({
+  const { id: editId, ...editData } = cabinToEdit || {};
+  const { register, handleSubmit, formState, getValues, reset } = useForm<Inputs>({
     defaultValues: editId ? (editData as FieldValues) : {},
   });
 
   const { errors } = formState;
 
-  const queryClient = useQueryClient();
-  const { isPending: isCreating, mutate: createCabin } = useMutation({
-    mutationFn: (newCabin: Inputs) => postCabin(newCabin),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      toast.success("Create new cabin successful");
-
-      setTimeout(() => {
-        setShowForm(false);
-      }, 1000);
-    },
-    onError: (err) => toast.error(err.message),
-  });
-
-  const { isPending: isEditing, mutate: editCabin } = useMutation({
-    mutationFn: ({ id, newCabinData }: { id: number; newCabinData: Inputs }) => patchCabin(id, newCabinData),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      toast.success("Edit cabin successful");
-
-      setTimeout(() => {
-        setShowForm(false);
-      }, 1000);
-    },
-    onError: (err) => toast.error(err.message),
-  });
+  const { isCreating, createCabinMutate } = useCreateCabin();
+  const { isEditing, editCabinMutate } = useEditCabin();
 
   const isWorking = isCreating || isEditing;
 
@@ -88,9 +60,30 @@ function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
     // console.log(data);
     // mutate({ ...data, image: data.image[0] });
     // if (editId) return console.log(data);
-    if (editId) return editCabin({ id: editId, newCabinData: data });
+    if (editId)
+      return editCabinMutate(
+        { id: editId, newCabinData: data },
+        {
+          onSuccess: (data: Cabin) => {
+            // * notice that in the onSuccess we can access to the newly data so it can be the new edited data in this case
+            console.log(data);
+            setTimeout(() => {
+              setShowForm(false);
+            }, 1000);
+          },
+        }
+      );
 
-    createCabin(data);
+    createCabinMutate(data, {
+      onSuccess: (data: Cabin) => {
+        // * notice that in the onSuccess we can access to the newly data so it can be the new created data in this case
+        console.log(data);
+        reset();
+        setTimeout(() => {
+          setShowForm(false);
+        }, 1000);
+      },
+    });
   };
 
   const onError = function (errors: FieldErrors) {

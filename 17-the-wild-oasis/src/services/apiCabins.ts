@@ -84,6 +84,8 @@ export async function patchCabin(id: number, data: Partial<Cabins>) {
 
   if (!storageError) return updatedCabin;
 
+  // console.log(storageError);
+
   await supabase.from("cabins").delete().eq("id", id);
 
   throw new Error("Image upload is not success and the cabin is not edited");

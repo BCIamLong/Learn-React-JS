@@ -1,11 +1,12 @@
+// * Before use custom hook for creating and updating
 import styled from "styled-components";
 import toast from "react-hot-toast";
-import { SubmitHandler, useForm, FieldErrors } from "react-hook-form";
+import { SubmitHandler, useForm, FieldErrors, FieldValues } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Button from "~/components/Button";
 import { FileInput, Form, FormRow, Input } from "~/components/form";
-import { postCabin } from "~/services/apiCabins";
-
+import { patchCabin, postCabin } from "~/services/apiCabins";
+import Cabin from "~/types/cabin.type";
 // import Cabin from "../../types/cabin.type";
 
 const Buttons = styled.div`
@@ -29,7 +30,7 @@ const Textarea = styled.textarea`
   }
 `;
 
-interface Inputs {
+interface Inputs extends FieldValues {
   name: string;
   maxCapacity: number;
   regularPrice: number;
@@ -38,17 +39,21 @@ interface Inputs {
   image: FileList;
 }
 
-interface CreateCabinFormProps {
+interface CabinFormProps {
   setShowForm: (show: boolean) => void;
+  cabinToEdit?: Cabin;
 }
 
-function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
-  const { register, handleSubmit, formState, getValues } = useForm<Inputs>();
+function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
+  const { id: editId, ...editData } = cabinToEdit!;
+  const { register, handleSubmit, formState, getValues } = useForm<Inputs>({
+    defaultValues: editId ? (editData as FieldValues) : {},
+  });
 
   const { errors } = formState;
 
   const queryClient = useQueryClient();
-  const { isPending: isCreating, mutate } = useMutation({
+  const { isPending: isCreating, mutate: createCabin } = useMutation({
     mutationFn: (newCabin: Inputs) => postCabin(newCabin),
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -63,10 +68,30 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
     onError: (err) => toast.error(err.message),
   });
 
+  const { isPending: isEditing, mutate: editCabin } = useMutation({
+    mutationFn: ({ id, newCabinData }: { id: number; newCabinData: Inputs }) => patchCabin(id, newCabinData),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      toast.success("Edit cabin successful");
+
+      setTimeout(() => {
+        setShowForm(false);
+      }, 1000);
+    },
+    onError: (err) => toast.error(err.message),
+  });
+
+  const isWorking = isCreating || isEditing;
+
   const onSubmit: SubmitHandler<Inputs> = function (data) {
     // console.log(data);
     // mutate({ ...data, image: data.image[0] });
-    mutate(data);
+    // if (editId) return console.log(data);
+    if (editId) return editCabin({ id: editId, newCabinData: data });
+
+    createCabin(data);
   };
 
   const onError = function (errors: FieldErrors) {
@@ -91,7 +116,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
           type="text"
           id="name"
           {...register("name", { required: "This field is required" })}
-          disabled={isCreating}
+          disabled={isWorking}
         />
       </FormRow>
 
@@ -100,7 +125,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
           type="number"
           id="maxCapacity"
           {...register("maxCapacity", { required: "This field is required" })}
-          disabled={isCreating}
+          disabled={isWorking}
         />
       </FormRow>
 
@@ -109,7 +134,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
           type="number"
           id="regularPrice"
           {...register("regularPrice", { required: "This field is required" })}
-          disabled={isCreating}
+          disabled={isWorking}
         />
       </FormRow>
 
@@ -121,7 +146,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
             required: "This field is required",
             validate: (val: number) => val <= +getValues().regularPrice || "Discount must less than price",
           })}
-          disabled={isCreating}
+          disabled={isWorking}
           defaultValue={0}
         />
       </FormRow>
@@ -135,7 +160,7 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
               return text.split(" ").length > 2 || "This string must be more 3 words";
             },
           })}
-          disabled={isCreating}
+          disabled={isWorking}
         ></Textarea>
       </FormRow>
 
@@ -146,17 +171,21 @@ function CreateCabinForm({ setShowForm }: CreateCabinFormProps) {
           {...register("image", { required: "This field is required" })}
           disabled={isCreating}
         /> */}
-        <FileInput id="image" {...register("image", { required: "This field is required" })} disabled={isCreating} />
+        <FileInput
+          id="image"
+          {...register("image", { required: editId ? false : "This field is required" })}
+          disabled={isWorking}
+        />
       </FormRow>
 
       <Buttons>
         <Button $size="medium" $variation="secondary" type="reset" onClick={() => setShowForm(false)}>
           Cancel
         </Button>
-        <Button disabled={isCreating}>{isCreating ? "Processing" : "Create new cabin"}</Button>
+        <Button disabled={isWorking}>{isWorking ? "Processing" : editId ? "Edit cabin" : "Create new cabin"}</Button>
       </Buttons>
     </Form>
   );
 }
 
-export default CreateCabinForm;
+export default CabinForm;

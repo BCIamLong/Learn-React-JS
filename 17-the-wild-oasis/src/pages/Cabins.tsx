@@ -2,8 +2,9 @@ import { useState } from "react";
 import Button from "../components/Button";
 import Row from "../components/Row";
 import CabinsTable from "../features/cabins/CabinsTable";
-import CreateCabinForm from "../features/cabins/CreateCabinForm";
+// import CreateCabinForm from "../features/cabins/CreateCabinForm";
 import Popup from "../components/Popup";
+import CabinForm from "~/features/cabins/CabinForm";
 
 function Cabins() {
   const [showForm, setShowForm] = useState(false);
@@ -21,7 +22,8 @@ function Cabins() {
         </Button>
         {showForm && (
           <Popup onShow={() => setShowForm((show) => !show)}>
-            <CreateCabinForm setShowForm={setShowForm} />
+            {/* <CreateCabinForm setShowForm={setShowForm} /> */}
+            <CabinForm setShowForm={setShowForm} />
           </Popup>
         )}
         {/* {showForm && <CreateCabinForm />} */}

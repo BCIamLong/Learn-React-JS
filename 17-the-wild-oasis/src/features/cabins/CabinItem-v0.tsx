@@ -1,12 +1,15 @@
+//* Before use the useDeleteCabin custom hook
+
 // import { ReactNode } from "react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import styled, { css } from "styled-components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HiEllipsisVertical, HiPencil, HiMiniTrash, HiMiniSquare2Stack } from "react-icons/hi2";
-
-import useDeleteCabin from "./useDeleteCabin";
 import Cabin from "~/types/cabin.type";
 import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
+import { deleteCabin } from "~/services/apiCabins";
 import Popup from "~/components/Popup";
 import CabinForm from "./CabinForm";
 
@@ -130,7 +133,25 @@ function CabinItem({ cabin }: CabinItemProps) {
 
   const [isSelected, setIsSelected] = useState(false);
   const [showForm, setShowForm] = useState(false);
-  const { isDeleting, deleteCabinMutate } = useDeleteCabin();
+  const queryClient = useQueryClient();
+  const { isPending: isDeleting, mutate } = useMutation({
+    mutationFn: (id: number) => deleteCabin(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["cabins"],
+      });
+      // setIsSelected(false);
+      toast.success("Delete cabin successfully");
+    },
+    onError: (err) => toast.error(err.message),
+    // onError: (err) =>
+    //   toast.custom(
+    //     <div>
+    //       {err.message} <button onClick={endPause}>Close</button>
+    //     </div>
+    //   ),
+  });
+
   return (
     <>
       <TableItem role="row">
@@ -172,7 +193,7 @@ function CabinItem({ cabin }: CabinItemProps) {
                 <HiPencil />
                 <span>Edit</span>
               </button>
-              <button onClick={() => deleteCabinMutate(cabin.id)} disabled={isDeleting}>
+              <button onClick={() => mutate(cabin.id)} disabled={isDeleting}>
                 <HiMiniTrash />
                 <span>{isDeleting ? "Deleting" : "Delete"}</span>
               </button>
