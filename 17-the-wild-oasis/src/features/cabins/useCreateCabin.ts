@@ -20,7 +20,7 @@ export default function useCreateCabin() {
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      toast.success("Create new cabin successful");
+      // toast.success("Create new cabin successful");
 
       //   setTimeout(() => {
       //     setShowForm(false);

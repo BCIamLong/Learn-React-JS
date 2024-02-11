@@ -36,10 +36,11 @@ export async function postCabin(newCabin: Cabins) {
 
   // https://xyinqkbbdbmknpwnrucc.supabase.co/storage/v1/object/public/cabin-images/cabin-006.jpg
   const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
-
+  const hasNewImage = typeof newCabin.image !== "string";
+  // !hasNewImage ? data : { ...data, image: filePath }
   const { data, error } = await supabase
     .from("cabins")
-    .insert({ ...newCabin, image: filePath })
+    .insert(!hasNewImage ? newCabin : { ...newCabin, image: filePath })
     .select()
     .single();
   // * so this data here is not really return immediately right so it's async task deal with supabase right and to make sure it really be here we can .select().single(); to make sure this data is already have here
@@ -48,6 +49,7 @@ export async function postCabin(newCabin: Cabins) {
 
   console.log(error);
   if (error) throw new Error("Cabin can't be created");
+  if (!hasNewImage) return data;
 
   const { error: storageError } = await supabase.storage.from("cabin-images").upload(fileName, newCabin.image[0], {
     cacheControl: "3600",

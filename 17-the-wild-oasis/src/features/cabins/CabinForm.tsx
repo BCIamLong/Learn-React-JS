@@ -6,6 +6,7 @@ import useEditCabin from "./useEditCabin";
 import Button from "~/components/Button";
 import { FileInput, Form, FormRow, Input } from "~/components/form";
 import Cabin from "~/types/cabin.type";
+import toast from "react-hot-toast";
 // import Cabin from "../../types/cabin.type";
 
 const Buttons = styled.div`
@@ -78,6 +79,7 @@ function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
       onSuccess: (data: Cabin) => {
         // * notice that in the onSuccess we can access to the newly data so it can be the new created data in this case
         console.log(data);
+        toast.success("Create new cabin successful");
         reset();
         setTimeout(() => {
           setShowForm(false);

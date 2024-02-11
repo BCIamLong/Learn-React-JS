@@ -9,6 +9,8 @@ import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
 import Popup from "~/components/Popup";
 import CabinForm from "./CabinForm";
+import useCreateCabin from "./useCreateCabin";
+import toast from "react-hot-toast";
 
 const TableItem = styled.div`
   display: grid;
@@ -131,6 +133,26 @@ function CabinItem({ cabin }: CabinItemProps) {
   const [isSelected, setIsSelected] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabinMutate } = useDeleteCabin();
+  const { isCreating, createCabinMutate } = useCreateCabin();
+
+  const { name, maxCapacity, regularPrice, discount, description, image } = cabin;
+
+  function handleDuplicateCabin() {
+    const newCabinData = {
+      name: `Copy of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      description,
+      image,
+    };
+    createCabinMutate(newCabinData, {
+      onSuccess: () => {
+        setIsSelected(false);
+        toast.success("Duplicate cabin successful");
+      },
+    });
+  }
   return (
     <>
       <TableItem role="row">
@@ -159,9 +181,9 @@ function CabinItem({ cabin }: CabinItemProps) {
           </Button>
           {isSelected && (
             <OptionsBox>
-              <button>
+              <button disabled={isCreating} onClick={handleDuplicateCabin}>
                 <HiMiniSquare2Stack />
-                <span>Duplicate</span>
+                <span>{isCreating ? "Duplicating" : "Duplicate"}</span>
               </button>
               <button
                 onClick={() => {
