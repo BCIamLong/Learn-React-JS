@@ -200,13 +200,18 @@ function CabinItem({ cabin }: CabinItemProps) {
               </button>
             </OptionsBox>
           )}
+          {showForm && (
+            <Popup onShow={() => setShowForm((show) => !show)}>
+              <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
+            </Popup>
+          )}
         </div>
       </TableItem>
-      {showForm && (
+      {/* {showForm && (
         <Popup onShow={() => setShowForm((show) => !show)}>
           <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
         </Popup>
-      )}
+      )} */}
     </>
   );
 }

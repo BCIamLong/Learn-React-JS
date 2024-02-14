@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import styled from "styled-components";
 import { HiMiniXMark } from "react-icons/hi2";
 import Button from "./Button";
+import { createPortal } from "react-dom";
 
 const StyledPopup = styled.div`
   display: flex;
@@ -44,7 +45,7 @@ interface PopupProps {
 }
 
 export default function Popup({ children, onShow }: PopupProps) {
-  return (
+  return createPortal(
     <StyledPopup>
       <PopupBox>
         {children}
@@ -54,6 +55,7 @@ export default function Popup({ children, onShow }: PopupProps) {
           </Button>
         </CloseBox>
       </PopupBox>
-    </StyledPopup>
+    </StyledPopup>,
+    document.body
   );
 }
