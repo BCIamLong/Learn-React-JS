@@ -1,8 +1,19 @@
-import { Dispatch, ReactNode, SetStateAction, cloneElement, createContext, useContext, useState } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  cloneElement,
+  createContext,
+  useContext,
+  // useEffect,
+  // useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 import { HiMiniXMark } from "react-icons/hi2";
 import Button from "./Button";
 import { createPortal } from "react-dom";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 const StyledPopup = styled.div`
   display: flex;
@@ -62,10 +73,24 @@ function Open({ opens: openModalName, children }: { opens: string; children: JSX
 // function Window({ name, children }: { name: string; children: ReactNode }) {
 function Window({ name, children }: { name: string; children: JSX.Element }) {
   const { openName, close, open } = useModalContext()!;
+  // const modal = useRef(null);
+
+  // useEffect(() => {
+  //   if (!openName) return;
+  //   const handleClick = (e: MouseEvent) => {
+  //     if (modal.current === e.target) close();
+  //   };
+
+  //   document.addEventListener("click", handleClick);
+
+  //   return () => document.removeEventListener("click", handleClick);
+  // }, [openName]);
+  const modal = useOutsideClick(close);
+
   if (openName !== name) return;
 
   return createPortal(
-    <StyledPopup>
+    <StyledPopup ref={modal}>
       <PopupBox>
         {cloneElement(children, { setShowForm: open })}
         {/* {children} */}
