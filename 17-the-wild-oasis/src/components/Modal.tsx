@@ -32,7 +32,7 @@ const StyledPopup = styled.div`
 `;
 
 const PopupBox = styled.div`
-  width: 60%;
+  max-width: 60%;
   z-index: 300;
   position: relative;
   box-shadow: var(--shadow-lg);
@@ -92,7 +92,7 @@ function Window({ name, children }: { name: string; children: JSX.Element }) {
   return createPortal(
     <StyledPopup ref={modal}>
       <PopupBox>
-        {cloneElement(children, { setShowForm: open })}
+        {cloneElement(children, { onCloseModal: open })}
         {/* {children} */}
         <CloseBox>
           <Button $size="tiny" $variation="option" onClick={close}>

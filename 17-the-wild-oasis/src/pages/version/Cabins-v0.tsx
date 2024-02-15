@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Button from "../components/Button";
-import Row from "../components/Row";
-import CabinsTable from "../features/cabins/CabinsTable";
+import Button from "../../components/Button";
+import Row from "../../components/Row";
+import CabinsTable from "../../features/cabins/CabinsTable";
 // import CreateCabinForm from "../features/cabins/CreateCabinForm";
-import Popup from "../components/Modal";
+import Popup from "../../components/Modal";
 import CabinForm from "~/features/cabins/CabinForm";
 
 function Cabins() {

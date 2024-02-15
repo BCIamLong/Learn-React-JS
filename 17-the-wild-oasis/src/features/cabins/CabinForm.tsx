@@ -43,12 +43,12 @@ interface Inputs extends FieldValues {
 interface CabinFormProps {
   // * because now we can pass in this setShowForm via cloneElement in Modal.Window component so therefore this prop can be optional because we have case we don't need to pass in setShowForm prop tp CabinForm when we use it with Modal component right
 
-  setShowForm?: (show: boolean) => void;
+  onCloseModal?: (show: boolean) => void;
   cabinToEdit?: Cabin;
 }
 
 // function CabinForm({ cabinToEdit }: CabinFormProps) {
-function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
+function CabinForm({ onCloseModal: setShowForm, cabinToEdit }: CabinFormProps) {
   // const { open: setShowForm } = useModalContext()!;
   const { id: editId, ...editData } = cabinToEdit || {};
   const { register, handleSubmit, formState, getValues, reset } = useForm<Inputs>({

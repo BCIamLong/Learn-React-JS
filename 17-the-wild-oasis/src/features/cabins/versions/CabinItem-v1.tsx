@@ -7,11 +7,10 @@ import useDeleteCabin from "./useDeleteCabin";
 import Cabin from "~/types/cabin.type";
 import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
+import Popup from "~/components/Modal";
 import CabinForm from "./CabinForm";
 import useCreateCabin from "./useCreateCabin";
 import toast from "react-hot-toast";
-import Modal from "~/components/Modal";
-import { ConfirmDelete } from "~/components/ConfirmDelete";
 
 const TableItem = styled.div`
   display: grid;
@@ -130,8 +129,9 @@ interface CabinItemProps {
 function CabinItem({ cabin }: CabinItemProps) {
   // const { handlers } = useToaster();
   // const { startPause, endPause } = handlers;
-  // const [isConfirm, setIsConfirm] = useState(false);
+
   const [isSelected, setIsSelected] = useState(false);
+  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabinMutate } = useDeleteCabin();
   const { isCreating, createCabinMutate } = useCreateCabin();
 
@@ -185,44 +185,26 @@ function CabinItem({ cabin }: CabinItemProps) {
                 <HiMiniSquare2Stack />
                 <span>{isCreating ? "Duplicating" : "Duplicate"}</span>
               </button>
-              <Modal>
-                <Modal.Open opens="edit-form">
-                  <button
-                  // onClick={() => {
-                  //   setShowForm(true);
-                  //   setIsSelected(false);
-                  // }}
-                  >
-                    <HiPencil />
-                    <span>Edit</span>
-                  </button>
-                </Modal.Open>
-                <Modal.Window name="edit-form">
-                  <CabinForm cabinToEdit={cabin} />
-                </Modal.Window>
-
-                <Modal.Open opens="confirm-box">
-                  <button disabled={isDeleting}>
-                    <HiMiniTrash />
-                    <span>Delete</span>
-                  </button>
-                </Modal.Open>
-                <Modal.Window name="confirm-box">
-                  <ConfirmDelete
-                    onConfirm={() => {
-                      deleteCabinMutate(cabin.id);
-                    }}
-                    disabled={isDeleting}
-                  />
-                </Modal.Window>
-              </Modal>
+              <button
+                onClick={() => {
+                  setShowForm(true);
+                  setIsSelected(false);
+                }}
+              >
+                <HiPencil />
+                <span>Edit</span>
+              </button>
+              <button onClick={() => deleteCabinMutate(cabin.id)} disabled={isDeleting}>
+                <HiMiniTrash />
+                <span>{isDeleting ? "Deleting" : "Delete"}</span>
+              </button>
             </OptionsBox>
           )}
-          {/* {showForm && (
+          {showForm && (
             <Popup onShow={() => setShowForm((show) => !show)}>
               <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
             </Popup>
-          )} */}
+          )}
         </div>
       </TableItem>
       {/* {showForm && (
