@@ -10,8 +10,8 @@ import Cabin from "~/types/cabin.type";
 import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
 import { deleteCabin } from "~/services/apiCabins";
-import Popup from "~/components/Popup";
-import CabinForm from "./CabinForm";
+import Popup from "~/components/Modal";
+import CabinForm from "../CabinForm";
 
 const TableItem = styled.div`
   display: grid;

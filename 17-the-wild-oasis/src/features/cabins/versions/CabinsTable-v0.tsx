@@ -2,7 +2,7 @@
 
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
-import CabinItem from "./CabinItem";
+import CabinItem from "../CabinItem";
 import { getCabins } from "~/services/apiCabins";
 import Spinner from "~/components/Spinner";
 

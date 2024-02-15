@@ -7,6 +7,7 @@ import Button from "~/components/Button";
 import { FileInput, Form, FormRow, Input } from "~/components/form";
 import Cabin from "~/types/cabin.type";
 import toast from "react-hot-toast";
+// import { useModalContext } from "~/components/Modal";
 // import Cabin from "../../types/cabin.type";
 
 const Buttons = styled.div`
@@ -40,11 +41,15 @@ interface Inputs extends FieldValues {
 }
 
 interface CabinFormProps {
-  setShowForm: (show: boolean) => void;
+  // * because now we can pass in this setShowForm via cloneElement in Modal.Window component so therefore this prop can be optional because we have case we don't need to pass in setShowForm prop tp CabinForm when we use it with Modal component right
+
+  setShowForm?: (show: boolean) => void;
   cabinToEdit?: Cabin;
 }
 
+// function CabinForm({ cabinToEdit }: CabinFormProps) {
 function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
+  // const { open: setShowForm } = useModalContext()!;
   const { id: editId, ...editData } = cabinToEdit || {};
   const { register, handleSubmit, formState, getValues, reset } = useForm<Inputs>({
     defaultValues: editId ? (editData as FieldValues) : {},
@@ -69,7 +74,7 @@ function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
             // * notice that in the onSuccess we can access to the newly data so it can be the new edited data in this case
             console.log(data);
             setTimeout(() => {
-              setShowForm(false);
+              setShowForm?.(false);
             }, 1000);
           },
         }
@@ -82,7 +87,7 @@ function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
         toast.success("Create new cabin successful");
         reset();
         setTimeout(() => {
-          setShowForm(false);
+          setShowForm?.(false);
         }, 1000);
       },
     });
@@ -173,7 +178,7 @@ function CabinForm({ setShowForm, cabinToEdit }: CabinFormProps) {
       </FormRow>
 
       <Buttons>
-        <Button $size="medium" $variation="secondary" type="reset" onClick={() => setShowForm(false)}>
+        <Button $size="medium" $variation="secondary" type="reset" onClick={() => setShowForm?.(false)}>
           Cancel
         </Button>
         <Button disabled={isWorking}>{isWorking ? "Processing" : editId ? "Edit cabin" : "Create new cabin"}</Button>

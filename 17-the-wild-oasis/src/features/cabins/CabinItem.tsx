@@ -7,7 +7,7 @@ import useDeleteCabin from "./useDeleteCabin";
 import Cabin from "~/types/cabin.type";
 import formatCurrency from "~/utils/formatCurrency";
 import Button from "~/components/Button";
-import Popup from "~/components/Popup";
+import Popup from "~/components/Modal";
 import CabinForm from "./CabinForm";
 import useCreateCabin from "./useCreateCabin";
 import toast from "react-hot-toast";
