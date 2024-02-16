@@ -90,8 +90,8 @@ function Window({ name, children }: { name: string; children: JSX.Element }) {
   if (openName !== name) return;
 
   return createPortal(
-    <StyledPopup ref={modal}>
-      <PopupBox>
+    <StyledPopup>
+      <PopupBox ref={modal}>
         {cloneElement(children, { onCloseModal: open })}
         {/* {children} */}
         <CloseBox>

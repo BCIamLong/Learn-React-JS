@@ -1,5 +1,4 @@
 // import { ReactNode } from "react";
-import { useState } from "react";
 import styled, { css } from "styled-components";
 import { HiEllipsisVertical, HiPencil, HiMiniTrash, HiMiniSquare2Stack } from "react-icons/hi2";
 
@@ -13,6 +12,7 @@ import toast from "react-hot-toast";
 import Modal from "~/components/Modal";
 import { ConfirmDelete } from "~/components/ConfirmDelete";
 import Table from "~/components/Table";
+import Menus from "~/components/Menus";
 
 const Image = styled.img`
   width: 70%;
@@ -58,48 +58,6 @@ const StyledHiEllipsisVertical = styled(HiEllipsisVertical)`
   }
 `;
 
-const OptionsBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  top: 90%;
-  right: 1.5%;
-  z-index: 100;
-  border-radius: var(--border-radius-md);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-
-  & button:first-child {
-    border-top-right-radius: var(--border-radius-md);
-    border-top-left-radius: var(--border-radius-md);
-  }
-  & button:last-child {
-    border-bottom-right-radius: var(--border-radius-md);
-    border-bottom-left-radius: var(--border-radius-md);
-  }
-
-  & button {
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    padding: 1.6rem 2rem;
-    background-color: var(--color-grey-0);
-    border: none;
-  }
-
-  & button:hover {
-    background-color: var(--color-grey-100);
-  }
-
-  & button:focus {
-    border: none;
-    /* outline: none; */
-    outline: 1px solid var(--color-brand-900);
-    background-color: var(--color-grey-100);
-    /* border-collapse: collapse; */
-  }
-`;
-
 // const Options = styled.button``;
 
 interface CabinItemProps {
@@ -110,7 +68,6 @@ function CabinItem({ cabin }: CabinItemProps) {
   // const { handlers } = useToaster();
   // const { startPause, endPause } = handlers;
   // const [isConfirm, setIsConfirm] = useState(false);
-  const [isSelected, setIsSelected] = useState(false);
   const { isDeleting, deleteCabinMutate } = useDeleteCabin();
   const { isCreating, createCabinMutate } = useCreateCabin();
 
@@ -127,7 +84,6 @@ function CabinItem({ cabin }: CabinItemProps) {
     };
     createCabinMutate(newCabinData, {
       onSuccess: () => {
-        setIsSelected(false);
         toast.success("Duplicate cabin successful");
       },
     });
@@ -154,55 +110,62 @@ function CabinItem({ cabin }: CabinItemProps) {
             <Discount $isExist={false}>&mdash;</Discount>
           )}
         </div>
-        <div>
-          <Button $size="tiny" $variation="option" onClick={() => setIsSelected((isSelected: boolean) => !isSelected)}>
-            <StyledHiEllipsisVertical />
-          </Button>
-          {isSelected && (
-            <OptionsBox>
-              <button disabled={isCreating} onClick={handleDuplicateCabin}>
+        <Menus.Menu>
+          <Menus.Toggle id={cabin.id}>
+            <Button $size="tiny" $variation="option">
+              <StyledHiEllipsisVertical />
+            </Button>
+          </Menus.Toggle>
+
+          <Modal>
+            <Menus.Box id={cabin.id}>
+              <Menus.Button disabled={isCreating} onClick={handleDuplicateCabin}>
                 <HiMiniSquare2Stack />
                 <span>{isCreating ? "Duplicating" : "Duplicate"}</span>
-              </button>
-              <Modal>
-                <Modal.Open opens="edit-form">
-                  <button
-                  // onClick={() => {
-                  //   setShowForm(true);
-                  //   setIsSelected(false);
-                  // }}
-                  >
-                    <HiPencil />
-                    <span>Edit</span>
-                  </button>
-                </Modal.Open>
-                <Modal.Window name="edit-form">
-                  <CabinForm cabinToEdit={cabin} />
-                </Modal.Window>
+              </Menus.Button>
 
-                <Modal.Open opens="confirm-box">
-                  <button disabled={isDeleting}>
-                    <HiMiniTrash />
-                    <span>Delete</span>
-                  </button>
-                </Modal.Open>
-                <Modal.Window name="confirm-box">
-                  <ConfirmDelete
-                    onConfirm={() => {
-                      deleteCabinMutate(cabin.id);
-                    }}
-                    disabled={isDeleting}
-                  />
-                </Modal.Window>
-              </Modal>
-            </OptionsBox>
-          )}
-          {/* {showForm && (
+              <Modal.Open opens="edit-form">
+                <Menus.Button>
+                  <HiPencil />
+                  <span>Edit</span>
+                </Menus.Button>
+                {/* <button>
+                  <HiPencil />
+                  <span>Edit</span>
+                </button> */}
+              </Modal.Open>
+
+              <Modal.Open opens="confirm-box">
+                <Menus.Button disabled={isDeleting}>
+                  <HiMiniTrash />
+                  <span>Delete</span>
+                </Menus.Button>
+                {/* <button disabled={isDeleting}>
+                  <HiMiniTrash />
+                  <span>Delete</span>
+                </button> */}
+              </Modal.Open>
+            </Menus.Box>
+
+            <Modal.Window name="edit-form">
+              <CabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Window name="confirm-box">
+              <ConfirmDelete
+                onConfirm={() => {
+                  deleteCabinMutate(cabin.id);
+                }}
+                disabled={isDeleting}
+              />
+            </Modal.Window>
+          </Modal>
+        </Menus.Menu>
+        {/* {showForm && (
             <Popup onShow={() => setShowForm((show) => !show)}>
-              <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
+            <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
             </Popup>
           )} */}
-        </div>
       </Table.Row>
       {/* {showForm && (
         <Popup onShow={() => setShowForm((show) => !show)}>
