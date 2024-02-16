@@ -1,5 +1,6 @@
 import { useContext, createContext, ReactNode } from "react";
 import styled from "styled-components";
+import Cabin from "~/types/cabin.type";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -78,7 +79,11 @@ function Row({ children }: { children: ReactNode }) {
   );
 }
 
-function Body() {}
+function Body({ data, render }: { data?: Cabin[]; render: (cabin: Cabin) => JSX.Element }) {
+  if (!data?.length) return <p>We have no data yet</p>;
+
+  return <>{data?.map(render)}</>;
+}
 
 function useTableContext() {
   const context = useContext(TableContext);

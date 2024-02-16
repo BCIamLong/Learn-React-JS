@@ -21,9 +21,9 @@ function CabinsTable() {
         <div></div>
       </Table.Header>
 
-      {cabins?.map((cabin) => (
-        <CabinItem cabin={cabin} key={cabin.id} />
-      ))}
+      <Table.Body data={cabins} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} />
+
+      {/* {cabins?.map()} */}
     </Table>
   );
 }
