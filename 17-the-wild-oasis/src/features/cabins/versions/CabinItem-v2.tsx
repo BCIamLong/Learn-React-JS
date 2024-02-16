@@ -12,7 +12,28 @@ import useCreateCabin from "./useCreateCabin";
 import toast from "react-hot-toast";
 import Modal from "~/components/Modal";
 import { ConfirmDelete } from "~/components/ConfirmDelete";
-import Table from "~/components/Table";
+
+const TableItem = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 2fr 1fr 1fr 1fr;
+  padding: 0.6rem 1.2rem 0.3rem 0;
+
+  border-bottom: 1px solid var(--color-grey-200);
+  font-size: 1.4rem;
+  align-items: center;
+  background-color: var(--color-grey-0);
+  position: relative;
+
+  & div:last-child {
+    justify-self: end;
+  }
+
+  &:last-child {
+    border-bottom: none;
+    border-bottom-left-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
+  }
+`;
 
 const Image = styled.img`
   width: 70%;
@@ -134,7 +155,7 @@ function CabinItem({ cabin }: CabinItemProps) {
   }
   return (
     <>
-      <Table.Row>
+      <TableItem role="row">
         <div>
           <Image src={cabin.image} alt={`The Wild Oasis's Cabin ${cabin.name}`} />
         </div>
@@ -203,7 +224,7 @@ function CabinItem({ cabin }: CabinItemProps) {
             </Popup>
           )} */}
         </div>
-      </Table.Row>
+      </TableItem>
       {/* {showForm && (
         <Popup onShow={() => setShowForm((show) => !show)}>
           <CabinForm setShowForm={setShowForm} cabinToEdit={cabin} />
