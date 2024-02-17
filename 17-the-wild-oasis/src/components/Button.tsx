@@ -50,11 +50,20 @@ const variations: Options = {
       background-color: var(--color-grey-100);
     }
   `,
+  filter: css`
+    background-color: var(--color-grey-0);
+    color: var(--color-grey-700);
+    &:hover {
+      background-color: var(--color-brand-600);
+      color: var(--color-grey-0);
+    }
+  `,
 };
 
 interface ButtonProps {
   $size?: keyof Options;
   $variation?: keyof Options;
+  $active?: boolean;
 }
 
 const Button = styled.button<ButtonProps>`
@@ -72,6 +81,14 @@ const Button = styled.button<ButtonProps>`
   /* Default button */
   ${(props) => !props.$size && sizes["medium"]}
   ${(props) => !props.$variation && variations["primary"]}
+
+  /* *active state */
+  ${(props) =>
+    props.$active &&
+    css`
+      background-color: var(--color-brand-600);
+      color: var(--color-grey-0);
+    `}
 `;
 
 // Button.defaultProps = {
