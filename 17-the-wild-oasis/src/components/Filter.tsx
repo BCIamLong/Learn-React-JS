@@ -5,15 +5,16 @@ import { MouseEvent } from "react";
 
 const StyledFilter = styled.div`
   display: flex;
-  gap: 1.2rem;
+  gap: 0.8rem;
   background-color: var(--color-grey-0);
-  padding: 0.6rem 1.2rem;
+  padding: 0.6rem 1rem;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-md);
 
   & button {
     font-size: 1.4rem;
-    font-weight: 600;
+    line-height: 1;
+    font-weight: 500;
   }
 
   & button:visited {

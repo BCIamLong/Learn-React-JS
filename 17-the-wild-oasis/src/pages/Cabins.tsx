@@ -8,7 +8,7 @@ function Cabins() {
   return (
     <>
       <Row $type="horizontal">
-        <div>Table</div>
+        <h2>Cabins</h2>
         {/* <p>Filter / Sort</p> */}
         <CabinOperations />
       </Row>
