@@ -9,7 +9,9 @@ export interface Booking {
   cabinPrice: number;
   extrasPrice: number;
   totalPrice: number;
-  status: string;
+  status: "checked-out" | "checked-in" | "unconfirmed";
+  // * in some case Typescript will infer and see that this status is union type and it will force us to declare this status as the union type like this so it's good because maybe we enter another string not correct right so this is also the powerful of type casting from Typescript
+  // status: string;
   hasBreakfast: boolean;
   isPaid: boolean;
   observation: string;

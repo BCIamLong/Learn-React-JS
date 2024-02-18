@@ -17,15 +17,19 @@ const Cabin = styled.p`
   letter-spacing: 1px;
 `;
 
-const Status = styled.p`
+interface Status {
+  $color: string;
+}
+
+const Status = styled.p<Status>`
   display: inline-block;
   padding: 0.6rem 1rem;
   border-radius: var(--border-radius-lg);
-  background-color: var(--color-blue-100);
+  background-color: var(--color-${(props) => props.$color}-100);
   text-transform: uppercase;
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--color-blue-700);
+  color: var(--color-${(props) => props.$color}-700);
   line-height: 1;
 `;
 
@@ -80,6 +84,12 @@ const StyledHiEllipsisVertical = styled(HiEllipsisVertical)`
   }
 `;
 
+const colors = {
+  "checked-out": "silver",
+  "checked-in": "yellow",
+  unconfirmed: "blue",
+};
+
 export default function BookingRow({ booking }: BookingRowProps) {
   return (
     <Table.Row>
@@ -104,7 +114,7 @@ export default function BookingRow({ booking }: BookingRowProps) {
         </Date>
       </DateBox>
       <div>
-        <Status>{booking.status}</Status>
+        <Status $color={colors[booking.status]}>{booking.status}</Status>
       </div>
       <div>
         <Price>{formatCurrency(booking.totalPrice)}</Price>

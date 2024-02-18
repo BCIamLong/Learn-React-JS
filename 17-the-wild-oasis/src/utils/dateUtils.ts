@@ -1,4 +1,4 @@
-import { format, formatDistance } from "date-fns";
+import { differenceInDays, format, formatDistance, parseISO } from "date-fns";
 
 export function formatDate(date: Date) {
   return format(date, "LLL dd yyyy", {});
@@ -21,3 +21,6 @@ export function getDistanceDates(date1: Date, date2: Date) {
 
   return formatDate;
 }
+
+export const subtractDates = (dateStr1: string, dateStr2: string) =>
+  differenceInDays(parseISO(String(dateStr1)), parseISO(String(dateStr2)));
