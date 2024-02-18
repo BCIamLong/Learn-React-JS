@@ -5,6 +5,8 @@ import { getBookings } from "~/services/apiBookings";
 export function useBookings() {
   const [searchParams] = useSearchParams();
   const filter = searchParams.get("status") || "";
+  const sort = searchParams.get("sort") || "createdAt-dsc";
+  const [sortField, direction] = sort.split("-");
 
   const options = {
     filter: {
@@ -14,6 +16,10 @@ export function useBookings() {
       field: "status",
       value: filter === "all" ? "" : filter,
       method: "eq",
+    },
+    sort: {
+      field: sortField,
+      direction,
     },
   };
 

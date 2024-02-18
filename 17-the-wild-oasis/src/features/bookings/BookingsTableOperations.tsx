@@ -21,8 +21,8 @@ export default function BookingsTableOperations() {
       />
       <SortBy
         options={[
-          { value: "createdAt-asc", label: "Sort by date (recent first)" },
-          { value: "createdAt-dsc", label: "Sort by amount (earlier first)" },
+          { value: "createdAt-dsc", label: "Sort by date (recent first)" },
+          { value: "createdAt-asc", label: "Sort by date (earlier first)" },
           { value: "totalPrice-asc", label: "Sort by amount (low first)" },
           { value: "totalPrice-dsc", label: "Sort by amount (high first)" },
         ]}
