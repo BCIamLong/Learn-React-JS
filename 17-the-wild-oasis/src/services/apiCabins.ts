@@ -15,7 +15,7 @@ interface Cabins {
 export async function getCabins() {
   const { data: cabins, error } = await supabase.from("cabins").select("*");
 
-  if (error) return;
+  if (error) throw new Error("Can't get the cabins data");
 
   return cabins;
 }

@@ -4,6 +4,7 @@ import Spinner from "~/components/Spinner";
 import CabinItem from "./CabinItem";
 import Menu from "~/components/Menus";
 import { useSearchParams } from "react-router-dom";
+import Cabin from "~/types/cabin.type";
 
 function CabinsTable() {
   const { cabins, error, isLoading } = useCabins();
@@ -44,7 +45,7 @@ function CabinsTable() {
           <div></div>
         </Table.Header>
 
-        <Table.Body data={cabinsSorted} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} />
+        <Table.Body<Cabin> data={cabinsSorted} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} />
         {/* <Table.Body data={cabinsFiltered} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} /> */}
         {/* <Table.Body data={cabins} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} /> */}
 

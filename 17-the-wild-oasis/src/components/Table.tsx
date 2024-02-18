@@ -1,6 +1,7 @@
 import { useContext, createContext, ReactNode } from "react";
 import styled from "styled-components";
-import Cabin from "~/types/cabin.type";
+// import { Booking } from "~/types/booking.type";
+// import Cabin from "~/types/cabin.type";
 
 const StyledTable = styled.div`
   border: 1px solid var(--color-grey-200);
@@ -79,7 +80,12 @@ function Row({ children }: { children: ReactNode }) {
   );
 }
 
-function Body({ data, render }: { data?: Cabin[]; render: (cabin: Cabin) => JSX.Element }) {
+// interface BodyProps {
+//   data?: Cabin[] | Booking[];
+//   render: (cabin: Cabin | Booking) => JSX.Element;
+// }
+
+function Body<T>({ data, render }: { data: T[]; render: (cabin: T) => JSX.Element }) {
   if (!data?.length) return <p>We have no data yet</p>;
 
   return <>{data?.map(render)}</>;

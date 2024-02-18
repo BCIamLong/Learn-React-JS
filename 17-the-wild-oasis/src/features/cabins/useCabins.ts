@@ -9,6 +9,7 @@ export default function useCabins() {
   } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins,
+    staleTime: 0,
   });
   return { cabins, error, isLoading };
 }
