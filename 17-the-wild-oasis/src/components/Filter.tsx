@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Button from "./Button";
 import { useSearchParams } from "react-router-dom";
 import { MouseEvent } from "react";
+// import { useQueryClient } from "@tanstack/react-query";
 
 const StyledFilter = styled.div`
   display: flex;
@@ -30,13 +31,14 @@ interface FilterProps {
 
 export function Filter({ filterField, options }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  // const queryClient = useQueryClient();
   const filterURL = searchParams.get(filterField) || "all";
 
   function handleClick(value: string) {
     return (e: MouseEvent<HTMLButtonElement>) => {
       e.preventDefault();
       //   searchParams.set("filter", value);
+      // queryClient.invalidateQueries({ queryKey: ["bookings"] });
       searchParams.set(filterField, value);
       setSearchParams(searchParams);
     };
@@ -50,6 +52,7 @@ export function Filter({ filterField, options }: FilterProps) {
           <Button
             key={value}
             $active={value === filterURL}
+            disabled={value === filterURL}
             $size="small"
             $variation="filter"
             onClick={handleClick(value)}

@@ -39,7 +39,7 @@ export default function Select({ currentVal, onChange, options, ...props }: Sele
       {options.map((op) => {
         const { value, label } = op;
         return (
-          <option key={value} value={value}>
+          <option key={value} value={value} disabled={value === currentVal}>
             {label}
           </option>
         );
