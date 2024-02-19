@@ -8,6 +8,8 @@ export function useBookings() {
   const sort = searchParams.get("sort") || "createdAt-dsc";
   const [sortField, direction] = sort.split("-");
 
+  const currentPage = +searchParams.get("page")! || 1;
+
   const options = {
     filter: {
       // field: "totalPrice",
@@ -21,10 +23,11 @@ export function useBookings() {
       field: sortField,
       direction,
     },
+    page: currentPage,
   };
 
   const {
-    data: bookings,
+    data: { bookings, count } = {},
     isLoading,
     error,
   } = useQuery({
@@ -38,5 +41,5 @@ export function useBookings() {
     staleTime: 0,
   });
 
-  return { bookings, isLoading, error };
+  return { bookings, isLoading, error, count };
 }

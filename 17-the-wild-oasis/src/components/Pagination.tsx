@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { HiChevronRight, HiChevronLeft } from "react-icons/hi2";
 import Button from "./Button";
 import { useSearchParams } from "react-router-dom";
+import { PAGE_LIMIT } from "~/configs/constant";
 
 const StyledPagination = styled.div`
   display: flex;
@@ -22,8 +23,6 @@ const StyledPagination = styled.div`
 const Buttons = styled.div`
   display: flex;
 `;
-
-const PAGE_LIMIT = 10;
 
 export default function Pagination({ count }: { count: number }) {
   const [searchParams, setSearchParams] = useSearchParams();

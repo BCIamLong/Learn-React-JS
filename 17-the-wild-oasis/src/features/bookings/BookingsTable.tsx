@@ -9,7 +9,7 @@ import Pagination from "~/components/Pagination";
 export default function BookingsTable() {
   // const [searchParams] = useSearchParams();
   // const filter = searchParams.get("filter") || "";
-  const { isLoading, bookings } = useBookings();
+  const { isLoading, bookings, count } = useBookings();
 
   if (isLoading) return <Spinner />;
 
@@ -28,7 +28,7 @@ export default function BookingsTable() {
       </Table.Header>
       <Table.Body<Booking> data={bookings} render={(booking) => <BookingRow key={booking.id} booking={booking} />} />
       <Table.Footer>
-        <Pagination count={11} />
+        <Pagination count={count || 0} />
       </Table.Footer>
     </Table>
   );

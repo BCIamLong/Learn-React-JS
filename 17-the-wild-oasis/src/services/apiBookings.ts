@@ -1,24 +1,39 @@
+import { PAGE_LIMIT } from "~/configs/constant";
 import supabase from "./supabase";
 
 export const getBookings = async function ({
   filter,
   sort,
+  page,
 }: {
   filter: { field: string; value: string; method?: string };
   sort: { field: string; direction: string };
+  page: number;
 }) {
   const { field: filterField, value: filterVal, method } = filter;
   const { field: sortField, direction } = sort;
-  let query = supabase.from("bookings").select("*, cabins(name), guests(fullName,email)");
+  let query = supabase.from("bookings").select("*, cabins(name), guests(fullName,email)", {
+    count: "exact",
+  });
 
   // if (value) query = query.eq(field, value);
   // * we can use this way to condition to call method because method is also the property of object right
+  // * FILTER
   if (filterVal) query = query[method || "eq"](filterField, filterVal);
+
+  // * SORT
   if (sortField) query = query.order(sortField, { ascending: direction === "asc" });
 
-  const { data: bookings, error } = await query;
+  // * PAGINATION
+  if (page) {
+    const from = (page - 1) * PAGE_LIMIT;
+    const to = page * PAGE_LIMIT - 1;
+    query = query.range(from, to);
+  }
+
+  const { data: bookings, error, count } = await query;
 
   if (error) throw new Error("Can't get the bookings data!");
 
-  return bookings;
+  return { bookings, count };
 };

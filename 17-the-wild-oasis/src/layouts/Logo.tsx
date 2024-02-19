@@ -4,6 +4,7 @@ const StyledLogo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  /* padding: 0.6rem; */
 `;
 
 const Image = styled.img`

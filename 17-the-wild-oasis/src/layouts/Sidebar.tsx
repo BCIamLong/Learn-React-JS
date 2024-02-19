@@ -12,6 +12,7 @@ const StyledSidebar = styled.aside`
   padding: 2.4rem 1.2rem;
   grid-row: 1/-1;
   border-right: 1px solid var(--color-grey-50);
+  box-shadow: var(--shadow-md);
   overflow-y: scroll;
   /* scrollbar-width: thin;
   scrollbar-color: var(--color-brand-500) var(--color-grey-100); */
@@ -21,14 +22,29 @@ const StyledSidebar = styled.aside`
   }
 `;
 
+// const SidebarBox = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 2.4rem;
+//   overflow-y: scroll;
+//   /* scrollbar-width: thin;
+//   scrollbar-color: var(--color-brand-500) var(--color-grey-100); */
+
+//   &::-webkit-scrollbar {
+//     display: none;
+//   }
+// `;
+
 function Sidebar() {
   return (
     // <h1>Sidebar</h1>
     <StyledSidebar>
+      {/* <SidebarBox> */}
       <Logo />
       <MainNav />
       <Uploader />
       <Footer />
+      {/* </SidebarBox> */}
     </StyledSidebar>
   );
 }
