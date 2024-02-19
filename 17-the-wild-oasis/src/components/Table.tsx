@@ -91,6 +91,10 @@ function Body<T>({ data, render }: { data: T[]; render: (cabin: T) => JSX.Elemen
   return <>{data?.map(render)}</>;
 }
 
+function Footer({ children }: { children: ReactNode }) {
+  return children;
+}
+
 function useTableContext() {
   const context = useContext(TableContext);
 
@@ -110,5 +114,6 @@ function Table({ columns, children }: { children: ReactNode; columns: string }) 
 Table.Header = Header;
 Table.Row = Row;
 Table.Body = Body;
+Table.Footer = Footer;
 
 export default Table;

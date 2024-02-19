@@ -58,6 +58,22 @@ const variations: Options = {
       color: var(--color-grey-0);
     }
   `,
+  pagination: css`
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    background-color: var(--color-grey-50);
+    color: var(--color-grey-700);
+    &:hover {
+      background-color: var(--color-brand-600);
+      color: var(--color-grey-0);
+    }
+    & svg {
+      font-size: 120%;
+    }
+  `,
 };
 
 interface ButtonProps {

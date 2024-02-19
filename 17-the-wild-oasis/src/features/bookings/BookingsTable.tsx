@@ -3,6 +3,7 @@ import { useBookings } from "./useBookings";
 import Spinner from "~/components/Spinner";
 import BookingRow from "./BookingRow";
 import { Booking } from "~/types/booking.type";
+import Pagination from "~/components/Pagination";
 // import { useSearchParams } from "react-router-dom";
 
 export default function BookingsTable() {
@@ -26,6 +27,9 @@ export default function BookingsTable() {
         <div></div>
       </Table.Header>
       <Table.Body<Booking> data={bookings} render={(booking) => <BookingRow key={booking.id} booking={booking} />} />
+      <Table.Footer>
+        <Pagination count={11} />
+      </Table.Footer>
     </Table>
   );
 }
