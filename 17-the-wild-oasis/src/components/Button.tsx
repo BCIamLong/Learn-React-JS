@@ -74,6 +74,26 @@ const variations: Options = {
       font-size: 120%;
     }
   `,
+  back: css`
+    /* background-color: var(--color-grey-0); */
+    background-color: inherit;
+    color: var(--color-brand-700);
+    font-weight: 500;
+    &:hover {
+      /* background-color: var(--color-brand-600); */
+      color: var(--color-brand-800);
+    }
+  `,
+  backV2: css`
+    background-color: var(--color-grey-0);
+    color: var(--color-grey-700);
+    border: 1.5px solid var(--color-grey-200);
+    border-radius: var(--border-radius-sm);
+    /* font-weight: 500; */
+    &:hover {
+      background-color: var(--color-grey-50);
+    }
+  `,
 };
 
 interface ButtonProps {
@@ -83,6 +103,8 @@ interface ButtonProps {
 }
 
 const Button = styled.button<ButtonProps>`
+  display: flex;
+  align-items: center;
   /* Globals styles for button */
   border: none;
   border-radius: var(--border-radius-sm);

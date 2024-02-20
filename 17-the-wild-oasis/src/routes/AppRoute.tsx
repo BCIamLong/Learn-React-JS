@@ -8,6 +8,7 @@ import Cabins from "../pages/Cabins";
 import Settings from "../pages/Settings";
 import PageNotFound from "../pages/PageNotFound";
 import AppLayout from "../layouts/AppLayout";
+import Booking from "~/pages/Booking";
 
 export default function AppRoute() {
   return (
@@ -35,6 +36,7 @@ export default function AppRoute() {
           <Route path="account" element={<Account />} />
           <Route path="users" element={<Users />} />
           <Route path="bookings" element={<Bookings />} />
+          <Route path="bookings/:bookingId" element={<Booking />} />
           <Route path="cabins" element={<Cabins />} />
           <Route path="settings" element={<Settings />} />
         </Route>

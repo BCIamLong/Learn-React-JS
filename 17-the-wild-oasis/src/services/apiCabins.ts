@@ -8,7 +8,7 @@ interface Cabins {
   maxCapacity: number;
   regularPrice: number;
   discount: number;
-  image: FileList;
+  image: FileList | string;
   createdAt?: Date;
 }
 
@@ -32,7 +32,7 @@ export async function postCabin(newCabin: Cabins) {
   // ! notice that the file name should not have this / slash because if we have that then we will create new folder in the supabase
   // * so if we have this name: 123-cabin/123.jpg => now in supabase it will create folder 123-cabin and then in here we have 123.jpg file which is not what we want right
 
-  const fileName = `${Math.random()}-${newCabin.image[0].name}`.replace("/", ""); //* so to make sure we don't have this / we can do it like this
+  const fileName = `${Math.random()}-${(newCabin.image as FileList)[0].name}`.replace("/", ""); //* so to make sure we don't have this / we can do it like this
 
   // https://xyinqkbbdbmknpwnrucc.supabase.co/storage/v1/object/public/cabin-images/cabin-006.jpg
   const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
@@ -65,7 +65,7 @@ export async function postCabin(newCabin: Cabins) {
 
 export async function patchCabin(id: number, data: Partial<Cabins>) {
   if (!data.image) return;
-  const fileName = `${Math.random()}-${data.image?.[0].name}`.replace("/", "");
+  const fileName = `${Math.random()}-${(data.image as FileList)?.[0].name}`.replace("/", "");
   const filePath = `${SUPABASE_URL}/storage/v1/object/public/cabin-images/${fileName}`;
   const hasNewImage = typeof data.image !== "string";
 

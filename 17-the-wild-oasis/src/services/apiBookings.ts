@@ -1,3 +1,4 @@
+// import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 import { PAGE_LIMIT } from "~/configs/constant";
 import supabase from "./supabase";
 
@@ -6,7 +7,12 @@ export const getBookings = async function ({
   sort,
   page,
 }: {
-  filter: { field: string; value: string; method?: string };
+  filter: {
+    field: string;
+    value: string;
+    method?: string;
+    //  keyof PostgrestFilterBuilder<{} extends GenericSchema, unknown, unknown[], "bookings", unknown>;
+  };
   sort: { field: string; direction: string };
   page: number;
 }) {
@@ -36,4 +42,15 @@ export const getBookings = async function ({
   if (error) throw new Error("Can't get the bookings data!");
 
   return { bookings, count };
+};
+
+export const getBooking = async function (id: number) {
+  const { data: booking, error } = await supabase
+    .from("bookings")
+    .select("*, cabins(name), guests(fullName,email)")
+    .eq("id", id)
+    .single();
+  if (error) throw new Error("Can't get the booking data!");
+
+  return booking;
 };

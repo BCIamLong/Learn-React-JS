@@ -1,6 +1,8 @@
-import { HiEllipsisVertical } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiEllipsisVertical, HiMiniEye, HiTrash } from "react-icons/hi2";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "~/components/Button";
+import Menus from "~/components/Menus";
 import Table from "~/components/Table";
 import { Booking } from "~/types/booking.type";
 import { formatDate, getDistanceDates, getTimeAfterCreatedAt } from "~/utils/dateUtils";
@@ -91,6 +93,7 @@ const colors = {
 };
 
 export default function BookingRow({ booking }: BookingRowProps) {
+  const navigate = useNavigate();
   return (
     <Table.Row>
       <div></div>
@@ -119,11 +122,28 @@ export default function BookingRow({ booking }: BookingRowProps) {
       <div>
         <Price>{formatCurrency(booking.totalPrice)}</Price>
       </div>
-      <div>
-        <Button $size="tiny" $variation="option">
-          <StyledHiEllipsisVertical />
-        </Button>
-      </div>
+      <Menus.Menu>
+        <Menus.Toggle id={booking.id}>
+          <Button $size="tiny" $variation="option">
+            <StyledHiEllipsisVertical />
+          </Button>
+        </Menus.Toggle>
+
+        <Menus.Box id={booking.id}>
+          <Menus.Button onClick={() => navigate(`/bookings/${booking.id}`)}>
+            <HiMiniEye />
+            <span>See detail</span>
+          </Menus.Button>
+          <Menus.Button>
+            <HiArrowDownOnSquare />
+            <span>Check in</span>
+          </Menus.Button>
+          <Menus.Button>
+            <HiTrash />
+            <span>Delete booking</span>
+          </Menus.Button>
+        </Menus.Box>
+      </Menus.Menu>
     </Table.Row>
   );
 }

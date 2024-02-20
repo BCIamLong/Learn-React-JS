@@ -1,4 +1,4 @@
-import { ReactNode, cloneElement, createContext, useContext, useState } from "react";
+import { MouseEvent, ReactNode, cloneElement, createContext, useContext, useState } from "react";
 import styled from "styled-components";
 import useOutsideClick from "~/hooks/useOutsideClick";
 
@@ -68,10 +68,13 @@ function Toggle({ id, children }: { id: number; children: JSX.Element }) {
   const { open, close, selectedId } = useMenuContext();
 
   return cloneElement(children, {
-    onClick: () => {
+    onClick: (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
       // setIsSelected((is) => !is);
+      console.log(selectedId, id);
       if (selectedId === id) return close();
       open(id);
+      // open(selectedId);
     },
   });
 }

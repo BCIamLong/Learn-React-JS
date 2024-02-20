@@ -4,6 +4,10 @@ export function formatDate(date: Date) {
   return format(date, "LLL dd yyyy", {});
 }
 
+export function formatTime(time: Date) {
+  return format(time, "E, LLL dd yyyy, h:m bbb", {});
+}
+
 export function getTimeAfterCreatedAt(createdAt: Date) {
   const time = new Date().getTime() - new Date(createdAt).getTime();
   const days = Math.floor(time / (24 * 60 * 60 * 1000));
@@ -17,7 +21,8 @@ export function getTimeAfterCreatedAt(createdAt: Date) {
 }
 
 export function getDistanceDates(date1: Date, date2: Date) {
-  const formatDate = formatDistance(date1, date2).split(" ")[0] + " night stay";
+  const formatDate = formatDistance(date1, date2).split(" ")[0];
+  // const formatDate = formatDistance(date1, date2).split(" ")[0] + " night stay";
 
   return formatDate;
 }
