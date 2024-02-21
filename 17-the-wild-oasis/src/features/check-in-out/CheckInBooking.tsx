@@ -12,6 +12,7 @@ import Checkbox from "~/components/Checkbox";
 import formatCurrency from "~/utils/formatCurrency";
 import { useState } from "react";
 import { useCheckIn } from "./useCheckIn";
+import useSettings from "../settings/useSettings";
 
 const Heading = styled.div`
   display: flex;
@@ -34,12 +35,25 @@ const Buttons = styled.div`
 
 export default function CheckInBooking() {
   const [confirmedPaid, setConfirmedPaid] = useState(false);
+  const [wantBreakfast, setWantBreakfast] = useState(false);
   const navigate = useNavigate();
   const { booking, isLoading } = useBooking();
-  const { id, status, guests, totalPrice } = booking || {};
+  const { id, status, guests, totalPrice, hasBreakfast, numGuests, numNights } = booking || {};
   const { checkIn, isCheckingIn } = useCheckIn();
+  const { settings, isLoading: isLoadingSettings } = useSettings();
 
-  if (isLoading) return <Spinner />;
+  const extrasPrice = settings?.breakfastPrice * numGuests * numNights;
+
+  function handleCheckIn() {
+    if (wantBreakfast)
+      return checkIn({
+        bookingId: id,
+        breakfastData: { hasBreakfast: true, extrasPrice, totalPrice: totalPrice + extrasPrice },
+      });
+    checkIn({ bookingId: id, breakfastData: {} });
+  }
+
+  if (isLoading || isLoadingSettings) return <Spinner />;
 
   return (
     <>
@@ -54,15 +68,35 @@ export default function CheckInBooking() {
       </Row>
       <Row>
         <BookingDataBox booking={booking} />
+
+        {!hasBreakfast && (
+          <Checkbox
+            onChange={() => {
+              setWantBreakfast((has) => !has);
+              setConfirmedPaid(false);
+            }}
+            checked={wantBreakfast}
+            label={`Want to add breakfast for ${formatCurrency(extrasPrice)}?`}
+            id={id}
+          />
+        )}
+
         <Checkbox
           onChange={() => setConfirmedPaid(true)}
           checked={confirmedPaid || isCheckingIn}
-          label={`I confirm that ${guests?.fullName} has paid the total amount of ${formatCurrency(totalPrice)}`}
+          disabled={confirmedPaid || isCheckingIn}
+          label={`I confirm that ${guests?.fullName} has paid the total amount of ${
+            wantBreakfast
+              ? `${formatCurrency(totalPrice + extrasPrice)} (${formatCurrency(totalPrice)} + ${formatCurrency(
+                  extrasPrice
+                )})`
+              : formatCurrency(totalPrice)
+          }`}
           id={id}
         />
 
         <Buttons>
-          <Button disabled={!confirmedPaid || isCheckingIn} onClick={() => checkIn(id)}>
+          <Button disabled={!confirmedPaid || isCheckingIn} onClick={handleCheckIn}>
             Check in booking #{id}
           </Button>
           <Button $variation="backV2" onClick={() => navigate(-1)}>

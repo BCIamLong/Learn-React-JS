@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { updateBooking } from "~/services/apiBookings";
+import { Booking } from "~/types/booking.type";
 
 export const useCheckIn = function () {
   const queryClient = useQueryClient();
@@ -11,10 +12,11 @@ export const useCheckIn = function () {
     isPending: isCheckingIn,
     error,
   } = useMutation({
-    mutationFn: (bookingId: number) =>
+    mutationFn: ({ bookingId, breakfastData }: { bookingId: number; breakfastData: Partial<Booking> }) =>
       updateBooking(bookingId, {
         isPaid: true,
         status: "checked-in",
+        ...breakfastData,
       }),
     //* in the onSuccess we can access to the data return from the mutation function to do something like in this case we can use it to display the specify message....
     onSuccess: (data) => {

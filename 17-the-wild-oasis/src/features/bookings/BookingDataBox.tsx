@@ -146,7 +146,8 @@ export default function BookingDataBox({
       <Detail>
         <UserInfos>
           {/* {fullName} K + {numGuests - 1} guests • <Email>{email}</Email> • <NationalId>{nationalId}</NationalId> */}
-          {fullName} K + {numGuests - 1} guests • <Email>{email}</Email> • <NationalId>National ID</NationalId>
+          {fullName} K {numGuests - 1 > 0 && `+ ${numGuests - 1} guests `}• <Email>{email}</Email> •{" "}
+          <NationalId>National ID</NationalId>
         </UserInfos>
         <HasBreakfast>
           <HiOutlineCheckCircle />

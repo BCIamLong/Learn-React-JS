@@ -25,17 +25,19 @@ const StyledCheckBox = styled.div`
 export default function Checkbox({
   id,
   checked,
+  disabled,
   label,
   onChange,
 }: {
   id: number;
   checked: boolean;
+  disabled?: boolean;
   label: string;
   onChange: () => void;
 }) {
   return (
     <StyledCheckBox>
-      <input id={String(id)} checked={checked} type="checkbox" disabled={checked} onChange={onChange} />
+      <input id={String(id)} checked={checked} type="checkbox" disabled={disabled} onChange={onChange} />
       <label htmlFor={String(id)}>{label}</label>
     </StyledCheckBox>
   );
