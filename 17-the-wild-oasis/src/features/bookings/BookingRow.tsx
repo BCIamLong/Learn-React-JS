@@ -134,10 +134,12 @@ export default function BookingRow({ booking }: BookingRowProps) {
             <HiMiniEye />
             <span>See detail</span>
           </Menus.Button>
-          <Menus.Button>
-            <HiArrowDownOnSquare />
-            <span>Check in</span>
-          </Menus.Button>
+          {booking.status === "unconfirmed" && (
+            <Menus.Button onClick={() => navigate(`/check-in/${booking.id}`)}>
+              <HiArrowDownOnSquare />
+              <span>Check in</span>
+            </Menus.Button>
+          )}
           <Menus.Button>
             <HiTrash />
             <span>Delete booking</span>

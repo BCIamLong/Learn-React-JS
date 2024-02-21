@@ -1,6 +1,7 @@
 // import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 import { PAGE_LIMIT } from "~/configs/constant";
 import supabase from "./supabase";
+import { Booking } from "~/types/booking.type";
 
 export const getBookings = async function ({
   filter,
@@ -53,4 +54,17 @@ export const getBooking = async function (id: number) {
   if (error) throw new Error("Can't get the booking data!");
 
   return booking;
+};
+
+export const updateBooking = async function (id: number, bookingData: Partial<Booking>) {
+  const { data: newBooking, error } = await supabase
+    .from("bookings")
+    .update(bookingData)
+    .eq("id", id)
+    .select()
+    .single();
+
+  if (error) throw new Error("Can't update the booking data!");
+
+  return newBooking;
 };

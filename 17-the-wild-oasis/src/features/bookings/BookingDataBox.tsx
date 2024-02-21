@@ -1,7 +1,5 @@
-import { HiCurrencyDollar, HiOutlineCheckCircle, HiOutlineCurrencyDollar, HiOutlineHomeModern } from "react-icons/hi2";
-import { useNavigate } from "react-router-dom";
+import { HiOutlineCheckCircle, HiOutlineCurrencyDollar, HiOutlineHomeModern } from "react-icons/hi2";
 import styled from "styled-components";
-import Button from "~/components/Button";
 import { Booking } from "~/types/booking.type";
 import { formatDate, formatTime, getDistanceDates } from "~/utils/dateUtils";
 import formatCurrency from "~/utils/formatCurrency";
@@ -27,7 +25,7 @@ const Detail = styled.div`
   gap: 2.4rem;
   padding: 3.2rem 3.2rem 2.4rem 3.2rem;
   background-color: var(--color-grey-0);
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
 `;
 
 const Hot = styled.p`
@@ -63,18 +61,23 @@ const HasBreakfast = styled.p`
   }
 `;
 
-const TotalPrice = styled.div`
+interface TotalPrice {
+  $color: string;
+}
+
+const TotalPrice = styled.div<TotalPrice>`
   display: flex;
   border-radius: var(--border-radius-sm);
   justify-content: space-between;
   align-items: center;
   padding: 2.4rem 3rem;
-  background-color: var(--color-yellow-100);
-  color: var(--color-yellow-700);
+  background-color: var(--color-${(props) => props.$color}-100);
+  color: var(--color-${(props) => props.$color}-700);
 
   p:nth-child(2) {
     font-weight: 600;
     font-size: 1.4rem;
+    text-transform: uppercase;
   }
 
   p:first-child {
@@ -104,18 +107,9 @@ const UserInfos = styled.p`
   font-weight: 500;
 `;
 
-const Buttons = styled.div`
-  display: flex;
-  justify-content: end;
-  gap: 1.2rem;
-  button {
-    font-size: 1.4rem;
-    font-weight: 500;
-  }
-`;
-
 export default function BookingDataBox({
   booking: {
+    id,
     cabins: { name },
     guests: { fullName, email },
     startDate,
@@ -126,6 +120,7 @@ export default function BookingDataBox({
     extrasPrice,
     totalPrice,
     hasBreakfast,
+    status,
     isPaid,
     observation,
     createdAt,
@@ -133,7 +128,7 @@ export default function BookingDataBox({
 }: {
   booking: Booking;
 }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   // console.log(nationalId);
   return (
     <StyledBookingDataBox>
@@ -158,23 +153,21 @@ export default function BookingDataBox({
           <span>Breakfast included?</span>
           <span>{hasBreakfast ? "Yes" : "No"}</span>
         </HasBreakfast>
-        <TotalPrice>
+        <TotalPrice $color={status === "checked-in" ? "green" : "yellow"}>
           <p>
             <HiOutlineCurrencyDollar />
             <span>Total price</span>
             <span>{formatCurrency(totalPrice)}</span>
+            {isPaid && hasBreakfast && (
+              <span>
+                ({formatCurrency(cabinPrice)} cabin + {formatCurrency(extrasPrice)} breakfast)
+              </span>
+            )}
           </p>
-          <p>WILL PAY AT PROPERTY</p>
+          <p>{status === "checked-in" ? "Paid" : "WILL PAY AT PROPERTY"}</p>
         </TotalPrice>
         <BookedDate>Booked {formatTime(createdAt)}</BookedDate>
       </Detail>
-      <Buttons>
-        <Button>Check in</Button>
-        <Button $variation="danger">Delete Booking</Button>
-        <Button $variation="backV2" onClick={() => navigate(-1)}>
-          Back
-        </Button>
-      </Buttons>
     </StyledBookingDataBox>
   );
 }
