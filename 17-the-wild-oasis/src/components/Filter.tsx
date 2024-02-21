@@ -33,6 +33,7 @@ export function Filter({ filterField, options }: FilterProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   // const queryClient = useQueryClient();
   const filterURL = searchParams.get(filterField) || "all";
+  if (searchParams.get("page")) searchParams.set("page", "1"); //* we don't need use setSearchParams function because filter only work when we click and when we click we call the handleClick function which also call the setSearchParams function right
 
   function handleClick(value: string) {
     return (e: MouseEvent<HTMLButtonElement>) => {

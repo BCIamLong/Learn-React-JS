@@ -154,7 +154,7 @@ export default function BookingDataBox({
           <span>Breakfast included?</span>
           <span>{hasBreakfast ? "Yes" : "No"}</span>
         </HasBreakfast>
-        <TotalPrice $color={status === "checked-in" ? "green" : "yellow"}>
+        <TotalPrice $color={status === "checked-in" || status === "checked-out" ? "green" : "yellow"}>
           <p>
             <HiOutlineCurrencyDollar />
             <span>Total price</span>
@@ -165,7 +165,7 @@ export default function BookingDataBox({
               </span>
             )}
           </p>
-          <p>{status === "checked-in" ? "Paid" : "WILL PAY AT PROPERTY"}</p>
+          <p>{status === "checked-in" || status === "checked-out" ? "Paid" : "WILL PAY AT PROPERTY"}</p>
         </TotalPrice>
         <BookedDate>Booked {formatTime(createdAt)}</BookedDate>
       </Detail>

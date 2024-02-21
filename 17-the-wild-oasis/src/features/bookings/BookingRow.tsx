@@ -1,4 +1,4 @@
-import { HiArrowDownOnSquare, HiEllipsisVertical, HiMiniEye, HiTrash } from "react-icons/hi2";
+import { HiArrowDownOnSquare, HiArrowUpOnSquare, HiEllipsisVertical, HiMiniEye, HiTrash } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "~/components/Button";
@@ -7,6 +7,7 @@ import Table from "~/components/Table";
 import { Booking } from "~/types/booking.type";
 import { formatDate, getDistanceDates, getTimeAfterCreatedAt } from "~/utils/dateUtils";
 import formatCurrency from "~/utils/formatCurrency";
+import { useCheckOut } from "../check-in-out/useCheckOut";
 
 interface BookingRowProps {
   booking: Booking;
@@ -94,6 +95,8 @@ const colors = {
 
 export default function BookingRow({ booking }: BookingRowProps) {
   const navigate = useNavigate();
+  const { checkOut, isCheckingOut } = useCheckOut();
+  const { id, status } = booking;
   return (
     <Table.Row>
       <div></div>
@@ -117,27 +120,34 @@ export default function BookingRow({ booking }: BookingRowProps) {
         </Date>
       </DateBox>
       <div>
-        <Status $color={colors[booking.status]}>{booking.status}</Status>
+        <Status $color={colors[status]}>{status}</Status>
       </div>
       <div>
         <Price>{formatCurrency(booking.totalPrice)}</Price>
       </div>
       <Menus.Menu>
-        <Menus.Toggle id={booking.id}>
+        <Menus.Toggle id={id}>
           <Button $size="tiny" $variation="option">
             <StyledHiEllipsisVertical />
           </Button>
         </Menus.Toggle>
 
-        <Menus.Box id={booking.id}>
-          <Menus.Button onClick={() => navigate(`/bookings/${booking.id}`)}>
+        <Menus.Box id={id}>
+          <Menus.Button onClick={() => navigate(`/bookings/${id}`)}>
             <HiMiniEye />
             <span>See detail</span>
           </Menus.Button>
-          {booking.status === "unconfirmed" && (
-            <Menus.Button onClick={() => navigate(`/check-in/${booking.id}`)}>
+          {status === "unconfirmed" && (
+            <Menus.Button onClick={() => navigate(`/check-in/${id}`)}>
               <HiArrowDownOnSquare />
               <span>Check in</span>
+            </Menus.Button>
+          )}
+
+          {status === "checked-in" && (
+            <Menus.Button onClick={() => checkOut(id)} disabled={isCheckingOut}>
+              <HiArrowUpOnSquare />
+              <span>Check out</span>
             </Menus.Button>
           )}
           <Menus.Button>

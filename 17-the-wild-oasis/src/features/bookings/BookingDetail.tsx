@@ -7,6 +7,8 @@ import Tag from "~/components/Tag";
 import styled from "styled-components";
 import BookingDataBox from "./BookingDataBox";
 import { STATUS_COLORS } from "~/configs/constant";
+import { HiArrowUpOnSquare } from "react-icons/hi2";
+import { useCheckOut } from "../check-in-out/useCheckOut";
 
 const Heading = styled.div`
   display: flex;
@@ -30,6 +32,7 @@ export default function BookingDetail() {
   const navigate = useNavigate();
   const { booking, isLoading } = useBooking();
   const { id, status } = booking || {};
+  const { checkOut, isCheckingOut } = useCheckOut();
 
   if (isLoading) return <Spinner />;
 
@@ -48,6 +51,11 @@ export default function BookingDetail() {
         <BookingDataBox booking={booking} />
         <Buttons>
           {status === "unconfirmed" && <Button onClick={() => navigate(`/check-in/${id}`)}>Check in</Button>}
+          {status === "checked-in" && (
+            <Button onClick={() => checkOut(id)} disabled={isCheckingOut}>
+              Check out
+            </Button>
+          )}
           <Button $variation="danger">Delete Booking</Button>
           <Button $variation="backV2" onClick={() => navigate(-1)}>
             Back

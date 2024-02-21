@@ -11,6 +11,7 @@ export const useBooking = function () {
     isLoading,
   } = useQuery({
     queryKey: ["booking"],
+    // queryKey: ["booking", bookingId],
     queryFn: () => getBooking(+bookingId || 1),
   });
 
