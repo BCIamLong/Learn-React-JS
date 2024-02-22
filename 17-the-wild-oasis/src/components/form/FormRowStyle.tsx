@@ -1,7 +1,12 @@
 import styled from "styled-components";
 
-const FormRow = styled.div`
+interface FormRow {
+  $direction?: string;
+}
+
+const FormRow = styled.div<FormRow>`
   display: flex;
+  flex-direction: ${(props) => props.$direction || "row"};
   align-items: center;
   gap: 2rem;
   width: 100%;

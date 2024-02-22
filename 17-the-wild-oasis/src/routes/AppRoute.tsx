@@ -9,7 +9,8 @@ import Settings from "../pages/Settings";
 import PageNotFound from "../pages/PageNotFound";
 import AppLayout from "../layouts/AppLayout";
 import Booking from "~/pages/Booking";
-import CheckIn from "~/pages/Checkin";
+import CheckIn from "~/pages/CheckIn";
+import LoginLayout from "~/layouts/LoginLayout";
 
 export default function AppRoute() {
   return (
@@ -31,7 +32,10 @@ export default function AppRoute() {
         {/* we can also don't need to use / notation because by default Vite did all of that */}
 
         <Route index element={<Navigate replace to="/login" />} />
-        <Route path="login" element={<Login />} />
+        <Route element={<LoginLayout />}>
+          <Route path="login" element={<Login />} />
+        </Route>
+
         <Route element={<AppLayout />}>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="account" element={<Account />} />

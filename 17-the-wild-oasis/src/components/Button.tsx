@@ -94,6 +94,18 @@ const variations: Options = {
       background-color: var(--color-grey-50);
     }
   `,
+  login: css`
+    display: flex;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: 500;
+    background-color: var(--color-brand-600);
+    color: var(--color-brand-50);
+    &:hover {
+      background-color: var(--color-brand-700);
+    }
+    line-height: 1.4;
+  `,
 };
 
 interface ButtonProps {
