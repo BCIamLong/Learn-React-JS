@@ -109,7 +109,7 @@ const UserInfos = styled.p`
 
 export default function BookingDataBox({
   booking: {
-    id,
+    // id,
     cabins: { name },
     guests: { fullName, email },
     startDate,
@@ -122,7 +122,7 @@ export default function BookingDataBox({
     hasBreakfast,
     status,
     isPaid,
-    observation,
+    // observation,
     createdAt,
   },
 }: {

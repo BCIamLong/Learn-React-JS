@@ -45,7 +45,10 @@ function CabinsTable() {
           <div></div>
         </Table.Header>
 
-        <Table.Body<Cabin> data={cabinsSorted} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} />
+        <Table.Body<Cabin>
+          data={cabinsSorted as Cabin[]}
+          render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />}
+        />
         {/* <Table.Body data={cabinsFiltered} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} /> */}
         {/* <Table.Body data={cabins} render={(cabin) => <CabinItem cabin={cabin} key={cabin.id} />} /> */}
 

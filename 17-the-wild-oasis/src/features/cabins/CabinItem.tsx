@@ -153,6 +153,7 @@ function CabinItem({ cabin }: CabinItemProps) {
 
             <Modal.Window name="confirm-box">
               <ConfirmDelete
+                recourseName="cabin"
                 onConfirm={() => {
                   deleteCabinMutate(cabin.id);
                 }}

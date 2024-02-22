@@ -67,7 +67,12 @@ const ModalContext = createContext<ModalContextType | null>(null);
 function Open({ opens: openModalName, children }: { opens: string; children: JSX.Element }) {
   const { open } = useModalContext()!;
 
-  return cloneElement(children, { onClick: () => open(openModalName) });
+  return cloneElement(children, {
+    onClick: () => {
+      // alert(openModalName);
+      open(openModalName);
+    },
+  });
 }
 
 // function Window({ name, children }: { name: string; children: ReactNode }) {
@@ -86,6 +91,7 @@ function Window({ name, children }: { name: string; children: JSX.Element }) {
   //   return () => document.removeEventListener("click", handleClick);
   // }, [openName]);
   const modal = useOutsideClick(close);
+  console.log(openName, name, openName !== name);
 
   if (openName !== name) return;
 
@@ -117,7 +123,8 @@ function Modal({ children }: ModalProps) {
   function close() {
     setOpenName("false");
   }
-  return <ModalContext.Provider value={{ close, openName, open: setOpenName }}>{children}</ModalContext.Provider>;
+  const open = setOpenName;
+  return <ModalContext.Provider value={{ close, openName, open }}>{children}</ModalContext.Provider>;
 }
 
 Modal.Open = Open;

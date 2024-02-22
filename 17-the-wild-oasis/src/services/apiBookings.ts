@@ -68,3 +68,8 @@ export const updateBooking = async function (id: number, bookingData: Partial<Bo
 
   return newBooking;
 };
+
+export const deleteBooking = async function (id: number) {
+  const { error } = await supabase.from("bookings").delete().eq("id", id).single();
+  if (error) throw new Error("Can't delete the booking data!");
+};

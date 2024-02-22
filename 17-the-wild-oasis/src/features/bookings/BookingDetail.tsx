@@ -1,14 +1,19 @@
-import Spinner from "~/components/Spinner";
 import { useBooking } from "./useBooking";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+import Spinner from "~/components/Spinner";
 import Row from "~/components/Row";
 import Button from "~/components/Button";
-import { useNavigate } from "react-router-dom";
 import Tag from "~/components/Tag";
-import styled from "styled-components";
+
 import BookingDataBox from "./BookingDataBox";
 import { STATUS_COLORS } from "~/configs/constant";
-import { HiArrowUpOnSquare } from "react-icons/hi2";
 import { useCheckOut } from "../check-in-out/useCheckOut";
+import { useDeleteBooking } from "./useDeleteBooking";
+import Modal from "~/components/Modal";
+import { ConfirmDelete } from "~/components/ConfirmDelete";
+// import { HiArrowUpOnSquare } from "react-icons/hi2";
 
 const Heading = styled.div`
   display: flex;
@@ -28,11 +33,14 @@ const Buttons = styled.div`
   }
 `;
 
+type Status = "checked-out" | "checked-in" | "unconfirmed";
+
 export default function BookingDetail() {
   const navigate = useNavigate();
   const { booking, isLoading } = useBooking();
-  const { id, status } = booking || {};
+  const { id, status }: { id: number; status: Status } = booking || {};
   const { checkOut, isCheckingOut } = useCheckOut();
+  const { isDeleting, deleteBooking } = useDeleteBooking();
 
   if (isLoading) return <Spinner />;
 
@@ -56,7 +64,17 @@ export default function BookingDetail() {
               Check out
             </Button>
           )}
-          <Button $variation="danger">Delete Booking</Button>
+          <Modal>
+            <Modal.Open opens="delete-booking">
+              <Button $variation="danger" disabled={isDeleting} onClick={() => deleteBooking(id)}>
+                {isDeleting ? "Deleting" : "Delete Booking"}
+              </Button>
+            </Modal.Open>
+            <Modal.Window name="delete-booking">
+              <ConfirmDelete recourseName="booking" disabled={isDeleting} onConfirm={() => deleteBooking(id)} />
+            </Modal.Window>
+          </Modal>
+
           <Button $variation="backV2" onClick={() => navigate(-1)}>
             Back
           </Button>

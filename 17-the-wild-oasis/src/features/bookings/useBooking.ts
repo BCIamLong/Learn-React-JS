@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import { getBooking } from "~/services/apiBookings";
 
 export const useBooking = function () {
-  const { bookingId } = useParams() || {};
+  const params = useParams();
+  const bookingId = params?.bookingId ? params.bookingId : "";
 
   const {
     data: booking,

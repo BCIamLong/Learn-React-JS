@@ -7,7 +7,7 @@ const StyledConfirmDelete = styled.div`
   gap: 1.2rem;
   z-index: 100;
   background-color: var(--color-grey-0);
-  padding: 3rem;
+  padding: 3rem 3.6rem;
   max-width: 60rem;
 
   & h3 {
@@ -30,15 +30,17 @@ export function ConfirmDelete({
   onConfirm,
   onCloseModal,
   disabled,
+  recourseName,
 }: {
   onConfirm: () => void;
   onCloseModal?: (name: string) => void;
   disabled: boolean;
+  recourseName: string;
 }) {
   return (
     <StyledConfirmDelete>
-      <h3>Delete cabins</h3>
-      <p>Are you sure you want to delete this cabins permanently? This action cannot be undone.</p>
+      <h3>Delete {recourseName}</h3>
+      <p>Are you sure you want to delete this {recourseName} permanently? This action cannot be undone.</p>
       <div>
         <Button $variation="option" onClick={() => onCloseModal?.("false")} disabled={disabled}>
           Cancel

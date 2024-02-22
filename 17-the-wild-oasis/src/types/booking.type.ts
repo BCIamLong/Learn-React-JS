@@ -1,3 +1,6 @@
+import Cabin from "./cabin.type";
+import Guest from "./guest.type";
+
 export interface Booking {
   id: number;
   cabinId: string;
@@ -16,4 +19,8 @@ export interface Booking {
   isPaid: boolean;
   observation: string;
   createdAt: Date;
+  guests: Partial<Guest>;
+  cabins: Partial<Cabin>;
+  // guests: Partial<Guest>[];
+  // cabins: Partial<Cabin>[];
 }
