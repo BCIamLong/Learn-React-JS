@@ -14,9 +14,10 @@ export const useLogin = function () {
 
   const { mutate: login, isPending: isLogging } = useMutation({
     mutationFn: ({ email, password }: credentials) => loginService({ email, password }),
-    onSuccess: (user) => {
+    onSuccess: (data) => {
       toast.success("Login successfully");
-      queryClient.setQueriesData(["user"], user);
+      queryClient.setQueryData(["user"], data.user);
+      // queryClient.setQueriesData(["user"], user);
       navigate("/dashboard", { replace: true });
     },
 
