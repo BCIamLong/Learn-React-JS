@@ -6,6 +6,7 @@ const FileInput = styled.input.attrs({ type: "file" })`
   color: inherit;
   /* display: none; */
   /* font-weight: 500; */
+  width: 55%;
 
   &::-webkit-file-upload-button {
     color: var(--color-brand-50);

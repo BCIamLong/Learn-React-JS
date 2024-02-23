@@ -10,7 +10,7 @@ const Form = styled.form`
   font-size: 1.4rem;
   color: var(--color-grey-600);
   border-radius: var(--border-radius-lg);
-  width: 70rem;
+  width: 76rem;
 `;
 
 export default Form;

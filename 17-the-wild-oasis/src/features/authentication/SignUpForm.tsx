@@ -1,0 +1,71 @@
+import { FieldValues, useForm } from "react-hook-form";
+import Button from "~/components/Button";
+import { Form, FormRow, Input, Buttons } from "~/components/form";
+
+interface Inputs extends FieldValues {
+  fullName: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+export default function SignUpForm() {
+  const { register, formState, getValues, handleSubmit } = useForm<Inputs>();
+  const { errors } = formState;
+  // console.log(errors);
+
+  function onSubmit(data: Inputs) {
+    console.log(data);
+  }
+
+  return (
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <FormRow label="Full name" errorMsg={errors?.fullName?.message || ""}>
+        <Input type="text" id="fullName" {...register("fullName", { required: "This field is required" })} />
+      </FormRow>
+      <FormRow label="Email" errorMsg={errors?.email?.message || ""}>
+        <Input
+          type="email"
+          id="email"
+          {...register("email", {
+            required: "This field is required",
+            pattern: {
+              value: /^[a-z0-9.]{1,64}@[a-z0-9.]{1,64}$/i,
+              message: "Please provide the valid email",
+            },
+          })}
+        />
+      </FormRow>
+      <FormRow label="Password" errorMsg={errors?.password?.message || ""}>
+        <Input
+          type="password"
+          id="password"
+          {...register("password", {
+            required: "This field is required",
+            minLength: {
+              value: 8,
+              message: "Password must have at least 8 characters",
+            },
+          })}
+        />
+      </FormRow>
+      <FormRow label="Password confirm" errorMsg={errors?.passwordConfirm?.message || ""}>
+        <Input
+          type="password"
+          id="passwordConfirm"
+          {...register("passwordConfirm", {
+            required: "This field is required",
+            validate: (val) => val === getValues().password || "Please write the correct password confirm",
+          })}
+        />
+      </FormRow>
+
+      <Buttons>
+        <Button $size="medium" $variation="secondary" type="reset">
+          Cancel
+        </Button>
+        <Button>Create new user</Button>
+      </Buttons>
+    </Form>
+  );
+}
