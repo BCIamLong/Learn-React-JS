@@ -50,6 +50,21 @@ const variations: Options = {
       background-color: var(--color-grey-100);
     }
   `,
+  header: css`
+    background-color: var(--color-grey-0);
+    color: var(--color-grey-700);
+    color: var(--color-brand-700);
+    font-size: 1.4rem;
+    font-weight: 500;
+    gap: 0.3rem;
+    svg {
+      font-size: 2rem;
+    }
+
+    &:hover {
+      background-color: var(--color-grey-100);
+    }
+  `,
   filter: css`
     background-color: var(--color-grey-0);
     color: var(--color-grey-700);
