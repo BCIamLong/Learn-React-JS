@@ -11,6 +11,7 @@ import AppLayout from "../layouts/AppLayout";
 import Booking from "~/pages/Booking";
 import CheckIn from "~/pages/CheckIn";
 import LoginLayout from "~/layouts/LoginLayout";
+import ProtectedRoute from "./ProtectedRoute";
 
 export default function AppRoute() {
   return (
@@ -36,7 +37,13 @@ export default function AppRoute() {
           <Route path="login" element={<Login />} />
         </Route>
 
-        <Route element={<AppLayout />}>
+        <Route
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="account" element={<Account />} />
           <Route path="users" element={<Users />} />
