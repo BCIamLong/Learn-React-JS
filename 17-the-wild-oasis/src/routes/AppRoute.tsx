@@ -32,7 +32,7 @@ export default function AppRoute() {
 
         {/* we can also don't need to use / notation because by default Vite did all of that */}
 
-        <Route index element={<Navigate replace to="/login" />} />
+        <Route index element={<Navigate replace to="/dashboard" />} />
         <Route element={<LoginLayout />}>
           <Route path="login" element={<Login />} />
         </Route>

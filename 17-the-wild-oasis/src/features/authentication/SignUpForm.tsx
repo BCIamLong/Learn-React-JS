@@ -1,6 +1,8 @@
 import { FieldValues, useForm } from "react-hook-form";
 import Button from "~/components/Button";
 import { Form, FormRow, Input, Buttons } from "~/components/form";
+import { useSignUp } from "./useSignUp";
+// import SpinnerMini from "~/components/SpinnerMini";
 
 interface Inputs extends FieldValues {
   fullName: string;
@@ -10,23 +12,35 @@ interface Inputs extends FieldValues {
 }
 
 export default function SignUpForm() {
-  const { register, formState, getValues, handleSubmit } = useForm<Inputs>();
+  const { register, formState, getValues, handleSubmit, reset } = useForm<Inputs>();
   const { errors } = formState;
   // console.log(errors);
+  const { signup, isSigningUp } = useSignUp();
 
-  function onSubmit(data: Inputs) {
-    console.log(data);
+  function onSubmit({ fullName, email, password }: Inputs) {
+    signup(
+      { fullName, email, password },
+      {
+        onSettled: () => reset(),
+      }
+    );
   }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Full name" errorMsg={errors?.fullName?.message || ""}>
-        <Input type="text" id="fullName" {...register("fullName", { required: "This field is required" })} />
+        <Input
+          type="text"
+          id="fullName"
+          disabled={isSigningUp}
+          {...register("fullName", { required: "This field is required" })}
+        />
       </FormRow>
       <FormRow label="Email" errorMsg={errors?.email?.message || ""}>
         <Input
           type="email"
           id="email"
+          disabled={isSigningUp}
           {...register("email", {
             required: "This field is required",
             pattern: {
@@ -40,6 +54,7 @@ export default function SignUpForm() {
         <Input
           type="password"
           id="password"
+          disabled={isSigningUp}
           {...register("password", {
             required: "This field is required",
             minLength: {
@@ -53,6 +68,7 @@ export default function SignUpForm() {
         <Input
           type="password"
           id="passwordConfirm"
+          disabled={isSigningUp}
           {...register("passwordConfirm", {
             required: "This field is required",
             validate: (val) => val === getValues().password || "Please write the correct password confirm",
@@ -61,10 +77,10 @@ export default function SignUpForm() {
       </FormRow>
 
       <Buttons>
-        <Button $size="medium" $variation="secondary" type="reset">
+        <Button $size="medium" $variation="secondary" type="reset" disabled={isSigningUp}>
           Cancel
         </Button>
-        <Button>Create new user</Button>
+        <Button disabled={isSigningUp}>{isSigningUp ? "Processing" : "Create new user"}</Button>
       </Buttons>
     </Form>
   );
