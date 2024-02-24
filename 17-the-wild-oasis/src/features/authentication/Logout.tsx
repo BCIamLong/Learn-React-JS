@@ -12,7 +12,6 @@ export default function Logout() {
       ) : (
         <>
           <HiArrowRightOnRectangle />
-          <span>Logout</span>
         </>
       )}
     </Button>

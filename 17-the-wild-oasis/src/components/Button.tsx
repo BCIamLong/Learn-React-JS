@@ -57,8 +57,10 @@ const variations: Options = {
     font-size: 1.4rem;
     font-weight: 500;
     gap: 0.3rem;
+    padding: 0.4rem 0.6rem !important;
     svg {
-      font-size: 2rem;
+      font-size: 2.4rem;
+      font-weight: 500;
     }
 
     &:hover {

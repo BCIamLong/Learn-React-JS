@@ -25,12 +25,14 @@ const LoginPage = styled.div`
   }
 
   form div {
+    flex-direction: column;
     width: 100% !important;
+    border-bottom: none;
+    padding: 0 !important;
   }
 
   form div label {
     width: 100%;
-    margin-bottom: -1rem;
     border-bottom: none !important;
   }
 
