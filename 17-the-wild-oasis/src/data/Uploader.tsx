@@ -88,16 +88,16 @@ async function createBookings() {
 const DevNav = styled.div`
   padding: 1.2rem;
   cursor: pointer;
-  background-color: var(--color-brand-100);
-  border-top: 1.5px solid var(--color-grey-0);
-  border-bottom: 1.5px solid var(--color-grey-0);
+  background-color: var(--color-grey-0);
+  border-top: 1.5px solid var(--color-grey-300);
+  border-bottom: 1.5px solid var(--color-grey-300);
 
   &:hover {
     border-top: 1.5px solid var(--color-brand-500);
     border-bottom: 1.5px solid var(--color-brand-500);
     background-color: var(--color-grey-0);
   }
-  transition: all 1s;
+  transition: all 0.6s;
   margin-bottom: 0.3rem;
 `;
 
@@ -131,6 +131,7 @@ export function Uploader() {
     <div
       style={{
         transition: "all 1s",
+        backgroundColor: "var(--color-grey-0)",
       }}
     >
       <DevNav onClick={() => setIsOpen((is) => !is)}>Development Area</DevNav>
@@ -140,7 +141,7 @@ export function Uploader() {
           flexDirection: "column",
           gap: "1.2rem",
           marginTop: "auto",
-          backgroundColor: "#e0e7ff",
+          backgroundColor: "var(--color-grey-0)",
           padding: "8px",
           borderRadius: "5px",
           textAlign: "center",

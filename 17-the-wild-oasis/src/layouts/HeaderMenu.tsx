@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { HiOutlineMoon, HiOutlineUser } from "react-icons/hi2";
+import { HiOutlineUser } from "react-icons/hi2";
 
 import Button from "~/components/Button";
 import Logout from "~/features/authentication/Logout";
 import { useNavigate } from "react-router-dom";
+import DarkModeToggle from "~/components/DarkModeToggle";
 
 const StyledHeaderMenu = styled.ul`
   display: flex;
@@ -17,9 +18,7 @@ export default function HeaderMenu() {
       <Button $variation="header" onClick={() => navigate("/account")}>
         <HiOutlineUser />
       </Button>
-      <Button $variation="header">
-        <HiOutlineMoon />
-      </Button>
+      <DarkModeToggle />
       <Logout />
     </StyledHeaderMenu>
   );

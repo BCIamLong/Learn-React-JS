@@ -7,6 +7,7 @@ import Button from "~/components/Button";
 import { FileInput, Form, FormRow, Input } from "~/components/form";
 import Cabin from "~/types/cabin.type";
 import toast from "react-hot-toast";
+import Textarea from "~/components/form/Textarea";
 // import { useModalContext } from "~/components/Modal";
 // import Cabin from "../../types/cabin.type";
 
@@ -18,18 +19,18 @@ const Buttons = styled.div`
   padding-top: 2rem;
 `;
 
-const Textarea = styled.textarea`
-  padding: 1.6rem 1.2rem;
-  border-radius: var(--border-radius-sm);
-  /* border-color: inherit; */
-  border: 1.5px solid var(--color-grey-200);
-  width: 55%;
-  resize: none;
+// const Textarea = styled.textarea`
+//   padding: 1.6rem 1.2rem;
+//   border-radius: var(--border-radius-sm);
+//   /* border-color: inherit; */
+//   border: 1.5px solid var(--color-grey-200);
+//   width: 55%;
+//   resize: none;
 
-  &:focus {
-    /* border: none; */
-  }
-`;
+//   &:focus {
+//     /* border: none; */
+//   }
+// `;
 
 interface Inputs extends FieldValues {
   name: string;

@@ -30,10 +30,12 @@ const variations: Options = {
     }
   `,
   secondary: css`
-    background-color: var(--color-brand-50);
-    color: var(--color-brand-700);
+    background-color: var(--color-brand-0);
+    color: var(--color-grey-700);
+    font-weight: 500;
+    border: 1px solid var(--color-grey-300);
     &:hover {
-      background-color: var(--color-brand-100);
+      background-color: var(--color-grey-100);
     }
   `,
   danger: css`
