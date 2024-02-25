@@ -1,4 +1,4 @@
-import { differenceInDays, format, formatDistance, parseISO } from "date-fns";
+import { differenceInDays, endOfDay, format, formatDistance, parseISO, startOfDay } from "date-fns";
 
 export function formatDate(date: Date) {
   return format(date, "LLL dd yyyy", {});
@@ -29,3 +29,9 @@ export function getDistanceDates(date1: Date, date2: Date) {
 
 export const subtractDates = (dateStr1: string, dateStr2: string) =>
   differenceInDays(parseISO(String(dateStr1)), parseISO(String(dateStr2)));
+
+export const getTimeOfDayIOS = function (date: Date, time?: string) {
+  if (time === "end") return endOfDay(date).toISOString();
+
+  return startOfDay(date).toISOString();
+};

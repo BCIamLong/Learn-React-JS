@@ -2,6 +2,8 @@
 import { PAGE_LIMIT } from "~/configs/constant";
 import supabase from "./supabase";
 import { Booking } from "~/types/booking.type";
+// import { endOfDay, startOfDay } from "date-fns";
+import { getTimeOfDayIOS } from "~/utils/dateUtils";
 
 export const getBookings = async function ({
   filter,
@@ -72,4 +74,34 @@ export const updateBooking = async function (id: number, bookingData: Partial<Bo
 export const deleteBooking = async function (id: number) {
   const { error } = await supabase.from("bookings").delete().eq("id", id).single();
   if (error) throw new Error("Can't delete the booking data!");
+};
+
+export const getBookingsAfterDate = async function (date: Date) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("createdAt, totalPrice, extrasPrice")
+    .gte("createdAt", getTimeOfDayIOS(date))
+    .lte("createdAt", getTimeOfDayIOS(new Date(), "end"));
+  // .gte("createdAt", startOfDay(date).toISOString())
+  // .lte("createdAt", endOfDay(new Date()).toISOString());
+
+  if (error) throw new Error(error.message);
+
+  return data;
+};
+
+export const getStaysAfterDate = async function (date: Date) {
+  // const endDate = new Date().setUTCHours(23, 59, 59, 999);
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*, guests(fullName)")
+    .gte("startDate", getTimeOfDayIOS(date))
+    .lte("startDate", getTimeOfDayIOS(new Date(), "end"));
+  // .gte("startDate", startOfDay(date).toISOString())
+  // .lte("startDate", endOfDay(new Date()).toISOString());
+  // .lte("startDate", endDate);
+
+  if (error) throw new Error(error.message);
+
+  return data;
 };

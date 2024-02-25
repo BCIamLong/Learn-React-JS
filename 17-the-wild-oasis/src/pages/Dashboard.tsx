@@ -1,4 +1,5 @@
 import Row from "~/components/Row";
+import DashboardBox from "~/features/dashboard/DashboardBox";
 import DashboardFilter from "~/features/dashboard/DashboardFilter";
 import DashboardLayout from "~/layouts/DashboardLayout";
 
@@ -10,10 +11,7 @@ function Dashboard() {
         <DashboardFilter />
       </Row>
       <DashboardLayout>
-        <div>Statistics</div>
-        <div>Today's activity</div>
-        <div>Chart stay durations</div>
-        <div>Chart sales</div>
+        <DashboardBox />
       </DashboardLayout>
     </>
   );

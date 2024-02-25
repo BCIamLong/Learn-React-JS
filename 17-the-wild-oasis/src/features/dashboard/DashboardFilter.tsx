@@ -3,19 +3,19 @@ import { Filter } from "~/components/Filter";
 export default function DashboardFilter() {
   return (
     <Filter
-      defaultFilter="last-days-7"
+      defaultFilter="7-days"
       filterField="last"
       options={[
         {
-          value: "last-days-7",
+          value: "7-days",
           label: "Last 7 days",
         },
         {
-          value: "last-days-30",
+          value: "30-days",
           label: "Last 30 days",
         },
         {
-          value: "last-days-90",
+          value: "90-days",
           label: "Last 90 days",
         },
       ]}
