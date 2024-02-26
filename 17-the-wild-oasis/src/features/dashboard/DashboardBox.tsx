@@ -5,11 +5,13 @@ import { useRecentStays } from "./useRecentStays";
 import Stats from "./Stats";
 import useCabins from "../cabins/useCabins";
 import SalesChart from "./SalesChart";
+import DurationsChart from "./DurationsChart";
 
 const StyledDashboardBox = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr 1.2fr;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1.4fr;
   column-gap: 2rem;
+  row-gap: 2.4rem;
 `;
 
 export default function DashboardBox() {
@@ -23,7 +25,7 @@ export default function DashboardBox() {
     <StyledDashboardBox>
       <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} numCabins={cabins?.length || 0} />
       <div>Today's activity</div>
-      <div>Chart stay durations</div>
+      <DurationsChart confirmedStays={confirmedStays} />
       <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardBox>
   );
