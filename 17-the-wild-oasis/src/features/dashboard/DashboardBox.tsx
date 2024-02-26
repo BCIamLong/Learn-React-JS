@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRecentStays } from "./useRecentStays";
 import Stats from "./Stats";
 import useCabins from "../cabins/useCabins";
+import SalesChart from "./SalesChart";
 
 const StyledDashboardBox = styled.div`
   display: grid;
@@ -20,11 +21,10 @@ export default function DashboardBox() {
 
   return (
     <StyledDashboardBox>
-      <div>Statistics</div>
+      <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} numCabins={cabins?.length || 0} />
       <div>Today's activity</div>
       <div>Chart stay durations</div>
-      <div>Chart sales</div>
-      <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} numCabins={cabins?.length || 0} />
+      <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardBox>
   );
 }
