@@ -44,6 +44,8 @@ export default function BookingDetail() {
 
   if (isLoading) return <Spinner />;
 
+  if (!booking) return <p>No booking could be found</p>;
+
   return (
     <>
       <Row $type="horizontal">

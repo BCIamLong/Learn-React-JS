@@ -99,7 +99,7 @@ function Button({ disabled, onClick, children }: { disabled?: boolean; onClick?:
 function Box({ id, children }: { id: number; children: ReactNode }) {
   // const { selectedId, isSelected } = useMenuContext();
   const { selectedId, close } = useMenuContext();
-  const box = useOutsideClick(close);
+  const box = useOutsideClick(close, false);
   // if (!isSelected) return;
 
   // console.log(id !== selectedId);
