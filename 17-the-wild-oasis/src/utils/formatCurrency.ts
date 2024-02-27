@@ -8,9 +8,13 @@ export default function formatCurrency(amount: number) {
     amountFormat = amount
       .toString()
       .split("")
+      .reverse()
       .reduce((str, el, i) => {
-        return i % 3 === 0 && i !== length - 1 && length > 3 ? str + el + "," : str + el;
-      }, "");
+        return i !== 0 && (i + 1) % 3 === 0 && i !== length - 1 && length > 3 ? str + el + "," : str + el;
+      }, "")
+      .split("")
+      .reverse()
+      .join("");
 
   amountFormat = amountFormat + ".00";
 

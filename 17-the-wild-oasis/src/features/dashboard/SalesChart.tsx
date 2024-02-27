@@ -12,6 +12,8 @@ const StyledSalesChart = styled.div`
   grid-column: 1/-1;
   background-color: var(--color-grey-0);
   padding: 2.4rem;
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-grey-100);
 `;
 
 // const fakeData = [
@@ -113,7 +115,7 @@ export default function SalesChart({ bookings, numDays }: { bookings: Booking[];
         </h3>
       </Row>
       <Row>
-        <ResponsiveContainer width="100%" height={400}>
+        <ResponsiveContainer width="100%" height={300}>
           <AreaChart data={data}>
             <CartesianGrid strokeDasharray="4" />
             <Tooltip

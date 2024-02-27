@@ -8,6 +8,8 @@ const StyledDurationsChart = styled.div`
   grid-column: 3/-1;
   padding: 2rem;
   background-color: var(--color-grey-0);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-grey-100);
 `;
 
 const startDataLight = [

@@ -97,7 +97,7 @@ export default function CheckInBooking() {
 
         <Buttons>
           <Button disabled={!confirmedPaid || isCheckingIn} onClick={handleCheckIn}>
-            Check in booking #{id}
+            {isCheckingIn ? "Checking" : `Check in booking #${id}`}
           </Button>
           <Button $variation="backV2" onClick={() => navigate(-1)}>
             Back

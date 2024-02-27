@@ -5,11 +5,16 @@ interface Options {
 }
 
 const sizes: Options = {
+  mini: css`
+    padding: 0.5rem 0.4rem;
+    font-size: 1.2rem !important;
+  `,
   tiny: css`
     padding: 0.5rem 0.4rem;
   `,
   small: css`
     padding: 0.6rem 0.8rem;
+    /* font-size: 1.2rem !important; */
   `,
   medium: css`
     padding: 1rem 1.4rem;
@@ -80,6 +85,7 @@ const variations: Options = {
   pagination: css`
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.3rem;
     font-size: 1.4rem;
     font-weight: 500;
@@ -136,6 +142,7 @@ interface ButtonProps {
 const Button = styled.button<ButtonProps>`
   display: flex;
   align-items: center;
+  justify-content: center;
   /* Globals styles for button */
   border: none;
   border-radius: var(--border-radius-sm);

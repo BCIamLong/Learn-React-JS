@@ -6,6 +6,7 @@ import Stats from "./Stats";
 import useCabins from "../cabins/useCabins";
 import SalesChart from "./SalesChart";
 import DurationsChart from "./DurationsChart";
+import TodayActivities from "../check-in-out/TodayActivities";
 
 const StyledDashboardBox = styled.div`
   display: grid;
@@ -24,7 +25,7 @@ export default function DashboardBox() {
   return (
     <StyledDashboardBox>
       <Stats bookings={bookings} confirmedStays={confirmedStays} numDays={numDays} numCabins={cabins?.length || 0} />
-      <div>Today's activity</div>
+      <TodayActivities />
       <DurationsChart confirmedStays={confirmedStays} />
       <SalesChart bookings={bookings} numDays={numDays} />
     </StyledDashboardBox>
