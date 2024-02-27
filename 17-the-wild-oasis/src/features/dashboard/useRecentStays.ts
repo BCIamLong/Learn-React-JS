@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { format, subDays } from "date-fns";
+import { subDays } from "date-fns";
 import { useSearchParams } from "react-router-dom";
 import { getStaysAfterDate } from "~/services/apiBookings";
 

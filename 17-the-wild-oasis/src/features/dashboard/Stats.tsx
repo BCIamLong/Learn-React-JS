@@ -9,15 +9,16 @@ export default function Stats({
   numDays,
   numCabins,
 }: {
-  booking: Partial<Booking>[];
-  stays: Partial<Booking>[];
+  bookings: Partial<Booking>[];
+  confirmedStays: Partial<Booking>[];
   numDays: number;
   numCabins: number;
 }) {
   const numBookings = bookings.length;
-  const sales = bookings.reduce((sum, booking) => sum + booking.totalPrice, 0);
+  const sales = bookings.reduce((sum, booking) => (booking.totalPrice ? sum + booking.totalPrice : sum), 0);
   const checkedIns = confirmedStays.length;
-  const occupation = confirmedStays.reduce((sum, stay) => sum + stay.numNights, 0) / (numDays * numCabins);
+  const occupation =
+    confirmedStays.reduce((sum, stay) => (stay.numNights ? sum + stay.numNights : sum), 0) / (numDays * numCabins);
 
   return (
     <>
