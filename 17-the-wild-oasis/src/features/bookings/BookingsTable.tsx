@@ -5,16 +5,23 @@ import BookingRow from "./BookingRow";
 import { Booking } from "~/types/booking.type";
 import Pagination from "~/components/Pagination";
 import Menus from "~/components/Menus";
+import Empty from "~/components/Empty";
+import { useSearchParams } from "react-router-dom";
+import { useSearchBookings } from "./userSearchBookings";
 // import { useSearchParams } from "react-router-dom";
 
 export default function BookingsTable() {
   // const [searchParams] = useSearchParams();
   // const filter = searchParams.get("filter") || "";
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("search") || "";
+  const { bookings: bookingsSearch, isSearching } = useSearchBookings(query);
+
   const { isLoading, bookings, count } = useBookings();
 
-  if (isLoading) return <Spinner />;
+  if (isLoading || isSearching) return <Spinner />;
 
-  if (!bookings?.length) return <p>We don't have data yet</p>;
+  if (!bookings?.length) return <Empty resourceName="bookings" />;
 
   return (
     <Menus>
@@ -28,7 +35,19 @@ export default function BookingsTable() {
           <div>Amount</div>
           <div></div>
         </Table.Header>
-        <Table.Body<Booking> data={bookings} render={(booking) => <BookingRow key={booking.id} booking={booking} />} />
+        {bookingsSearch?.length ? (
+          <Table.Body<Booking>
+            data={bookingsSearch}
+            render={(booking) => <BookingRow key={booking.id} booking={booking} />}
+          />
+        ) : (
+          <Table.Body<Booking>
+            data={bookings}
+            render={(booking) => <BookingRow key={booking.id} booking={booking} />}
+          />
+        )}
+
+        {/* <Table.Body<Booking> data={bookings} render={(booking) => <BookingRow key={booking.id} booking={booking} />} /> */}
         <Table.Footer>
           <Pagination count={count || 0} />
         </Table.Footer>

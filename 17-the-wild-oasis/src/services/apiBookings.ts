@@ -5,6 +5,8 @@ import { Booking } from "~/types/booking.type";
 // import { endOfDay, startOfDay } from "date-fns";
 import { getTimeOfDayIOS } from "~/utils/dateUtils";
 
+type FilterType = "eq" | "neq" | "gt" | "lt" | "gte" | "lte" | "is";
+
 export const getBookings = async function ({
   filter,
   sort,
@@ -28,7 +30,8 @@ export const getBookings = async function ({
   // if (value) query = query.eq(field, value);
   // * we can use this way to condition to call method because method is also the property of object right
   // * FILTER
-  if (filterVal) query = query[method || "eq"](filterField, filterVal);
+  if (filterVal) query = query[(method || "eq") as FilterType](filterField, filterVal);
+  // if (filterVal && method) query = query[method](filterField, filterVal);
 
   // * SORT
   if (sortField) query = query.order(sortField, { ascending: direction === "asc" });
@@ -122,6 +125,19 @@ export const getActivitiesToday = async function () {
     .order("createdAt");
 
   if (error) throw new Error(error.message);
+
+  return data;
+};
+
+export const getSearchBookings = async function (query: string) {
+  const { data, error } = await supabase
+    .from("bookings")
+    .select("*, cabins(name), guests(fullName,email)")
+    .or(`and(cabins.name.eq.${query}), and(guests.fullName.eq.${query})`)
+    .order("createdAt");
+
+  if (error) return null;
+  // if (error) throw new Error(error.message);
 
   return data;
 };

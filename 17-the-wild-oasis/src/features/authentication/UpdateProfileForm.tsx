@@ -36,7 +36,7 @@ export default function UpdateProfileForm() {
         />
       </FormRow>
       <FormRow label="Avatar" errorMsg="">
-        <FileInput type="file" id="avatar" onChange={(e) => setAvatar(e.target?.files[0])} disabled={isUpdating} />
+        <FileInput type="file" id="avatar" onChange={(e) => setAvatar(e.target?.files?.[0])} disabled={isUpdating} />
       </FormRow>
 
       <Buttons>

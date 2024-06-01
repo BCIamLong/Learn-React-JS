@@ -3,6 +3,7 @@ import { useTodayActivities } from "./useTodayActivities";
 import Row from "~/components/Row";
 import TodayActivity from "./TodayActivity";
 import Spinner from "~/components/Spinner";
+import Empty from "~/components/Empty";
 
 const StyledTodayActivities = styled.div`
   grid-column: 1/3;
@@ -26,11 +27,15 @@ export default function TodayActivities() {
       </Row>
       {isLoading ? (
         <Spinner />
-      ) : (
+      ) : activities?.length ? (
         <Row>
           {activities?.map((activity) => (
             <TodayActivity activity={activity} key={activity.id} />
           ))}
+        </Row>
+      ) : (
+        <Row>
+          <Empty resourceName="activities" />
         </Row>
       )}
     </StyledTodayActivities>

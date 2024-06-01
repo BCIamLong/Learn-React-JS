@@ -3,6 +3,8 @@ import { useSearchParams } from "react-router-dom";
 import { PAGE_LIMIT } from "~/configs/constant";
 import { getBookings } from "~/services/apiBookings";
 
+// type FilterType = "eq" | "neq" | "gt" | "lt" | "gte" | "lte" | "is";
+
 export function useBookings() {
   const queryClient = useQueryClient();
   const [searchParams] = useSearchParams();

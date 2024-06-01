@@ -14,7 +14,7 @@ export const getCities = async () => {
 
 export const getCity = async (id) => {
   try {
-    const res = await fetch(`${BASE_URL}/cities/${id}`);
+    const res = await fetch(`/cities/${id}`);
     const data = await res.json();
     return data;
   } catch (err) {
@@ -25,7 +25,7 @@ export const getCity = async (id) => {
 
 export const postCity = async (city) => {
   try {
-    await fetch(`${BASE_URL}/cities`, {
+    await fetch(`/cities`, {
       method: "POST",
       body: JSON.stringify(city),
       headers: {
@@ -44,7 +44,7 @@ export const postCity = async (city) => {
 
 export const deleteCity = async (id) => {
   try {
-    await fetch(`${BASE_URL}/cities/${id}`, {
+    await fetch(`/cities/${id}`, {
       method: "DELETE",
     });
   } catch (err) {

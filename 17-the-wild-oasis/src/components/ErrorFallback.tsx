@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Row from "./Row";
 import GlobalStyles from "~/styles/GlobalStyles";
 import Button from "./Button";
-import { ErrorBoundaryPropsWithFallback } from "react-error-boundary";
+import { FallbackProps } from "react-error-boundary";
 
 const StyledErrorFallback = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const StyledBackground = styled.div`
   padding: 6rem;
 `;
 
-export default function ErrorFallback({ error, resetErrorBoundary }: ErrorBoundaryPropsWithFallback) {
+export default function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     <>
       <GlobalStyles />

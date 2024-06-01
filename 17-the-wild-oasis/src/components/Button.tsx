@@ -131,6 +131,16 @@ const variations: Options = {
     }
     line-height: 1.4;
   `,
+  search: css`
+    background-color: var(--color-grey-0);
+    color: var(--color-brand-600);
+    padding: 0 0.8rem;
+    svg {
+      color: var(--color-brand-600) !important;
+      font-size: 2.4rem;
+      stroke-width: 0.6px;
+    }
+  `,
 };
 
 interface ButtonProps {

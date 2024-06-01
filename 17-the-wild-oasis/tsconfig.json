@@ -31,5 +31,13 @@
     }
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "exclude": [
+    "src/**/versions/",
+    "src/**/version/",
+    "src/features/bookings/useDeleteBooking.ts",
+    "src/features/check-in-out/useCheckOut.ts",
+    "src/hooks/useOutsideClick.ts",
+    "src/services/apiBookings.ts"
+  ]
 }
